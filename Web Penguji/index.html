@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Qur'an & Murojaah Digital</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            850: '#0c4a6e',
+                            900: '#0c4a6e',
+                            950: '#0369a1',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Segoe UI', 'sans-serif'],
+                        arabic: ['Traditional Arabic', 'Amiri', 'Georgia', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;600;700&family=Amiri:ital,wght=0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        .ayat-item {
+            scroll-margin-top: 120px;
+        }
+        .arabic-text {
+            text-shadow: 0 0 1px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-24">
+
+    <!-- 🏛️ BAR ATAS -->
+    <header class="bg-sky-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
+                <div class="bg-gradient-to-tr from-amber-400 to-yellow-200 p-2 rounded-lg text-sky-900">
+
+                    <img src="img/bisc.png" alt="Logo" class="w-10 h-10">
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight tracking-wide">BISC MENGAJI</h1>
+                    <p class="text-xs text-sky-200">Al-Qur'an, Murojaah & Tahsin</p>
+                </div>
+            </div>
+            <button onclick="switchView('home')" class="bg-sky-850 hover:bg-sky-800 text-white text-sm font-semibold py-1.5 px-4 rounded-full transition duration-200 flex items-center gap-2 border border-sky-700/50">
+                <i class="fa-solid fa-house"></i> Beranda
+            </button>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main class="max-w-4xl mx-auto px-4 py-6">
+
+        <!-- ==================== VIEW 1: HOME ==================== -->
+        <section id="view-home" class="view-panel space-y-6">
+            <div class="bg-gradient-to-r from-sky-800 to-sky-950 text-white rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 text-sky-700 opacity-20 text-9xl">
+                    <i class="fa-solid fa-mosque"></i>
+                </div>
+                <div class="relative z-10 space-y-2">
+                    <span class="bg-yellow-500/20 text-yellow-300 text-xs font-bold px-3 py-1 rounded-full border border-yellow-500/30">Aplikasi Interaktif</span>
+                    <h2 class="text-2xl font-bold">Mari Dekatkan Diri Dengan Al-Qur'an</h2>
+                    <p class="text-sky-100 text-sm max-w-lg leading-relaxed">Platform belajar mengaji, murojaah hafalan secara mandiri, serta memahami hukum-hukum tajwid dasar dalam satu sentuhan mudah.</p>
+                </div>
+            </div>
+
+            <!-- 📖 Menu Awal 4 Tombol Utama -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button onclick="openQuran()" class="flex flex-col items-center justify-center bg-white border border-slate-100 hover:border-sky-500 p-6 rounded-2xl shadow-sm hover:shadow-md transition duration-300 group">
+                    <div class="w-14 h-14 bg-sky-50 rounded-2xl flex items-center justify-center text-sky-600 text-2xl mb-4 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-base">Al-Qur'an</span>
+                    <span class="text-xs text-slate-400 mt-1">Membaca & Audio</span>
+                </button>
+
+                <button onclick="openMurojaah()" class="flex flex-col items-center justify-center bg-white border border-slate-100 hover:border-sky-500 p-6 rounded-2xl shadow-sm hover:shadow-md transition duration-300 group">
+                    <div class="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 text-2xl mb-4 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-base">Murojaah</span>
+                    <span class="text-xs text-slate-400 mt-1">Quiz Sambung Ayat</span>
+                </button>
+
+                <button onclick="openTahsin()" class="flex flex-col items-center justify-center bg-white border border-slate-100 hover:border-sky-500 p-6 rounded-2xl shadow-sm hover:shadow-md transition duration-300 group">
+                    <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 text-2xl mb-4 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-microphone"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-base">Tahsin</span>
+                    <span class="text-xs text-slate-400 mt-1">Belajar Tajwid</span>
+                </button>
+
+                <button onclick="openInformasi()" class="flex flex-col items-center justify-center bg-white border border-slate-100 hover:border-sky-500 p-6 rounded-2xl shadow-sm hover:shadow-md transition duration-300 group">
+                    <div class="w-14 h-14 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 text-2xl mb-4 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-base">Informasi</span>
+                    <span class="text-xs text-slate-400 mt-1">Panduan Aplikasi</span>
+                </button>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-star text-amber-400"></i> Akses Cepat Surat Pilihan
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button onclick="quickJumpSurah(1)" class="py-3 px-4 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-xl text-sm font-semibold transition duration-200">1. Al-Fatihah</button>
+                    <button onclick="quickJumpSurah(36)" class="py-3 px-4 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-xl text-sm font-semibold transition duration-200">36. Yasin</button>
+                    <button onclick="quickJumpSurah(67)" class="py-3 px-4 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-xl text-sm font-semibold transition duration-200">67. Al-Mulk</button>
+                    <button onclick="quickJumpSurah(18)" class="py-3 px-4 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-xl text-sm font-semibold transition duration-200">18. Al-Kahfi</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 2: QURAN ==================== -->
+        <section id="view-quran" class="view-panel hidden space-y-6">
+            <div class="flex flex-col md:flex-row gap-4 items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                <div class="relative w-full">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="search-quran-input" oninput="filterQuranList()" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm transition" placeholder="Cari nama surat atau terjemahannya...">
+                </div>
+            </div>
+            <div id="quran-surah-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </section>
+
+        <!-- ==================== VIEW 3: QURAN DETAIL ==================== -->
+        <section id="view-quran-detail" class="view-panel hidden space-y-6">
+            <div id="detail-surah-header" class="bg-gradient-to-r from-sky-800 to-sky-950 text-white rounded-2xl p-6 shadow-md text-center space-y-3 relative"></div>
+            <div id="detail-ayat-list" class="space-y-4"></div>
+        </section>
+
+        <!-- ==================== VIEW 4: MUROJAAH (MAIN) ==================== -->
+        <section id="view-murojaah" class="view-panel hidden space-y-6">
+            <div class="bg-gradient-to-r from-sky-700 to-indigo-700 text-white p-6 rounded-2xl shadow-md">
+                <h2 class="text-2xl font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-bullseye"></i> Uji Hafalan Murojaah</h2>
+                <p class="text-sm text-sky-100">Pilih Juz yang ingin Anda uji hafalan suratnya. Kami merekomendasikan menguji Juz 30 terlebih dahulu.</p>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-slate-700 mb-3">Pilih Tingkat Juz :</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                    <button onclick="selectMurojaahJuz(30)" class="juz-btn py-4 px-3 bg-white border border-slate-200 hover:border-sky-500 rounded-xl font-bold text-center text-lg text-slate-700 hover:text-sky-600 shadow-sm transition">Juz 30</button>
+                    <button onclick="selectMurojaahJuz(29)" class="juz-btn py-4 px-3 bg-white border border-slate-200 hover:border-sky-500 rounded-xl font-bold text-center text-lg text-slate-700 hover:text-sky-600 shadow-sm transition">Juz 29</button>
+                    <button onclick="selectMurojaahJuz(28)" class="juz-btn py-4 px-3 bg-white border border-slate-200 hover:border-sky-500 rounded-xl font-bold text-center text-lg text-slate-700 hover:text-sky-600 shadow-sm transition">Juz 28</button>
+                    <button onclick="selectMurojaahJuz(27)" class="juz-btn py-4 px-3 bg-white border border-slate-200 hover:border-sky-500 rounded-xl font-bold text-center text-lg text-slate-700 hover:text-sky-600 shadow-sm transition">Juz 27</button>
+                    <button onclick="selectMurojaahJuz(26)" class="juz-btn py-4 px-3 bg-white border border-slate-200 hover:border-sky-500 rounded-xl font-bold text-center text-lg text-slate-700 hover:text-sky-600 shadow-sm transition">Juz 26</button>
+                </div>
+            </div>
+
+            <div id="murojaah-modes-box" class="hidden space-y-4">
+                <hr class="border-slate-200">
+                <h3 class="font-bold text-slate-700" id="selected-juz-title">Mode Murojaah Juz ...</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button onclick="startMurojaahGame('sambung_ayat')" class="flex items-center gap-4 bg-white p-5 border border-slate-200 hover:border-sky-500 rounded-2xl text-left shadow-sm hover:shadow-md transition duration-200">
+                        <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-shuffle"></i></div>
+                        <div>
+                            <span class="font-bold text-slate-800 text-sm block">Sambung Ayat</span>
+                            <span class="text-xs text-slate-400">Pilih kelanjutan ayat yang benar</span>
+                        </div>
+                    </button>
+
+                    <button onclick="startMurojaahGame('sambung_surat')" class="flex items-center gap-4 bg-white p-5 border border-slate-200 hover:border-sky-500 rounded-2xl text-left shadow-sm hover:shadow-md transition duration-200">
+                        <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-arrow-right-long"></i></div>
+                        <div>
+                            <span class="font-bold text-slate-800 text-sm block">Sambung Surat</span>
+                            <span class="text-xs text-slate-400">Tebak urutan surat selanjutnya</span>
+                        </div>
+                    </button>
+
+                    <button onclick="startMurojaahGame('tebak_surat')" class="flex items-center gap-4 bg-white p-5 border border-slate-200 hover:border-sky-500 rounded-2xl text-left shadow-sm hover:shadow-md transition duration-200">
+                        <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-question"></i></div>
+                        <div>
+                            <span class="font-bold text-slate-800 text-sm block">Tebak Surat</span>
+                            <span class="text-xs text-slate-400">Tentukan surat asal potongan ayat</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 5: MUROJAAH PLAYGROUND (GAME) ==================== -->
+        <section id="view-murojaah-play" class="view-panel hidden space-y-6 max-w-2xl mx-auto">
+            <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                <div class="flex items-center gap-3">
+                    <span id="game-juz-tag" class="bg-sky-100 text-sky-800 text-xs font-bold px-2.5 py-1 rounded-full">Juz 30</span>
+                    <span id="game-mode-tag" class="bg-slate-100 text-slate-800 text-xs font-bold px-2.5 py-1 rounded-full">Tebak Surat</span>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-slate-400">Soal ke: </span><strong id="game-current-q">1/10</strong>
+                    <span class="mx-2 text-slate-200">|</span>
+                    <span class="text-xs text-slate-400">Skor: </span><strong id="game-current-score" class="text-sky-600">0</strong>
+                </div>
+            </div>
+
+            <div id="game-loading-box" class="bg-white p-12 rounded-2xl border border-slate-100 shadow-sm text-center flex flex-col items-center justify-center gap-4">
+                <div class="w-10 h-10 border-4 border-sky-600 border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-sm text-slate-500 font-semibold" id="game-loading-text">Mengunduh ayat dari API eQuran...</p>
+            </div>
+
+            <div id="game-question-box" class="hidden space-y-6">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center space-y-6 relative overflow-hidden">
+                    <div id="game-instruction" class="text-sm font-semibold text-slate-400 uppercase tracking-wider">Lanjutkan Ayat Berikutnya:</div>
+                    <div id="game-question-main" class="arabic-text font-arabic text-3xl leading-relaxed text-slate-800 select-none">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                    <div id="game-question-subtitle" class="text-sm text-slate-500 italic"></div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3" id="game-options-container"></div>
+
+                <div class="text-center pt-2">
+                    <button id="game-next-btn" onclick="nextQuestion()" class="hidden w-full py-3.5 bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-xl transition duration-200 shadow-md">
+                        Selanjutnya <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 6: MUROJAAH RESULT ==================== -->
+        <section id="view-murojaah-result" class="view-panel hidden max-w-md mx-auto text-center space-y-6">
+            <div class="bg-white p-8 rounded-2xl shadow-md border border-slate-100 space-y-6">
+                <div class="w-20 h-20 bg-sky-50 text-sky-600 rounded-full flex items-center justify-center text-4xl mx-auto">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="space-y-1">
+                    <h2 class="text-2xl font-bold text-slate-800">Selesai Ber-Murojaah!</h2>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold" id="result-juz-mode">Juz 30 • Sambung Ayat</p>
+                </div>
+
+                <div class="py-6 border-y border-slate-100">
+                    <p class="text-slate-400 text-xs">Nilai Akhir Anda</p>
+                    <h3 class="text-6xl font-extrabold text-sky-700 mt-1" id="result-score">100</h3>
+                    <p class="text-sm text-slate-500 mt-2" id="result-message">MasyaAllah! Pertahankan terus hafalannya ya.</p>
+                </div>
+
+                <div class="flex flex-col gap-3">
+                    <button onclick="shareToWhatsApp()" class="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition shadow-sm flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> Bagikan Ke WhatsApp
+                    </button>
+                    <button onclick="replayMurojaahGame()" class="w-full py-3 bg-sky-700 text-white font-bold rounded-xl hover:bg-sky-800 transition shadow-sm">Main Lagi</button>
+                    <button onclick="openMurojaah()" class="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">Kembali ke Murojaah</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 7: TAHSIN ==================== -->
+        <section id="view-tahsin" class="view-panel hidden space-y-6">
+            <div class="bg-gradient-to-r from-sky-600 to-sky-800 text-white p-6 rounded-2xl shadow-md">
+                <h2 class="text-2xl font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Modul Belajar Tajwid Interaktif (7 Materi)</h2>
+                <p class="text-sm text-sky-100">Perbaiki ketepatan membaca Al-Qur'an Anda. Klik kategori tajwid utama, lalu klik sub-materi di bawahnya untuk memunculkan 8 contoh latihan praktis.</p>
+            </div>
+
+            <!-- Tab 7 Kategori Utama -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 bg-slate-100 p-1.5 rounded-xl">
+                <button onclick="switchTahsinTab('nun-sukun')" class="tahsin-tab-btn py-2 text-xs font-bold rounded-lg bg-white text-sky-800 shadow-sm transition" id="tab-btn-nun-sukun">Nun Sukun / Tanwin</button>
+                <button onclick="switchTahsinTab('mim-sukun')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-mim-sukun">Mim Sukun</button>
+                <button onclick="switchTahsinTab('tasydid')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-tasydid">Nun/Mim Tasydid</button>
+                <button onclick="switchTahsinTab('jalalah')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-jalalah">Lafadz Jalalah</button>
+                <button onclick="switchTahsinTab('qalqalah')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-qalqalah">Qalqalah</button>
+                <button onclick="switchTahsinTab('mad-thabii')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-mad-thabii">Mad Thabi'i</button>
+                <button onclick="switchTahsinTab('mad-fari')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-mad-fari">Mad Far'i</button>
+            </div>
+
+            <!-- Sub-kategori Panel -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
+                <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider block">Pilih Sub-Materi Tajwid:</span>
+                <div id="sub-materi-container" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- Tempat Contoh Bacaan Muncul -->
+            <div id="tahsin-tab-content" class="space-y-4"></div>
+        </section>
+
+        <!-- ==================== VIEW 8: INFORMASI ==================== -->
+        <section id="view-informasi" class="view-panel hidden max-w-2xl mx-auto space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-6">
+                <div class="text-center space-y-2">
+                    <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center text-3xl mx-auto">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800">Tentang Aplikasi</h2>
+                    <p class="text-xs text-slate-400">IQRA DIGITAL • Versi 1.3</p>
+                </div>
+
+                <div class="space-y-4 text-sm text-slate-600 leading-relaxed">
+                    <p><strong>IQRA Digital</strong> merupakan media pembelajaran Al-Qur'an digital satu pintu yang memadukan kenyamanan tilawah harian dengan pengujian murojaah hafalan mandiri serta rujukan ilmu tajwid praktis.</p>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl text-center text-xs text-slate-400 border border-slate-100">
+                    &copy; 2026 IQRA DIGITAL. All Rights Reserved.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 🎧 AUDIO BAR BOTTOM -->
+    <div id="audio-bar" class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] py-4 px-4 hidden transition duration-300 z-40">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3 w-full md:w-auto">
+                <div class="bg-sky-50 text-sky-800 w-10 h-10 rounded-lg flex items-center justify-center font-bold" id="bar-ayat-num">1</div>
+                <div>
+                    <h4 class="font-bold text-sm text-slate-800" id="bar-surah-title">Al-Fatihah</h4>
+                    <p class="text-xs text-slate-400" id="bar-qori-subtitle">Memutar Audio Ayat...</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+                <select id="qori-select" onchange="changeQori()" class="text-xs font-semibold py-2 px-3 border border-slate-200 rounded-lg bg-slate-50 focus:outline-none focus:ring-1 focus:ring-sky-500">
+                    <option value="01">Mishary Rashid Alafasy</option>
+                    <option value="02">Abdullah Al-Juhany</option>
+                    <option value="03">Muammar ZA</option>
+                    <option value="04">Muhammad Ayyub</option>
+                </select>
+                <audio id="main-audio" controls class="h-9 w-full max-w-[180px] md:max-w-xs focus:outline-none"></audio>
+                
+                <button onclick="stopAudio()" title="Stop Audio" class="bg-rose-50 hover:bg-rose-100 text-rose-600 p-2.5 rounded-lg text-sm border border-rose-200 transition">
+                    <i class="fa-solid fa-square"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ============= JAVASCRIPT CODE ============= -->
+    <!-- ========================================== -->
+    <script>
+        /* ================= STATE MANAGER & DATA ================= */
+        let allSurah = [];
+        let currentSurahData = null;
+        let currentAyatIndex = 0;
+        let selectedQori = '01'; 
+        let currentActiveView = 'home';
+
+        let currentJuz = 30;
+        let currentGameMode = '';
+        let gameScore = 0;
+        let gameQuestionIndex = 0; 
+        let gameQuestions = []; 
+
+        const JUZ_MAPPING = {
+            30: { start: 78, end: 114, surahs: [{ nomor: 78, nama: "An-Naba'" }, { nomor: 79, nama: "An-Nazi'at" }, { nomor: 80, nama: "'Abasa" }, { nomor: 81, nama: "At-Takwir" }, { nomor: 82, nama: "Al-Infitar" }, { nomor: 83, nama: "Al-Mutaffifin" }, { nomor: 84, nama: "Al-Insyiqaq" }, { nomor: 85, nama: "Al-Buruj" }, { nomor: 86, nama: "At-Tariq" }, { nomor: 87, nama: "Al-A'la" }, { nomor: 88, nama: "Al-Ghasyiyah" }, { nomor: 89, nama: "Al-Fajr" }, { nomor: 90, nama: "Al-Balad" }, { nomor: 91, nama: "Asy-Syams" }, { nomor: 92, nama: "Al-Lail" }, { nomor: 93, nama: "Adh-Dhuha" }, { nomor: 94, nama: "Asy-Syarh" }, { nomor: 95, nama: "At-Tin" }, { nomor: 96, nama: "Al-'Alaq" }, { nomor: 97, nama: "Al-Qadr" }, { nomor: 98, nama: "Al-Bayyinah" }, { nomor: 99, nama: "Az-Zalzalah" }, { nomor: 100, nama: "Al-'Adiyat" }, { nomor: 101, nama: "Al-Qari'ah" }, { nomor: 102, nama: "At-Takatsur" }, { nomor: 103, nama: "Al-'Asr" }, { nomor: 104, nama: "Al-Humazah" }, { nomor: 105, nama: "Al-Fil" }, { nomor: 106, nama: "Quraisy" }, { nomor: 107, nama: "Al-Ma'un" }, { nomor: 108, nama: "Al-Kautsar" }, { nomor: 109, nama: "Al-Kafirun" }, { nomor: 110, nama: "An-Nasr" }, { nomor: 111, nama: "Al-Lahab" }, { nomor: 112, nama: "Al-Ikhlas" }, { nomor: 113, nama: "Al-Falaq" }, { nomor: 114, nama: "An-Nas" }] },
+            29: { start: 67, end: 77, surahs: [{ nomor: 67, nama: "Al-Mulk" }, { nomor: 68, nama: "Al-Qalam" }, { nomor: 69, nama: "Al-Haqqah" }, { nomor: 70, nama: "Al-Ma'arij" }, { nomor: 71, nama: "Nuh" }, { nomor: 72, nama: "Al-Jinn" }, { nomor: 73, nama: "Al-Muzzammil" }, { nomor: 74, nama: "Al-Muddatstsir" }, { nomor: 75, nama: "Al-Qiyamah" }, { nomor: 76, nama: "Al-Insan" }, { nomor: 77, nama: "Al-Mursalat" }] },
+            28: { start: 58, end: 66, surahs: [{ nomor: 58, nama: "Al-Mujadalah" }, { nomor: 59, nama: "Al-Hasyr" }, { nomor: 60, nama: "Al-Mumtahanah" }, { nomor: 61, nama: "Asy-Syaff" }, { nomor: 62, nama: "Al-Jumu'ah" }, { nomor: 63, nama: "Al-Munafiqun" }, { nomor: 64, font: "At-Taghabun" }, { nomor: 65, nama: "At-Talaq" }, { nomor: 66, nama: "At-Tahrim" }] },
+            27: { start: 51, end: 57, surahs: [{ nomor: 51, nama: "Adz-Dzariyat" }, { nomor: 52, nama: "Ath-Thur" }, { nomor: 53, nama: "An-Najm" }, { nomor: 54, nama: "Al-Qamar" }, { nomor: 55, nama: "Ar-Rahman" }, { nomor: 56, nama: "Al-Waqi'ah" }, { nomor: 57, nama: "Al-Hadid" }] },
+            26: { start: 46, end: 51, surahs: [{ nomor: 46, nama: "Al-Ahqaf" }, { nomor: 47, nama: "Muhammad" }, { nomor: 48, nama: "Al-Fath" }, { nomor: 49, nama: "Al-Hujurat" }, { nomor: 50, nama: "Qaf" }] }
+        };
+
+        /* ================= DATA TAHSIN & SUB-MATERI (7 MATERI) ================= */
+        // Setiap sub-materi kini dipasangkan penjelasan dalam 1 paragraf serta 8 contoh bacaan murni Arab
+        const TAHSIN_COMPACT_DATA = {
+            'nun-sukun': {
+                'izhar': {
+                    penjelasan: "Izhar Halqi terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin (ــًــٍــٌ) bertemu dengan salah satu dari 6 huruf tenggorokan (Halqi), yaitu Alif (أ), Ha (هـ), Ha (ح), Kha (خ), 'Ain (ع), dan Ghain (غ). Aturan membacanya adalah suara Nun atau Tanwin tersebut harus diucapkan dengan jelas, tegas, tanpa disertai dengung.",
+                    contoh: ["مَنْ اٰمَنَ", "مِنْ حَكِيْمٍ", "فَرِيْقًا هَدٰى", "عَذَابٌ عَظِيْمٌ", "مِنْ غِلٍّ", "لَطِيْفٌ خَبِيْرٌ", "وَالْمُنْخَنِقَةُ", "مِنْ عِنْدِ"]
+                },
+                'bighunnah': {
+                    penjelasan: "Idgham Bighunnah terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 4 huruf yaitu Ya (ي), Nun (ن), Mim (م), atau Wawu (و). Aturan membacanya adalah suara Nun atau Tanwin harus dileburkan ke dalam huruf setelahnya dan dibaca mendengung ditahan selama 2-3 ketukan.",
+                    contoh: ["مَنْ يَّقُوْلُ", "عَذَابٌ مُّقِيْمٌ", "مِنْ وَّرَاۤىِٔهِمْ", "نَفْسًا زَّكِيَّةً", "مِنْ مَّاءٍ", "وُجُوْهٌ يَّوْمَىِٔذٍ", "خَيْرٌ وَّاَبْقٰى", "اَمَنَةً نُّعَاسًا"]
+                },
+                'bilaghunnah': {
+                    penjelasan: "Idgham Bilaghunnah terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Lam (ل) atau Ra (ر). Aturan membacanya adalah suara Nun atau Tanwin wajib dileburkan sepenuhnya ke dalam huruf Lam atau Ra tersebut secara langsung tanpa disertai dengung sedikit pun.",
+                    contoh: ["مِنْ رَّبِّهِمْ", "هُدًى لِّلْمُتَّقِيْنَ", "مِنْ لَّدُنْهُ", "غَفُوْرٌ رَّحِيْمٌ", "فِتْنَةٌ لَّهُمْ", "مِنْ رِّزْقِ اللّٰهِ", "بِقَادِرٍ لَّمْ", "تَوَّابٌ رَّحِيْمٌ"]
+                },
+                'iqlab': {
+                    penjelasan: "Iqlab terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan cara mengubah/membalikkan bunyi huruf Nun atau Tanwin tersebut menjadi suara huruf Mim (م) yang samar di bibir, sembari mendengung dan ditahan sejenak.",
+                    contoh: ["مِنْ بَعْدِ", "سَمِيْعٌ بَصِيْرٌ", "اَنْۢبِئْهُمْ", "عَلِيْمًا بِذَاتِ", "مَنْۢ بَخِلَ", "لَنَسْفَعًاۢ بِالنَّاصِيَةِ", "يُنْۢبِتُ", "خَبِيْرٌۢ بِمَا"]
+                },
+                'ikhfa': {
+                    penjelasan: "Ikhfa Haqiqi terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 15 huruf ikhfa. Aturan membacanya adalah suara Nun atau Tanwin disamarkan (antara jelas dan berdengung) di bibir sambil mengarah kepada makhraj pengucapan huruf berikutnya.",
+                    contoh: ["مِنْ دُوْنِ", "يَوْمَئِذٍ تُحَدِّثُ", "مِنْ كُلِّ", "صِرَاطًا صَالِحًا", "مِنْ جُوْعٍ", "نَفْسٌ شَيْـًٔا", "مِنْ قَبْلِ", "خَالِدًا فِيْهَا"]
+                }
+            },
+            'mim-sukun': {
+                'ikhfa-syafawi': {
+                    penjelasan: "Ikhfa Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan menyamarkan suara huruf Mim di bibir disertai dengan dengung (ghunnah) yang ditahan sekitar 2 ketukan secara lembut.",
+                    contoh: ["تَرْمِيْهِمْ بِحِجَارَةٍ", "اَمْ تُرِيْدُوْنَ بَلْ", "وَمَا صَاحِبُكُمْ بِمَجْنُوْنٍ", "يَعْتَصِمْ بِاللّٰهِ", "اَنْتُمْ بِهٖ", "فَاحْكُمْ بَيْنَهُمْ", "عَلَيْهِمْ بِمُصَيْطِرٍ", "جَزَاۤؤُهُمْ عِنْدَ رَبِّهِمْ جَنّٰتُ"]
+                },
+                'idgham-mimi': {
+                    penjelasan: "Idgham Mimi (atau Idgham Mutamatsilain Syafawi) terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Mim (م). Aturan membacanya adalah dengan memasukkan suara Mim pertama ke dalam Mim kedua secara sempurna, dibaca rapat, mendengung, dan ditahan sejenak.",
+                    contoh: ["لَهُمْ مَّا يَشَاۤءُوْنَ", "فِيْ قُلُوْبِهِمْ مَّرَضٌ", "اِنَّهَا عَلَيْهِمْ مُّؤْصَدَةٌ", "اَمْ مَنْ اَسَّسَ", "وَمِنْهُمْ مَّنْ", "خَلَقَكُمْ مِّنْ", "كُنْتُمْ مُّؤْمِنِيْنَ", "اَطْعَمَهُمْ مِّنْ جُوْعٍ"]
+                },
+                'izhar-syafawi': {
+                    penjelasan: "Izhar Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan salah satu huruf hijaiyah selain Mim (م) dan Ba (ب). Aturan membacanya adalah suara Mim Sukun tersebut harus diucapkan dengan sangat jelas dan terang di bibir tanpa mendengung.",
+                    contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ لَا", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"]
+                }
+            },
+            'tasydid': {
+                'nun-tasydid': {
+                    penjelasan: "Ghunnah pada Nun bertasydid terjadi ketika huruf Nun memiliki harakat tasydid (نّ). Aturan membacanya adalah suara dengung harus ditahan di rongga hidung secara mantap sepanjang 2 sampai 3 harakat sebelum berpindah ke harakat berikutnya.",
+                    contoh: ["اِنَّ الَّذِيْنَ", "مِنَ الْجِنَّةِ وَالنَّاسِ", "جَهَنَّمُ", "مِنِّيْ", "مِنَ الْجِنَّةِ", "اَنَّ لَهُمْ", "لَتُسْـَٔلُنَّ", "كَأَنَّهُ"]
+                },
+                'mim-tasydid': {
+                    penjelasan: "Ghunnah pada Mim bertasydid terjadi ketika huruf Mim memiliki harakat tasydid (مّ). Aturan membacanya adalah merapatkan bibir sepenuhnya dengan menekan suara dengung di rongga hidung yang ditahan mantap sepanjang 2 sampai 3 harakat.",
+                    contoh: ["ثُمَّ لَتُسْـَٔلُنَّ", "مِمَّا رَزَقْنٰهُمْ", "عَمَّ يَتَسَاۤءَلُوْنَ", "اُمِّيْ", "فَاَمَّا مَنْ", "اُمَّةً وَاحِدَةً", "مِمَّا", "يَمُّ"]
+                }
+            },
+            'jalalah': {
+                'tafkhim': {
+                    penjelasan: "Lafadz Jalalah Tafkhim adalah penebalan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal tersebut didahului oleh huruf yang berharakat Fathah (ــَـ) atau Dhammah (ــُـ). Cara membacanya adalah dengan memosisikan lidah lebih naik untuk menghasilkan gema bunyi yang tebal.",
+                    contoh: ["شَهِدَ اللّٰهُ", "يَنْصُرُكُمُ اللّٰهُ", "اللّٰهُ لَاۤ اِلٰهَ اِلَّا هُوَ", "رَسُوْلُ اللّٰهِ", "يُحِبُّهُمُ اللّٰهُ", "قَالَ اللّٰهُ", "اِنَّ اللّٰهَ", "اَحَدٌ اَللّٰهُ"]
+                },
+                'tarqiq': {
+                    penjelasan: "Lafadz Jalalah Tarqiq adalah penipisan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal agung tersebut didahului oleh huruf berharakat Kasrah (ــِـ). Cara membacanya adalah dengan menjaga posisi lidah tetap di bawah sehingga menghasilkan bunyi Lam yang tipis/ringan.",
+                    contoh: ["بِسْمِ اللّٰهِ", "فِيْ سَبِيْلِ اللّٰهِ", "لِلّٰهِ الْمُلْكُ", "اِلَّا اللّٰه", "بِاللّٰهِ", "دِيْنِ اللّٰهِ", "بِسْمِ اللّٰهِ الرَّحْمٰنِ", "قُلْ هُوَ اللّٰهُ اَحَدٌ اَللّٰهُ"]
+                }
+            },
+            'qalqalah': {
+                'sugra': {
+                    penjelasan: "Qalqalah Sugra (pantulan kecil) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) berharakat sukun asli dan terletak di pertengahan kata. Aturan membacanya adalah dipantulkan dengan getaran pantulan yang cenderung ringan.",
+                    contoh: ["يَقْطَعُوْنَ", "نُطْعِمُ", "يَبْتَغُوْنَ", "تَجْرِيْ", "يَدْخُلُوْنَ", "خَلَقْنَا", "تَجْعَلُ", "يَطْمَعُ"]
+                },
+                'kubra': {
+                    penjelasan: "Qalqalah Kubra (pantulan besar) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) terletak di akhir kata atau kalimat karena dibaca mati akibat waqaf (berhenti). Aturan membacanya adalah dipantulkan dengan getaran suara pantulan yang kuat dan jelas.",
+                    contoh: ["قُلْ هُوَ اللّٰهُ اَحَدٌ", "تَبَّتْ يَدَاۤ اَبِيْ لَهَبٍ وَّتَبَّ", "الْفَلَقِ", "بِرُوْجِ", "مُحِيْطٌ", "بِالْحَقِّ", "الْحَمِيْدِ", "كَسَبَ"]
+                }
+            },
+            'mad-thabii': {
+                'alif-fathah': {
+                    penjelasan: "Mad Thabi'i Alif terjadi apabila huruf berharakat Fathah (ــَـ) bertemu dengan huruf Alif mati (ا). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat tersebut sepanjang dua harakat (satu alif) secara konsisten.",
+                    contoh: ["قَالُوْا", "كِتَابٌ", "مَالِكِ", "هٰذَا", "الرَّحْمٰنِ", "عَلٰى", "سَمٰوٰتٍ", "جَاهِدِ"]
+                },
+                'ya-kasrah': {
+                    penjelasan: "Mad Thabi'i Ya terjadi apabila huruf berharakat Kasrah (ــِـ) bertemu dengan huruf Ya mati (يْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat kasrah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
+                    contoh: ["الَّذِيْنَ", "سَمِيْعٌ", "فِيْهَا", "بَنِيْٓ", "دِيْنُكُمْ", "عَلِيْمٌ", "قِيْلَ", "اَخِيْهِ"]
+                },
+                'wawu-dhammah': {
+                    penjelasan: "Mad Thabi'i Wawu terjadi apabila huruf berharakat Dhammah (ــُـ) bertemu dengan huruf Wawu mati (وْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat dhammah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
+                    contoh: ["يَقُوْلُوْنَ", "تَكُوْنُ", "يَدْعُوْ", "نُوْرٌ", "يَفْعَلُوْنَ", "اَعُوْذُ", "قُلُوْبِ", "تُوْبُوْا"]
+                }
+            },
+            'mad-fari': {
+                'muttasil': {
+                    penjelasan: "Mad Wajib Muttasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) dalam satu kata atau kalimat yang bersambung. Aturan membacanya adalah dengan wajib memanjangkan bacaan hingga 4 atau 5 harakat (2 setengah alif).",
+                    contoh: ["جَاۤءَ النَّصْرُ", "السَّمَاۤءِ", "سُوْۤءَ", "شَاۤءَ", "هَنِيْۤئًا", "جِيْۤءَ", "أُولَٰئِكَ", "يَشَاۤءُ"]
+                },
+                'munfasil': {
+                    penjelasan: "Mad Jaiz Munfasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) yang berada di awal kata berikutnya (terpisah kata). Aturan membacanya diperbolehkan memanjangkan ketukan sepanjang 2, 4, atau maksimal 5 harakat.",
+                    contoh: ["اِنَّآ اَنْزَلْنٰهُ", "يٰۤاَيُّهَا النَّاسُ", "فِيْٓ اَحْسَنِ", "لَاۤ اَعْبُدُ", "بِمَاۤ اُنْزِلَ", "قُوْٓا اَنْفُسَكُمْ", "قَالُوْٓا اٰمَنَّا", "يٰبَنِيْٓ اِسْرَاۤءِيْلَ"]
+                },
+                'arid-sukun': {
+                    penjelasan: "Mad 'Arid Lissukun terjadi apabila terdapat Mad Thabi'i yang berada di akhir ayat atau tepat sebelum huruf hidup yang dimatikan (sukun) karena waqaf (berhenti). Aturan membacanya boleh dipanjangkan selama 2, 4, atau maksimal 6 harakat.",
+                    contoh: ["الْعٰلَمِيْنَۙ", "الْمُسْتَقِيْمَ", "يَعْلَمُوْنَ", "عَظِيْمٌ", "النَّاسِ", "حَكِيْمٍ", "الرَّحِيْمِ", "دِيْنِ"]
+                }
+            }
+        };
+
+        // Judul sub-materi untuk tampilan tombol interaktif
+        const SUB_MATERI_NAMES = {
+            'nun-sukun': { 'izhar': 'Izhar Halqi', 'bighunnah': 'Idgham Bighunnah', 'bilaghunnah': 'Idgham Bilaghunnah', 'iqlab': 'Iqlab', 'ikhfa': 'Ikhfa Haqiqi' },
+            'mim-sukun': { 'ikhfa-syafawi': 'Ikhfa Syafawi', 'idgham-mimi': 'Idgham Mimi', 'izhar-syafawi': 'Izhar Syafawi' },
+            'tasydid': { 'nun-tasydid': 'Nun Tasydid', 'mim-tasydid': 'Mim Tasydid' },
+            'jalalah': { 'tafkhim': 'Tafkhim (Tebal)', 'tarqiq': 'Tarqiq (Tipis)' },
+            'qalqalah': { 'sugra': 'Qalqalah Sugra', 'kubra': 'Qalqalah Kubra' },
+            'mad-thabii': { 'alif-fathah': 'Alif + Fathah', 'ya-kasrah': 'Ya + Kasrah', 'wawu-dhammah': 'Wawu + Dhammah' },
+            'mad-fari': { 'muttasil': 'Wajib Muttasil', 'munfasil': 'Jaiz Munfasil', 'arid-sukun': 'Arid Lissukun' }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchSurahList();
+            switchView('home');
+        });
+
+        async function fetchSurahList() {
+            try {
+                let response = await fetch('https://equran.id/api/v2/surat');
+                let result = await response.json();
+                allSurah = result.data;
+            } catch (error) {
+                console.error("Gagal mendapatkan Al-Qur'an API:", error);
+            }
+        }
+
+        /* ================= PENGENDALI PANEL BACA & AUDIO VISIBILITY ================= */
+        function switchView(viewId) {
+            currentActiveView = viewId;
+            document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const audioBar = document.getElementById('audio-bar');
+            const mainAudio = document.getElementById('main-audio');
+            
+            if (currentActiveView !== 'quran' && currentActiveView !== 'quran-detail') {
+                mainAudio.pause();
+                audioBar.classList.add('hidden');
+                document.querySelectorAll('.ayat-item').forEach(el => el.removeProperty && el.removeAttribute('style'));
+                document.querySelectorAll('.ayat-item').forEach(el => el.classList.remove('bg-sky-50', 'border-sky-300'));
+            }
+        }
+
+        /* ================= MODUL 1: AL-QURAN DIGITAL ================= */
+        function openQuran() {
+            switchView('quran');
+            renderQuranList(allSurah);
+        }
+
+        function renderQuranList(data) {
+            const container = document.getElementById('quran-surah-list');
+            if (data.length === 0) {
+                container.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400">Surat tidak ditemukan.</div>`;
+                return;
+            }
+            let html = "";
+            data.forEach(surah => {
+                html += `
+                    <div onclick="loadSurahDetail(${surah.nomor})" class="bg-white p-5 rounded-2xl border border-slate-100 hover:border-sky-500 shadow-sm hover:shadow-md transition duration-200 cursor-pointer flex justify-between items-center group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-sky-50 text-sky-800 font-bold text-sm rounded-xl flex items-center justify-center group-hover:bg-sky-600 group-hover:text-white transition duration-200">
+                                ${surah.nomor}
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base leading-none">${surah.namaLatin}</h3>
+                                <span class="text-xs text-slate-400 mt-1.5 inline-block">${surah.arti} • ${surah.jumlahAyat} Ayat</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-arabic font-bold text-sky-800 text-xl">${surah.nama}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function filterQuranList() {
+            let query = document.getElementById('search-quran-input').value.toLowerCase();
+            let filtered = allSurah.filter(s => s.namaLatin.toLowerCase().includes(query) || s.arti.toLowerCase().includes(query));
+            renderQuranList(filtered);
+        }
+
+        async function quickJumpSurah(nomorSurah) {
+            await loadSurahDetail(nomorSurah);
+        }
+
+        async function loadSurahDetail(nomorSurah) {
+            const contentDiv = document.getElementById('detail-ayat-list');
+            contentDiv.innerHTML = `<div class="py-24 text-center"><div class="w-10 h-10 border-4 border-sky-800 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div></div>`;
+            switchView('quran-detail');
+
+            try {
+                let response = await fetch(`https://equran.id/api/v2/surat/${nomorSurah}`);
+                let result = await response.json();
+                currentSurahData = result.data;
+
+                const headerDiv = document.getElementById('detail-surah-header');
+                headerDiv.innerHTML = `
+                    <h2 class="text-2xl font-bold">${currentSurahData.namaLatin} (${currentSurahData.nama})</h2>
+                    <p class="text-sm text-sky-200 mt-1">${currentSurahData.arti} • ${currentSurahData.jumlahAyat} Ayat</p>
+                    <div class="font-arabic text-xl text-yellow-300 mt-2">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                `;
+                renderAyatList();
+            } catch (error) {
+                contentDiv.innerHTML = `<div class="py-12 text-center text-red-500">Gagal memuat detail surat.</div>`;
+            }
+        }
+
+        function renderAyatList() {
+            const container = document.getElementById('detail-ayat-list');
+            let html = "";
+            currentSurahData.ayat.forEach((ayat, index) => {
+                html += `
+                    <div id="ayat-${index}" onclick="playAyat(${index})" class="ayat-item bg-white p-6 rounded-2xl border border-slate-100 hover:border-sky-200 shadow-sm transition duration-300 cursor-pointer space-y-4">
+                        <div class="flex justify-between items-center">
+                            <div class="w-8 h-8 bg-sky-700 text-white font-bold text-xs rounded-full flex items-center justify-center">${ayat.nomorAyat}</div>
+                            <span class="text-[11px] text-sky-600 font-semibold flex items-center gap-1"><i class="fa-solid fa-play text-[9px]"></i> Putar</span>
+                        </div>
+                        <div class="arabic-text font-arabic text-3xl text-right leading-relaxed text-slate-800 pb-2">${ayat.teksArab}</div>
+                        <p class="text-slate-600 text-sm leading-relaxed">${ayat.teksIndonesia}</p>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        /* ================= AUDIO PLAYER ENGINE & STOP FUNCTION ================= */
+        const audioBar = document.getElementById('audio-bar');
+        const mainAudio = document.getElementById('main-audio');
+        const barAyatNum = document.getElementById('bar-ayat-num');
+        const barSurahTitle = document.getElementById('bar-surah-title');
+        const barQoriSubtitle = document.getElementById('bar-qori-subtitle');
+        const qoriSelect = document.getElementById('qori-select');
+
+        function playAyat(index) {
+            if (!currentSurahData || !currentSurahData.ayat[index]) return;
+            if (currentActiveView !== 'quran' && currentActiveView !== 'quran-detail') return;
+
+            currentAyatIndex = index;
+            let ayat = currentSurahData.ayat[index];
+            let audioUrl = ayat.audio[selectedQori] || Object.values(ayat.audio)[0];
+
+            audioBar.classList.remove('hidden');
+            barAyatNum.innerText = ayat.nomorAyat;
+            barSurahTitle.innerText = `${currentSurahData.namaLatin} (Ayat ${ayat.nomorAyat})`;
+            barQoriSubtitle.innerText = `Qori: ${qoriSelect.options[qoriSelect.selectedIndex].text}`;
+
+            mainAudio.src = audioUrl;
+            mainAudio.play();
+
+            document.querySelectorAll('.ayat-item').forEach(el => {
+                el.classList.remove('bg-sky-50', 'border-sky-300');
+                el.classList.add('bg-white', 'border-slate-100');
+            });
+
+            const activeElement = document.getElementById(`ayat-${index}`);
+            if (activeElement) {
+                activeElement.classList.add('bg-sky-50', 'border-sky-300');
+                activeElement.classList.remove('bg-white', 'border-slate-100');
+                activeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function stopAudio() {
+            mainAudio.pause();
+            mainAudio.src = ""; 
+            audioBar.classList.add('hidden'); 
+            
+            document.querySelectorAll('.ayat-item').forEach(el => {
+                el.classList.remove('bg-sky-50', 'border-sky-300');
+                el.classList.add('bg-white', 'border-slate-100');
+            });
+        }
+
+        function changeQori() {
+            selectedQori = qoriSelect.value;
+            if (currentSurahData && !audioBar.classList.contains('hidden')) {
+                playAyat(currentAyatIndex);
+            }
+        }
+
+        mainAudio.addEventListener('ended', () => {
+            if (currentSurahData && currentAyatIndex < currentSurahData.ayat.length - 1) {
+                playAyat(currentAyatIndex + 1);
+            } else {
+                stopAudio();
+            }
+        });
+
+        /* ================= MODUL 2: MUROJAAH (DYNAMIC QUIZ ENGINE) ================= */
+        function openMurojaah() {
+            switchView('murojaah');
+            document.querySelectorAll('.juz-btn').forEach(btn => btn.className = "juz-btn py-4 px-3 bg-white border border-slate-200 hover:border-sky-500 rounded-xl font-bold text-center text-lg text-slate-700 hover:text-sky-600 shadow-sm transition");
+            document.getElementById('murojaah-modes-box').classList.add('hidden');
+        }
+
+        function selectMurojaahJuz(juzNum) {
+            currentJuz = juzNum;
+            document.querySelectorAll('.juz-btn').forEach(btn => {
+                if (btn.innerText.includes(juzNum.toString())) {
+                    btn.className = "juz-btn py-4 px-3 bg-sky-50 border border-sky-500 rounded-xl font-bold text-center text-lg text-sky-600 shadow-sm transition";
+                } else {
+                    btn.className = "juz-btn py-4 px-3 bg-white border border-slate-200 hover:border-sky-500 rounded-xl font-bold text-center text-lg text-slate-700 hover:text-sky-600 shadow-sm transition";
+                }
+            });
+            document.getElementById('selected-juz-title').innerHTML = `Mode Murojaah <span class="text-sky-600 font-extrabold">Juz ${juzNum}</span> :`;
+            document.getElementById('murojaah-modes-box').classList.remove('hidden');
+        }
+
+        async function startMurojaahGame(mode) {
+            currentGameMode = mode;
+            gameScore = 0;
+            gameQuestionIndex = 0;
+            gameQuestions = [];
+
+            switchView('murojaah-play');
+            document.getElementById('game-loading-box').classList.remove('hidden');
+            document.getElementById('game-question-box').classList.add('hidden');
+
+            document.getElementById('game-juz-tag').innerText = `Juz ${currentJuz}`;
+            document.getElementById('game-mode-tag').innerText = mode.replace('_', ' ').toUpperCase();
+
+            try {
+                if (mode === 'sambung_surat') {
+                    generateOfflineSambungSuratQuestions();
+                } else {
+                    await generateDynamicOnlineQuestions();
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Koneksi internet bermasalah saat memuat data murojaah.");
+                openMurojaah();
+            }
+        }
+
+        function generateOfflineSambungSuratQuestions() {
+            const listSurah = JUZ_MAPPING[currentJuz].surahs;
+            let questions = [];
+            
+            for (let i = 0; i < 10; i++) {
+                let idx = Math.floor(Math.random() * (listSurah.length - 1));
+                let currentS = listSurah[idx];
+                let nextS = listSurah[idx + 1];
+
+                let options = [nextS.nama];
+                while (options.length < 4) {
+                    let randWrong = listSurah[Math.floor(Math.random() * listSurah.length)].nama;
+                    if (!options.includes(randWrong)) options.push(randWrong);
+                }
+                shuffleArray(options);
+
+                questions.push({
+                    q: `Setelah Surat <strong class="text-sky-800">${currentS.nama}</strong> adalah Surat...`,
+                    sub: `Kategori urutan surat Juz ${currentJuz}`,
+                    correct: nextS.nama,
+                    opts: options
+                });
+            }
+            gameQuestions = questions;
+            startFirstQuestion();
+        }
+
+        async function generateDynamicOnlineQuestions() {
+            const listSurahJuz = JUZ_MAPPING[currentJuz].surahs;
+            let questions = [];
+
+            const loadingText = document.getElementById('game-loading-text');
+
+            const fallbackAyatList = [
+                "قُلْ هُوَ اللَّهُ أَحَدٌ",
+                "اللَّهُ الصَّمَدُ",
+                "لَمْ يَلِدْ وَلَمْ يُولَدْ",
+                "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+                "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ",
+                "إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ",
+                "فَصَلِّ لِرَبِّكَ وَانْحَرْ",
+                "إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ"
+            ];
+
+            for (let i = 0; i < 10; i++) {
+                loadingText.innerText = `Menyiapkan soal ke-${i + 1} dari Juz ${currentJuz}...`;
+                
+                const randSurah = listSurahJuz[Math.floor(Math.random() * listSurahJuz.length)];
+                
+                let response = await fetch(`https://equran.id/api/v2/surat/${randSurah.nomor}`);
+                let result = await response.json();
+                let fetchedSurah = result.data;
+                let totalAyat = fetchedSurah.ayat.length;
+
+                if (currentGameMode === 'sambung_ayat') {
+                    let maxIndex = totalAyat > 1 ? totalAyat - 1 : totalAyat;
+                    let idx = Math.floor(Math.random() * maxIndex);
+                    let currentAyat = fetchedSurah.ayat[idx];
+                    
+                    let nextAyatText = "";
+
+                    if (idx === totalAyat - 1) {
+                        let currentSurahIndex = listSurahJuz.findIndex(s => s.nomor === randSurah.nomor);
+                        if (currentSurahIndex < listSurahJuz.length - 1) {
+                            let nextSurahInfo = listSurahJuz[currentSurahIndex + 1];
+                            let nextRes = await fetch(`https://equran.id/api/v2/surat/${nextSurahInfo.nomor}`);
+                            let nextData = await nextRes.json();
+                            nextAyatText = nextData.data.ayat[0].teksArab;
+                        } else {
+                            idx = Math.max(0, idx - 1);
+                            currentAyat = fetchedSurah.ayat[idx];
+                            nextAyatText = fetchedSurah.ayat[idx + 1].teksArab;
+                        }
+                    } else {
+                        nextAyatText = fetchedSurah.ayat[idx + 1].teksArab;
+                    }
+
+                    let options = [nextAyatText];
+                    
+                    let attempts = 0;
+                    while (options.length < 4 && attempts < 30) {
+                        attempts++;
+                        let randIdx = Math.floor(Math.random() * totalAyat);
+                        if (randIdx !== (idx + 1)) {
+                            let wrongText = fetchedSurah.ayat[randIdx].teksArab;
+                            if (!options.includes(wrongText)) options.push(wrongText);
+                        }
+                    }
+
+                    let fallbackIdx = 0;
+                    while (options.length < 4) {
+                        let textFallback = fallbackAyatList[fallbackIdx % fallbackAyatList.length];
+                        if (!options.includes(textFallback)) {
+                            options.push(textFallback);
+                        }
+                        fallbackIdx++;
+                    }
+
+                    shuffleArray(options);
+
+                    questions.push({
+                        q: currentAyat.teksArab,
+                        sub: `Surat ${randSurah.nama} Ayat ${currentAyat.nomorAyat}`,
+                        correct: nextAyatText,
+                        opts: options
+                    });
+
+                } else if (currentGameMode === 'tebak_surat') {
+                    let idx = Math.floor(Math.random() * totalAyat);
+                    let selectedAyat = fetchedSurah.ayat[idx];
+
+                    let options = [randSurah.nama];
+                    let attempts = 0;
+                    while (options.length < 4 && attempts < 30) {
+                        attempts++;
+                        let randWrong = listSurahJuz[Math.floor(Math.random() * listSurahJuz.length)].nama;
+                        if (!options.includes(randWrong)) options.push(randWrong);
+                    }
+                    shuffleArray(options);
+
+                    questions.push({
+                        q: selectedAyat.teksArab,
+                        sub: `Tebak asal surat dari potongan ayat di atas`,
+                        correct: randSurah.nama,
+                        opts: options
+                    });
+                }
+            }
+
+            gameQuestions = questions;
+            startFirstQuestion();
+        }
+
+        function startFirstQuestion() {
+            document.getElementById('game-loading-box').classList.add('hidden');
+            document.getElementById('game-question-box').classList.remove('hidden');
+            renderGameQuestion();
+        }
+
+        function renderGameQuestion() {
+            document.getElementById('game-next-btn').classList.add('hidden');
+            const currentQ = gameQuestions[gameQuestionIndex];
+            
+            document.getElementById('game-current-q').innerText = `${gameQuestionIndex + 1}/10`;
+            document.getElementById('game-current-score').innerText = gameScore;
+
+            const instr = document.getElementById('game-instruction');
+            instr.innerText = currentGameMode === 'sambung_ayat' ? "Lanjutan Dari Ayat Berikut:" : (currentGameMode === 'sambung_surat' ? "Urutan Surat Selanjutnya:" : "Surat Asal Ayat Berikut:");
+
+            const qMain = document.getElementById('game-question-main');
+            qMain.innerHTML = currentQ.q;
+            qMain.className = currentGameMode === 'sambung_surat' ? "text-xl leading-relaxed text-slate-700 font-semibold" : "arabic-text font-arabic text-3xl leading-relaxed text-slate-800 select-none";
+
+            document.getElementById('game-question-subtitle').innerText = currentQ.sub;
+
+            const container = document.getElementById('game-options-container');
+            container.innerHTML = "";
+
+            currentQ.opts.forEach((opt, oIdx) => {
+                let textClass = (currentGameMode === 'sambung_ayat') ? 'font-arabic text-xl text-right' : 'font-semibold text-center text-sm';
+                let btn = document.createElement('button');
+                btn.className = `w-full text-left bg-white border border-slate-200 hover:border-sky-400 p-4 rounded-xl shadow-sm transition duration-150 flex items-center justify-between group option-btn`;
+                btn.setAttribute('onclick', `checkGameAnswer(this, "${escapeHtml(opt)}", "${escapeHtml(currentQ.correct)}")`);
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3 w-full">
+                        <div class="w-7 h-7 bg-slate-50 text-slate-400 group-hover:bg-sky-100 group-hover:text-sky-700 text-xs font-bold rounded-full flex items-center justify-center shrink-0">${String.fromCharCode(65 + oIdx)}</div>
+                        <div class="w-full ${textClass} text-slate-700 leading-relaxed">${opt}</div>
+                    </div>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function checkGameAnswer(btnElement, chosen, correct) {
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.removeAttribute('onclick');
+                btn.classList.add('opacity-60');
+            });
+
+            if (chosen === correct) {
+                gameScore += 10;
+                btnElement.className = `w-full text-left bg-sky-50 border border-sky-500 p-4 rounded-xl shadow-sm transition duration-150 flex items-center justify-between group option-btn opacity-100 text-sky-800`;
+                btnElement.querySelector('div > div').className = "w-7 h-7 bg-sky-500 text-white text-xs font-bold rounded-full flex items-center justify-center shrink-0";
+            } else {
+                btnElement.className = `w-full text-left bg-rose-50 border border-rose-500 p-4 rounded-xl shadow-sm transition duration-150 flex items-center justify-between group option-btn opacity-100 text-rose-800`;
+                btnElement.querySelector('div > div').className = "w-7 h-7 bg-rose-500 text-white text-xs font-bold rounded-full flex items-center justify-center shrink-0";
+
+                document.querySelectorAll('.option-btn').forEach(btn => {
+                    const optionText = btn.querySelector('.font-arabic, .font-semibold').innerText;
+                    if (unescapeHtml(optionText) === unescapeHtml(correct)) {
+                        btn.className = `w-full text-left bg-sky-50 border border-sky-500 p-4 rounded-xl shadow-sm transition duration-150 flex items-center justify-between group option-btn text-sky-800`;
+                        btn.querySelector('div > div').className = "w-7 h-7 bg-sky-500 text-white text-xs font-bold rounded-full flex items-center justify-center shrink-0";
+                    }
+                });
+            }
+
+            document.getElementById('game-current-score').innerText = gameScore;
+            document.getElementById('game-next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (gameQuestionIndex < 9) {
+                gameQuestionIndex++;
+                renderGameQuestion();
+            } else {
+                showGameResult();
+            }
+        }
+
+        function showGameResult() {
+            switchView('murojaah-result');
+            document.getElementById('result-score').innerText = gameScore;
+            document.getElementById('result-juz-mode').innerText = `JUZ ${currentJuz} • ${currentGameMode.replace('_',' ').toUpperCase()}`;
+
+            let msg = gameScore >= 90 ? "MasyaAllah! Ingatan hafalan Anda luar biasa hebat." : (gameScore >= 70 ? "Bagus sekali! Tingkatkan murojaah pada ayat-ayat samar." : "Semangat! Coba kembali untuk melatih ingatan hafalan Anda.");
+            document.getElementById('result-message').innerText = msg;
+        }
+
+        function shareToWhatsApp() {
+            const modeName = currentGameMode.replace('_', ' ').toUpperCase();
+            const textMessage = `Alhamdulillah, saya baru saja menyelesaikan kuis Murojaah Hafalan di *IQRA DIGITAL*.\n\n📊 *Hasil Capaian:*\n• Kategori: Juz ${currentJuz}\n• Mode Game: ${modeName}\n• Skor Akhir: *${gameScore} / 100*\n\nYuk, uji dan asah hafalan Al-Qur'an kamu juga! 📖✨`;
+            const encodeMsg = encodeURIComponent(textMessage);
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeMsg}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function replayMurojaahGame() {
+            startMurojaahGame(currentGameMode);
+        }
+
+        /* ================= MODUL 3: TAHSIN (7 Kategori Utama & Sub-Materi Interaktif) ================= */
+        let activeMainCategory = 'nun-sukun';
+
+        function openTahsin() {
+            switchView('tahsin');
+            switchTahsinTab('nun-sukun');
+        }
+
+        function switchTahsinTab(categoryName) {
+            activeMainCategory = categoryName;
+
+            // Mengganti status tombol navigasi utama
+            document.querySelectorAll('.tahsin-tab-btn').forEach(btn => {
+                btn.className = "tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition";
+            });
+            document.getElementById(`tab-btn-${categoryName}`).className = "tahsin-tab-btn py-2 text-xs font-bold rounded-lg bg-white text-sky-800 shadow-sm transition";
+
+            // Membuat tombol sub-materi dari kategori terpilih
+            const subContainer = document.getElementById('sub-materi-container');
+            subContainer.innerHTML = "";
+            const subCategories = TAHSIN_COMPACT_DATA[categoryName];
+
+            let firstSubKey = null;
+            Object.keys(subCategories).forEach((subKey, index) => {
+                if (index === 0) firstSubKey = subKey;
+                const button = document.createElement('button');
+                button.id = `sub-btn-${subKey}`;
+                button.innerText = SUB_MATERI_NAMES[categoryName][subKey];
+                button.className = "py-2 px-3.5 text-xs font-semibold rounded-full border border-slate-200 bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800 hover:border-sky-300 transition duration-150 shadow-sm";
+                button.setAttribute('onclick', `renderTahsinExamples('${subKey}')`);
+                subContainer.appendChild(button);
+            });
+
+            // Tampilkan sub-kategori pertama secara default saat berpindah kategori utama
+            if (firstSubKey) {
+                renderTahsinExamples(firstSubKey);
+            }
+        }
+
+        function renderTahsinExamples(subCategoryKey) {
+            // Update visual active state tombol sub-materi
+            const subCategories = TAHSIN_COMPACT_DATA[activeMainCategory];
+            Object.keys(subCategories).forEach(key => {
+                const btn = document.getElementById(`sub-btn-${key}`);
+                if (btn) {
+                    if (key === subCategoryKey) {
+                        btn.className = "py-2 px-3.5 text-xs font-bold rounded-full border border-sky-500 bg-sky-500 text-white transition duration-150 shadow-sm";
+                    } else {
+                        btn.className = "py-2 px-3.5 text-xs font-semibold rounded-full border border-slate-200 bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800 hover:border-sky-300 transition duration-150 shadow-sm";
+                    }
+                }
+            });
+
+            // Ambil data dari sub-materi tajwid terpilih
+            const subMateriData = TAHSIN_COMPACT_DATA[activeMainCategory][subCategoryKey];
+            const contentContainer = document.getElementById('tahsin-tab-content');
+            
+            let html = `
+                <!-- Penjelasan Umum diletakkan dalam 1 paragraf di atas bagian 8 contoh bacaan -->
+                <div class="bg-sky-50 border border-sky-100 p-5 rounded-2xl text-sm text-sky-900 leading-relaxed shadow-sm">
+                    <strong>Penjelasan Materi:</strong> ${subMateriData.penjelasan}
+                </div>
+
+                <div class="flex items-center justify-between pb-1 pt-2 border-b border-slate-200/60">
+                    <h3 class="text-xs font-extrabold uppercase text-slate-400 tracking-wider">Daftar 8 Contoh Latihan Murni Arab:</h3>
+                    <span class="bg-sky-100 text-sky-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${SUB_MATERI_NAMES[activeMainCategory][subCategoryKey]}</span>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            `;
+
+            subMateriData.contoh.forEach((arabText, index) => {
+                html += `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center justify-center hover:border-sky-300 transition duration-300 group min-h-[110px]">
+                        <span class="text-[9px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-md mb-3">Latihan ${index + 1}</span>
+                        <div class="font-arabic font-bold text-sky-800 text-2xl leading-normal text-center select-all">${arabText}</div>
+                    </div>
+                `;
+            });
+
+            html += "</div>";
+            contentContainer.innerHTML = html;
+        }
+
+        /* ================= MODUL 4: INFORMASI ================= */
+        function openInformasi() { switchView('informasi'); }
+
+        /* ================= HELPER UTILS ================= */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
+        function unescapeHtml(str) { return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#039;/g, "'"); }
+    </script>
+</body>
+</html>
