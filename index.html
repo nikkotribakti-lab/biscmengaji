@@ -995,7 +995,7 @@
                 } else if (currentGameMode === 'tebak_surat') {
                     let idx = Math.floor(Math.random() * totalAyat);
                     let selectedAyat = fetchedSurah.ayat[idx];
-
+                    let audioUrl = selectedAyat.audio['05'];
                     let options = [randSurah.nama];
                     let attempts = 0;
                     while (options.length < 4 && attempts < 30) {
@@ -1009,7 +1009,8 @@
                         q: selectedAyat.teksArab,
                         sub: `Tebak asal surat dari potongan ayat di atas`,
                         correct: randSurah.nama,
-                        opts: options
+                        opts: options,
+                        audioUrl: audioUrl
                     });
                 }
             }
