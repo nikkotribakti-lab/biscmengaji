@@ -21,9 +21,9 @@
                         }
                     },
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'Segoe UI', 'sans-serif'],
-                        arabic: ['Traditional Arabic', 'Amiri', 'Georgia', 'serif']
-                    }
+                        sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+                        arabic: ['Amiri', 'Traditional Arabic', 'Georgia', 'serif']
+}
                 }
             }
         }
@@ -35,6 +35,14 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+
+body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+}
+
         .ayat-item {
             scroll-margin-top: 120px;
         }
