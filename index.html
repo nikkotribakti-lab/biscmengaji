@@ -36,13 +36,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
 
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
-
-body {
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    text-rendering: optimizeLegibility;
-}
-
         .ayat-item {
             scroll-margin-top: 120px;
         }
@@ -67,6 +60,13 @@ body {
     overflow-y: auto;  /* Bisa di-scroll jika kepanjangan */
     padding-bottom: 10px;
 }
+
+@media (max-width: 640px) {
+        .arabic-text {
+            font-size: 1.5rem !important; /* Lebih kecil di layar HP */
+            line-height: 2.5rem !important; /* Menambah spasi antar baris */
+        }
+    }
 
     </style>
 </head>
