@@ -942,7 +942,7 @@
                     let maxIndex = totalAyat > 1 ? totalAyat - 1 : totalAyat;
                     let idx = Math.floor(Math.random() * maxIndex);
                     let currentAyat = fetchedSurah.ayat[idx];
-                    
+                    let audioUrl = currentAyat.audio['05'];
                     let nextAyatText = "";
 
                     if (idx === totalAyat - 1) {
@@ -988,7 +988,8 @@
                         q: currentAyat.teksArab,
                         sub: `Surat ${randSurah.nama} Ayat ${currentAyat.nomorAyat}`,
                         correct: nextAyatText,
-                        opts: options
+                        opts: options,
+                        audioUrl: audioUrl
                     });
 
                 } else if (currentGameMode === 'tebak_surat') {
@@ -1055,6 +1056,16 @@
                 `;
                 container.appendChild(btn);
             });
+
+    qMain.innerHTML = `
+        <div class="mb-4">
+            <button onclick="playMurojaahAudio('${currentQ.audioUrl}')" 
+                    class="bg-sky-100 text-sky-800 px-4 py-2 rounded-full text-xs font-bold hover:bg-sky-200 transition">
+                <i class="fa-solid fa-play"></i> Dengar Audio Syeikh Mishary
+            </button>
+        </div>
+        <div>${currentQ.q}</div>
+    `;
         }
 
         function checkGameAnswer(btnElement, chosen, correct) {
@@ -1231,6 +1242,15 @@
     // Set sumber audio dan putar
     mainAudio.src = path;
     mainAudio.play();
+}
+
+function playMurojaahAudio(url) {
+    if (!url) {
+        alert("Audio tidak tersedia untuk ayat ini.");
+        return;
+    }
+    const audio = new Audio(url);
+    audio.play();
 }
 
     </script>
