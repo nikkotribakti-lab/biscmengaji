@@ -41,6 +41,25 @@
         .arabic-text {
             text-shadow: 0 0 1px rgba(0,0,0,0.05);
         }
+
+        .video-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .video-container iframe {
+        width: 100%;
+        max-width: 560px; /* Lebar maksimal video */
+        aspect-ratio: 16 / 9; /* Menjaga proporsi video tetap 16:9 */
+    }
+
+    #sub-materi-container {
+    max-height: 200px; /* Membatasi tinggi */
+    overflow-y: auto;  /* Bisa di-scroll jika kepanjangan */
+    padding-bottom: 10px;
+}
+
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-24">
@@ -260,20 +279,20 @@
         <!-- ==================== VIEW 7: TAHSIN ==================== -->
         <section id="view-tahsin" class="view-panel hidden space-y-6">
             <div class="bg-gradient-to-r from-sky-600 to-sky-800 text-white p-6 rounded-2xl shadow-md">
-                <h2 class="text-2xl font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Modul Belajar Tajwid Interaktif (7 Materi)</h2>
+                <h2 class="text-2xl font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Modul Belajar Tajwid Interaktif (7 Materi) dan Makharijul Huruf</h2>
                 <p class="text-sm text-sky-100">Perbaiki ketepatan membaca Al-Qur'an Anda. Klik kategori tajwid utama, lalu klik sub-materi di bawahnya untuk memunculkan 8 contoh latihan praktis.</p>
             </div>
 
             <!-- Tab 7 Kategori Utama -->
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 bg-slate-100 p-1.5 rounded-xl">
-                <button onclick="switchTahsinTab('nun-sukun')" class="tahsin-tab-btn py-2 text-xs font-bold rounded-lg bg-white text-sky-800 shadow-sm transition" id="tab-btn-nun-sukun">Nun Sukun / Tanwin</button>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2 bg-slate-100 p-1.5 rounded-xl"><button onclick="switchTahsinTab('nun-sukun')" class="tahsin-tab-btn py-2 text-xs font-bold rounded-lg bg-white text-sky-800 shadow-sm transition" id="tab-btn-nun-sukun">Nun Sukun / Tanwin</button>
                 <button onclick="switchTahsinTab('mim-sukun')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-mim-sukun">Mim Sukun</button>
                 <button onclick="switchTahsinTab('tasydid')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-tasydid">Nun/Mim Tasydid</button>
                 <button onclick="switchTahsinTab('jalalah')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-jalalah">Lafadz Jalalah</button>
                 <button onclick="switchTahsinTab('qalqalah')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-qalqalah">Qalqalah</button>
                 <button onclick="switchTahsinTab('mad-thabii')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-mad-thabii">Mad Thabi'i</button>
                 <button onclick="switchTahsinTab('mad-fari')" class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-mad-fari">Mad Far'i</button>
-            </div>
+                <button onclick="switchTahsinTab('makharijul-huruf')"class="tahsin-tab-btn py-2 text-xs font-bold text-slate-500 hover:bg-white/50 transition" id="tab-btn-makharijul-huruf"> Makharijul Huruf</button>
+ </div>
 
             <!-- Sub-kategori Panel -->
             <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
@@ -367,98 +386,252 @@
         const TAHSIN_COMPACT_DATA = {
             'nun-sukun': {
                 'izhar': {
+                    videoId: "INOXq9tBG5I",
                     penjelasan: "Izhar Halqi terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin (ــًــٍــٌ) bertemu dengan salah satu dari 6 huruf tenggorokan (Halqi), yaitu Alif (أ), Ha (هـ), Ha (ح), Kha (خ), 'Ain (ع), dan Ghain (غ). Aturan membacanya adalah suara Nun atau Tanwin tersebut harus diucapkan dengan jelas, tegas, tanpa disertai dengung.",
-                    contoh: ["مَنْ اٰمَنَ", "مِنْ حَكِيْمٍ", "فَرِيْقًا هَدٰى", "عَذَابٌ عَظِيْمٌ", "مِنْ غِلٍّ", "لَطِيْفٌ خَبِيْرٌ", "وَالْمُنْخَنِقَةُ", "مِنْ عِنْدِ"]
-                },
+                    contoh: ["مَنْ اٰمَنَ", "مِنْ حَكِيْمٍ", "فَرِيْقًا هَدٰى", "عَذَابٌ عَظِيْمٌ", "مِنْ غِلٍّ", "لَطِيْفٌ خَبِيْرٌ", "وَالْمُنْخَنِقَةُ", "مِنْ عِنْدِ"],
+                audioFiles: [
+                                "audio/tahsin/izhar_1.mp3",
+                                "audio/tahsin/izhar_2.mp3",
+                                "audio/tahsin/izhar_3.mp3",
+                                "audio/tahsin/izhar_4.mp3",
+                                "audio/tahsin/izhar_5.mp3",
+                                "audio/tahsin/izhar_6.mp3",
+                                "audio/tahsin/izhar_7.mp3",
+                                "audio/tahsin/izhar_8.mp3"
+                             ]
+                 },
+                
                 'bighunnah': {
-                    penjelasan: "Idgham Bighunnah terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 4 huruf yaitu Ya (ي), Nun (ن), Mim (م), atau Wawu (و). Aturan membacanya adalah suara Nun atau Tanwin harus dileburkan ke dalam huruf setelahnya dan dibaca mendengung ditahan selama 2-3 ketukan.",
-                    contoh: ["مَنْ يَّقُوْلُ", "عَذَابٌ مُّقِيْمٌ", "مِنْ وَّرَاۤىِٔهِمْ", "نَفْسًا زَّكِيَّةً", "مِنْ مَّاءٍ", "وُجُوْهٌ يَّوْمَىِٔذٍ", "خَيْرٌ وَّاَبْقٰى", "اَمَنَةً نُّعَاسًا"]
-                },
-                'bilaghunnah': {
-                    penjelasan: "Idgham Bilaghunnah terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Lam (ل) atau Ra (ر). Aturan membacanya adalah suara Nun atau Tanwin wajib dileburkan sepenuhnya ke dalam huruf Lam atau Ra tersebut secara langsung tanpa disertai dengung sedikit pun.",
-                    contoh: ["مِنْ رَّبِّهِمْ", "هُدًى لِّلْمُتَّقِيْنَ", "مِنْ لَّدُنْهُ", "غَفُوْرٌ رَّحِيْمٌ", "فِتْنَةٌ لَّهُمْ", "مِنْ رِّزْقِ اللّٰهِ", "بِقَادِرٍ لَّمْ", "تَوَّابٌ رَّحِيْمٌ"]
-                },
-                'iqlab': {
-                    penjelasan: "Iqlab terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan cara mengubah/membalikkan bunyi huruf Nun atau Tanwin tersebut menjadi suara huruf Mim (م) yang samar di bibir, sembari mendengung dan ditahan sejenak.",
-                    contoh: ["مِنْ بَعْدِ", "سَمِيْعٌ بَصِيْرٌ", "اَنْۢبِئْهُمْ", "عَلِيْمًا بِذَاتِ", "مَنْۢ بَخِلَ", "لَنَسْفَعًاۢ بِالنَّاصِيَةِ", "يُنْۢبِتُ", "خَبِيْرٌۢ بِمَا"]
-                },
-                'ikhfa': {
-                    penjelasan: "Ikhfa Haqiqi terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 15 huruf ikhfa. Aturan membacanya adalah suara Nun atau Tanwin disamarkan (antara jelas dan berdengung) di bibir sambil mengarah kepada makhraj pengucapan huruf berikutnya.",
-                    contoh: ["مِنْ دُوْنِ", "يَوْمَئِذٍ تُحَدِّثُ", "مِنْ كُلِّ", "صِرَاطًا صَالِحًا", "مِنْ جُوْعٍ", "نَفْسٌ شَيْـًٔا", "مِنْ قَبْلِ", "خَالِدًا فِيْهَا"]
-                }
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Idgham Bighunnah terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 4 huruf yaitu Ya (ي), Nun (ن), Mim (م), atau Wawu (و). Aturan membacanya adalah suara Nun atau Tanwin harus dileburkan ke dalam huruf setelahnya dan dibaca mendengung ditahan selama 2-3 ketukan.",
+    contoh: ["مَنْ يَّقُوْلُ", "عَذَابٌ مُّقِيْمٌ", "مِنْ وَّرَاۤىِٔهِمْ", "نَفْسًا زَّكِيَّةً", "مِنْ مَّاءٍ", "وُجُوْهٌ يَّوْمَىِٔذٍ", "خَيْرٌ وَّاَبْقٰى", "اَمَنَةً نُّعَاسًا"],
+    audioFiles: [
+        "audio/tahsin/bighunnah_1.mp3", "audio/tahsin/bighunnah_2.mp3", "audio/tahsin/bighunnah_3.mp3", "audio/tahsin/bighunnah_4.mp3", 
+        "audio/tahsin/bighunnah_5.mp3", "audio/tahsin/bighunnah_6.mp3", "audio/tahsin/bighunnah_7.mp3", "audio/tahsin/bighunnah_8.mp3"
+    ]
+},
+
+'bilaghunnah': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Idgham Bilaghunnah terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Lam (ل) atau Ra (ر). Aturan membacanya adalah suara Nun atau Tanwin wajib dileburkan sepenuhnya ke dalam huruf Lam atau Ra tersebut secara langsung tanpa disertai dengung sedikit pun.",
+    contoh: ["مِنْ رَّبِّهِمْ", "هُدًى لِّلْمُتَّقِيْنَ", "مِنْ لَّدُنْهُ", "غَفُوْرٌ رَّحِيْمٌ", "فِتْنَةٌ لَّهُمْ", "مِنْ رِّزْقِ اللّٰهِ", "بِقَادِرٍ لَّمْ", "تَوَّابٌ رَّحِيْمٌ"],
+    audioFiles: [
+        "audio/tahsin/bilaghunnah_1.mp3", "audio/tahsin/bilaghunnah_2.mp3", "audio/tahsin/bilaghunnah_3.mp3", "audio/tahsin/bilaghunnah_4.mp3", 
+        "audio/tahsin/bilaghunnah_5.mp3", "audio/tahsin/bilaghunnah_6.mp3", "audio/tahsin/bilaghunnah_7.mp3", "audio/tahsin/bilaghunnah_8.mp3"
+    ]
+},
+
+'iqlab': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Iqlab terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan cara mengubah/membalikkan bunyi huruf Nun atau Tanwin tersebut menjadi suara huruf Mim (م) yang samar di bibir, sembari mendengung dan ditahan sejenak.",
+    contoh: ["مِنْ بَعْدِ", "سَمِيْعٌ بَصِيْرٌ", "اَنْۢبِئْهُمْ", "عَلِيْمًا بِذَاتِ", "مَنْۢ بَخِلَ", "لَنَسْفَعًاۢ بِالنَّاصِيَةِ", "يُنْۢبِتُ", "خَبِيْرٌۢ بِمَا"],
+    audioFiles: [
+        "audio/tahsin/iqlab_1.mp3", "audio/tahsin/iqlab_2.mp3", "audio/tahsin/iqlab_3.mp3", "audio/tahsin/iqlab_4.mp3", 
+        "audio/tahsin/iqlab_5.mp3", "audio/tahsin/iqlab_6.mp3", "audio/tahsin/iqlab_7.mp3", "audio/tahsin/iqlab_8.mp3"
+    ]
+},
+
+'ikhfa': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Ikhfa Haqiqi terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 15 huruf ikhfa. Aturan membacanya adalah suara Nun atau Tanwin disamarkan (antara jelas dan berdengung) di bibir sambil mengarah kepada makhraj pengucapan huruf berikutnya.",
+    contoh: ["مِنْ دُوْنِ", "يَوْمَئِذٍ تُحَدِّثُ", "مِنْ كُلِّ", "صِرَاطًا صَالِحًا", "مِنْ جُوْعٍ", "نَفْسٌ شَيْـًٔا", "مِنْ قَبْلِ", "خَالِدًا فِيْهَا"],
+    audioFiles: [
+        "audio/tahsin/ikhfa_1.mp3", "audio/tahsin/ikhfa_2.mp3", "audio/tahsin/ikhfa_3.mp3", "audio/tahsin/ikhfa_4.mp3", 
+        "audio/tahsin/ikhfa_5.mp3", "audio/tahsin/ikhfa_6.mp3", "audio/tahsin/ikhfa_7.mp3", "audio/tahsin/ikhfa_8.mp3"
+    ]
+}
             },
-            'mim-sukun': {
+
+
+ 'mim-sukun': {
                 'ikhfa-syafawi': {
-                    penjelasan: "Ikhfa Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan menyamarkan suara huruf Mim di bibir disertai dengan dengung (ghunnah) yang ditahan sekitar 2 ketukan secara lembut.",
-                    contoh: ["تَرْمِيْهِمْ بِحِجَارَةٍ", "اَمْ تُرِيْدُوْنَ بَلْ", "وَمَا صَاحِبُكُمْ بِمَجْنُوْنٍ", "يَعْتَصِمْ بِاللّٰهِ", "اَنْتُمْ بِهٖ", "فَاحْكُمْ بَيْنَهُمْ", "عَلَيْهِمْ بِمُصَيْطِرٍ", "جَزَاۤؤُهُمْ عِنْدَ رَبِّهِمْ جَنّٰتُ"]
-                },
-                'idgham-mimi': {
-                    penjelasan: "Idgham Mimi (atau Idgham Mutamatsilain Syafawi) terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Mim (م). Aturan membacanya adalah dengan memasukkan suara Mim pertama ke dalam Mim kedua secara sempurna, dibaca rapat, mendengung, dan ditahan sejenak.",
-                    contoh: ["لَهُمْ مَّا يَشَاۤءُوْنَ", "فِيْ قُلُوْبِهِمْ مَّرَضٌ", "اِنَّهَا عَلَيْهِمْ مُّؤْصَدَةٌ", "اَمْ مَنْ اَسَّسَ", "وَمِنْهُمْ مَّنْ", "خَلَقَكُمْ مِّنْ", "كُنْتُمْ مُّؤْمِنِيْنَ", "اَطْعَمَهُمْ مِّنْ جُوْعٍ"]
-                },
-                'izhar-syafawi': {
-                    penjelasan: "Izhar Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan salah satu huruf hijaiyah selain Mim (م) dan Ba (ب). Aturan membacanya adalah suara Mim Sukun tersebut harus diucapkan dengan sangat jelas dan terang di bibir tanpa mendengung.",
-                    contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ لَا", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"]
-                }
-            },
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Ikhfa Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan menyamarkan suara huruf Mim di bibir disertai dengan dengung (ghunnah) yang ditahan sekitar 2 ketukan secara lembut.",
+    contoh: ["تَرْمِيْهِمْ بِحِجَارَةٍ", "اَمْ تُرِيْدُوْنَ بَلْ", "وَمَا صَاحِبُكُمْ بِمَجْنُوْنٍ", "يَعْتَصِمْ بِاللّٰهِ", "اَنْتُمْ بِهٖ", "فَاحْكُمْ بَيْنَهُمْ", "عَلَيْهِمْ بِمُصَيْطِرٍ", "جَزَاۤؤُهُمْ عِنْدَ رَبِّهِمْ جَنّٰتُ"],
+    audioFiles: [
+        "audio/tahsin/ikhfa-syafawi_1.mp3", "audio/tahsin/ikhfa-syafawi_2.mp3", "audio/tahsin/ikhfa-syafawi_3.mp3", "audio/tahsin/ikhfa-syafawi_4.mp3",
+        "audio/tahsin/ikhfa-syafawi_5.mp3", "audio/tahsin/ikhfa-syafawi_6.mp3", "audio/tahsin/ikhfa-syafawi_7.mp3", "audio/tahsin/ikhfa-syafawi_8.mp3"
+    ]
+},
+'idgham-mimi': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Idgham Mimi (atau Idgham Mutamatsilain Syafawi) terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Mim (م). Aturan membacanya adalah dengan memasukkan suara Mim pertama ke dalam Mim kedua secara sempurna, dibaca rapat, mendengung, dan ditahan sejenak.",
+    contoh: ["لَهُمْ مَّا يَشَاۤءُوْنَ", "فِيْ قُلُوْبِهِمْ مَّرَضٌ", "اِنَّهَا عَلَيْهِمْ مُّؤْصَدَةٌ", "اَمْ مَنْ اَسَّسَ", "وَمِنْهُمْ مَّنْ", "خَلَقَكُمْ مِّنْ", "كُنْتُمْ مُّؤْمِنِيْنَ", "اَطْعَمَهُمْ مِّنْ جُوْعٍ"],
+    audioFiles: [
+        "audio/tahsin/idgham-mimi_1.mp3", "audio/tahsin/idgham-mimi_2.mp3", "audio/tahsin/idgham-mimi_3.mp3", "audio/tahsin/idgham-mimi_4.mp3",
+        "audio/tahsin/idgham-mimi_5.mp3", "audio/tahsin/idgham-mimi_6.mp3", "audio/tahsin/idgham-mimi_7.mp3", "audio/tahsin/idgham-mimi_8.mp3"
+    ]
+},
+'izhar-syafawi': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Izhar Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan salah satu huruf hijaiyah selain Mim (م) dan Ba (ب). Aturan membacanya adalah suara Mim Sukun tersebut harus diucapkan dengan sangat jelas dan terang di bibir tanpa mendengung.",
+    contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ لَا", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"],
+    audioFiles: [
+        "audio/tahsin/izhar-syafawi_1.mp3", "audio/tahsin/izhar-syafawi_2.mp3", "audio/tahsin/izhar-syafawi_3.mp3", "audio/tahsin/izhar-syafawi_4.mp3",
+        "audio/tahsin/izhar-syafawi_5.mp3", "audio/tahsin/izhar-syafawi_6.mp3", "audio/tahsin/izhar-syafawi_7.mp3", "audio/tahsin/izhar-syafawi_8.mp3"
+    ]
+}
+    },
+
             'tasydid': {
-                'nun-tasydid': {
-                    penjelasan: "Ghunnah pada Nun bertasydid terjadi ketika huruf Nun memiliki harakat tasydid (نّ). Aturan membacanya adalah suara dengung harus ditahan di rongga hidung secara mantap sepanjang 2 sampai 3 harakat sebelum berpindah ke harakat berikutnya.",
-                    contoh: ["اِنَّ الَّذِيْنَ", "مِنَ الْجِنَّةِ وَالنَّاسِ", "جَهَنَّمُ", "مِنِّيْ", "مِنَ الْجِنَّةِ", "اَنَّ لَهُمْ", "لَتُسْـَٔلُنَّ", "كَأَنَّهُ"]
-                },
-                'mim-tasydid': {
-                    penjelasan: "Ghunnah pada Mim bertasydid terjadi ketika huruf Mim memiliki harakat tasydid (مّ). Aturan membacanya adalah merapatkan bibir sepenuhnya dengan menekan suara dengung di rongga hidung yang ditahan mantap sepanjang 2 sampai 3 harakat.",
-                    contoh: ["ثُمَّ لَتُسْـَٔلُنَّ", "مِمَّا رَزَقْنٰهُمْ", "عَمَّ يَتَسَاۤءَلُوْنَ", "اُمِّيْ", "فَاَمَّا مَنْ", "اُمَّةً وَاحِدَةً", "مِمَّا", "يَمُّ"]
-                }
-            },
+'nun-tasydid': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Ghunnah pada Nun bertasydid terjadi ketika huruf Nun memiliki harakat tasydid (نّ). Aturan membacanya adalah suara dengung harus ditahan di rongga hidung secara mantap sepanjang 2 sampai 3 harakat sebelum berpindah ke harakat berikutnya.",
+    contoh: ["اِنَّ الَّذِيْنَ", "مِنَ الْجِنَّةِ وَالنَّاسِ", "جَهَنَّمُ", "مِنِّيْ", "مِنَ الْجِنَّةِ", "اَنَّ لَهُمْ", "لَتُسْـَٔلُنَّ", "كَأَنَّهُ"],
+    audioFiles: [
+        "audio/tahsin/nun-tasydid_1.mp3", "audio/tahsin/nun-tasydid_2.mp3", "audio/tahsin/nun-tasydid_3.mp3", "audio/tahsin/nun-tasydid_4.mp3",
+        "audio/tahsin/nun-tasydid_5.mp3", "audio/tahsin/nun-tasydid_6.mp3", "audio/tahsin/nun-tasydid_7.mp3", "audio/tahsin/nun-tasydid_8.mp3"
+    ]
+},
+'mim-tasydid': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Ghunnah pada Mim bertasydid terjadi ketika huruf Mim memiliki harakat tasydid (مّ). Aturan membacanya adalah merapatkan bibir sepenuhnya dengan menekan suara dengung di rongga hidung yang ditahan mantap sepanjang 2 sampai 3 harakat.",
+    contoh: ["ثُمَّ لَتُسْـَٔلُنَّ", "مِمَّا رَزَقْنٰهُمْ", "عَمَّ يَتَسَاۤءَلُوْنَ", "اُمِّيْ", "فَاَمَّا مَنْ", "اُمَّةً وَاحِدَةً", "مِمَّا", "يَمُّ"],
+    audioFiles: [
+        "audio/tahsin/mim-tasydid_1.mp3", "audio/tahsin/mim-tasydid_2.mp3", "audio/tahsin/mim-tasydid_3.mp3", "audio/tahsin/mim-tasydid_4.mp3",
+        "audio/tahsin/mim-tasydid_5.mp3", "audio/tahsin/mim-tasydid_6.mp3", "audio/tahsin/mim-tasydid_7.mp3", "audio/tahsin/mim-tasydid_8.mp3"
+    ]
+}
+    },
+
             'jalalah': {
                 'tafkhim': {
-                    penjelasan: "Lafadz Jalalah Tafkhim adalah penebalan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal tersebut didahului oleh huruf yang berharakat Fathah (ــَـ) atau Dhammah (ــُـ). Cara membacanya adalah dengan memosisikan lidah lebih naik untuk menghasilkan gema bunyi yang tebal.",
-                    contoh: ["شَهِدَ اللّٰهُ", "يَنْصُرُكُمُ اللّٰهُ", "اللّٰهُ لَاۤ اِلٰهَ اِلَّا هُوَ", "رَسُوْلُ اللّٰهِ", "يُحِبُّهُمُ اللّٰهُ", "قَالَ اللّٰهُ", "اِنَّ اللّٰهَ", "اَحَدٌ اَللّٰهُ"]
-                },
-                'tarqiq': {
-                    penjelasan: "Lafadz Jalalah Tarqiq adalah penipisan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal agung tersebut didahului oleh huruf berharakat Kasrah (ــِـ). Cara membacanya adalah dengan menjaga posisi lidah tetap di bawah sehingga menghasilkan bunyi Lam yang tipis/ringan.",
-                    contoh: ["بِسْمِ اللّٰهِ", "فِيْ سَبِيْلِ اللّٰهِ", "لِلّٰهِ الْمُلْكُ", "اِلَّا اللّٰه", "بِاللّٰهِ", "دِيْنِ اللّٰهِ", "بِسْمِ اللّٰهِ الرَّحْمٰنِ", "قُلْ هُوَ اللّٰهُ اَحَدٌ اَللّٰهُ"]
-                }
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Lafadz Jalalah Tafkhim adalah penebalan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal tersebut didahului oleh huruf yang berharakat Fathah (ــَـ) atau Dhammah (ــُـ). Cara membacanya adalah dengan memosisikan lidah lebih naik untuk menghasilkan gema bunyi yang tebal.",
+    contoh: ["شَهِدَ اللّٰهُ", "يَنْصُرُكُمُ اللّٰهُ", "اللّٰهُ لَاۤ اِلٰهَ اِلَّا هُوَ", "رَسُوْلُ اللّٰهِ", "يُحِبُّهُمُ اللّٰهُ", "قَالَ اللّٰهُ", "اِنَّ اللّٰهَ", "اَحَدٌ اَللّٰهُ"],
+    audioFiles: [
+        "audio/tahsin/tafkhim_1.mp3", "audio/tahsin/tafkhim_2.mp3", "audio/tahsin/tafkhim_3.mp3", "audio/tahsin/tafkhim_4.mp3",
+        "audio/tahsin/tafkhim_5.mp3", "audio/tahsin/tafkhim_6.mp3", "audio/tahsin/tafkhim_7.mp3", "audio/tahsin/tafkhim_8.mp3"
+    ]
+},
+'tarqiq': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Lafadz Jalalah Tarqiq adalah penipisan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal agung tersebut didahului oleh huruf berharakat Kasrah (ــِـ). Cara membacanya adalah dengan menjaga posisi lidah tetap di bawah sehingga menghasilkan bunyi Lam yang tipis/ringan.",
+    contoh: ["بِسْمِ اللّٰهِ", "فِيْ سَبِيْلِ اللّٰهِ", "لِلّٰهِ الْمُلْكُ", "اِلَّا اللّٰه", "بِاللّٰهِ", "دِيْنِ اللّٰهِ", "بِسْمِ اللّٰهِ الرَّحْمٰنِ", "قُلْ هُوَ اللّٰهُ اَحَدٌ اَللّٰهُ"],
+    audioFiles: [
+        "audio/tahsin/tarqiq_1.mp3", "audio/tahsin/tarqiq_2.mp3", "audio/tahsin/tarqiq_3.mp3", "audio/tahsin/tarqiq_4.mp3",
+        "audio/tahsin/tarqiq_5.mp3", "audio/tahsin/tarqiq_6.mp3", "audio/tahsin/tarqiq_7.mp3", "audio/tahsin/tarqiq_8.mp3"
+    ]
+}
             },
+
             'qalqalah': {
-                'sugra': {
-                    penjelasan: "Qalqalah Sugra (pantulan kecil) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) berharakat sukun asli dan terletak di pertengahan kata. Aturan membacanya adalah dipantulkan dengan getaran pantulan yang cenderung ringan.",
-                    contoh: ["يَقْطَعُوْنَ", "نُطْعِمُ", "يَبْتَغُوْنَ", "تَجْرِيْ", "يَدْخُلُوْنَ", "خَلَقْنَا", "تَجْعَلُ", "يَطْمَعُ"]
-                },
-                'kubra': {
-                    penjelasan: "Qalqalah Kubra (pantulan besar) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) terletak di akhir kata atau kalimat karena dibaca mati akibat waqaf (berhenti). Aturan membacanya adalah dipantulkan dengan getaran suara pantulan yang kuat dan jelas.",
-                    contoh: ["قُلْ هُوَ اللّٰهُ اَحَدٌ", "تَبَّتْ يَدَاۤ اَبِيْ لَهَبٍ وَّتَبَّ", "الْفَلَقِ", "بِرُوْجِ", "مُحِيْطٌ", "بِالْحَقِّ", "الْحَمِيْدِ", "كَسَبَ"]
-                }
+'sugra': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Qalqalah Sugra (pantulan kecil) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) berharakat sukun asli dan terletak di pertengahan kata. Aturan membacanya adalah dipantulkan dengan getaran pantulan yang cenderung ringan.",
+    contoh: ["يَقْطَعُوْنَ", "نُطْعِمُ", "يَبْتَغُوْنَ", "تَجْرِيْ", "يَدْخُلُوْنَ", "خَلَقْنَا", "تَجْعَلُ", "يَطْمَعُ"],
+    audioFiles: [
+        "audio/tahsin/sugra_1.mp3", "audio/tahsin/sugra_2.mp3", "audio/tahsin/sugra_3.mp3", "audio/tahsin/sugra_4.mp3",
+        "audio/tahsin/sugra_5.mp3", "audio/tahsin/sugra_6.mp3", "audio/tahsin/sugra_7.mp3", "audio/tahsin/sugra_8.mp3"
+    ]
+},
+'kubra': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Qalqalah Kubra (pantulan besar) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) terletak di akhir kata atau kalimat karena dibaca mati akibat waqaf (berhenti). Aturan membacanya adalah dipantulkan dengan getaran suara pantulan yang kuat dan jelas.",
+    contoh: ["قُلْ هُوَ اللّٰهُ اَحَدٌ", "تَبَّتْ يَدَاۤ اَبِيْ لَهَبٍ وَّتَبَّ", "الْفَلَقِ", "بِرُوْجِ", "مُحِيْطٌ", "بِالْحَقِّ", "الْحَمِيْدِ", "كَسَبَ"],
+    audioFiles: [
+        "audio/tahsin/kubra_1.mp3", "audio/tahsin/kubra_2.mp3", "audio/tahsin/kubra_3.mp3", "audio/tahsin/kubra_4.mp3",
+        "audio/tahsin/kubra_5.mp3", "audio/tahsin/kubra_6.mp3", "audio/tahsin/kubra_7.mp3", "audio/tahsin/kubra_8.mp3"
+    ]
+}
             },
+
             'mad-thabii': {
-                'alif-fathah': {
-                    penjelasan: "Mad Thabi'i Alif terjadi apabila huruf berharakat Fathah (ــَـ) bertemu dengan huruf Alif mati (ا). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat tersebut sepanjang dua harakat (satu alif) secara konsisten.",
-                    contoh: ["قَالُوْا", "كِتَابٌ", "مَالِكِ", "هٰذَا", "الرَّحْمٰنِ", "عَلٰى", "سَمٰوٰتٍ", "جَاهِدِ"]
-                },
-                'ya-kasrah': {
-                    penjelasan: "Mad Thabi'i Ya terjadi apabila huruf berharakat Kasrah (ــِـ) bertemu dengan huruf Ya mati (يْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat kasrah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
-                    contoh: ["الَّذِيْنَ", "سَمِيْعٌ", "فِيْهَا", "بَنِيْٓ", "دِيْنُكُمْ", "عَلِيْمٌ", "قِيْلَ", "اَخِيْهِ"]
-                },
-                'wawu-dhammah': {
-                    penjelasan: "Mad Thabi'i Wawu terjadi apabila huruf berharakat Dhammah (ــُـ) bertemu dengan huruf Wawu mati (وْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat dhammah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
-                    contoh: ["يَقُوْلُوْنَ", "تَكُوْنُ", "يَدْعُوْ", "نُوْرٌ", "يَفْعَلُوْنَ", "اَعُوْذُ", "قُلُوْبِ", "تُوْبُوْا"]
-                }
+'alif-fathah': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Mad Thabi'i Alif terjadi apabila huruf berharakat Fathah (ــَـ) bertemu dengan huruf Alif mati (ا). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat tersebut sepanjang dua harakat (satu alif) secara konsisten.",
+    contoh: ["قَالُوْا", "كِتَابٌ", "مَالِكِ", "هٰذَا", "الرَّحْمٰنِ", "عَلٰى", "سَمٰوٰتٍ", "جَاهِدِ"],
+    audioFiles: [
+        "audio/tahsin/alif-fathah_1.mp3", "audio/tahsin/alif-fathah_2.mp3", "audio/tahsin/alif-fathah_3.mp3", "audio/tahsin/alif-fathah_4.mp3",
+        "audio/tahsin/alif-fathah_5.mp3", "audio/tahsin/alif-fathah_6.mp3", "audio/tahsin/alif-fathah_7.mp3", "audio/tahsin/alif-fathah_8.mp3"
+    ]
+},
+'ya-kasrah': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Mad Thabi'i Ya terjadi apabila huruf berharakat Kasrah (ــِـ) bertemu dengan huruf Ya mati (يْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat kasrah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
+    contoh: ["الَّذِيْنَ", "سَمِيْعٌ", "فِيْهَا", "بَنِيْٓ", "دِيْنُكُمْ", "عَلِيْمٌ", "قِيْلَ", "اَخِيْهِ"],
+    audioFiles: [
+        "audio/tahsin/ya-kasrah_1.mp3", "audio/tahsin/ya-kasrah_2.mp3", "audio/tahsin/ya-kasrah_3.mp3", "audio/tahsin/ya-kasrah_4.mp3",
+        "audio/tahsin/ya-kasrah_5.mp3", "audio/tahsin/ya-kasrah_6.mp3", "audio/tahsin/ya-kasrah_7.mp3", "audio/tahsin/ya-kasrah_8.mp3"
+    ]
+},
+'wawu-dhammah': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Mad Thabi'i Wawu terjadi apabila huruf berharakat Dhammah (ــُـ) bertemu dengan huruf Wawu mati (وْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat dhammah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
+    contoh: ["يَقُوْلُوْنَ", "تَكُوْنُ", "يَدْعُوْ", "نُوْرٌ", "يَفْعَلُوْنَ", "اَعُوْذُ", "قُلُوْبِ", "تُوْبُوْا"],
+    audioFiles: [
+        "audio/tahsin/wawu-dhammah_1.mp3", "audio/tahsin/wawu-dhammah_2.mp3", "audio/tahsin/wawu-dhammah_3.mp3", "audio/tahsin/wawu-dhammah_4.mp3",
+        "audio/tahsin/wawu-dhammah_5.mp3", "audio/tahsin/wawu-dhammah_6.mp3", "audio/tahsin/wawu-dhammah_7.mp3", "audio/tahsin/wawu-dhammah_8.mp3"
+    ]
+}
             },
+
             'mad-fari': {
-                'muttasil': {
-                    penjelasan: "Mad Wajib Muttasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) dalam satu kata atau kalimat yang bersambung. Aturan membacanya adalah dengan wajib memanjangkan bacaan hingga 4 atau 5 harakat (2 setengah alif).",
-                    contoh: ["جَاۤءَ النَّصْرُ", "السَّمَاۤءِ", "سُوْۤءَ", "شَاۤءَ", "هَنِيْۤئًا", "جِيْۤءَ", "أُولَٰئِكَ", "يَشَاۤءُ"]
-                },
-                'munfasil': {
-                    penjelasan: "Mad Jaiz Munfasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) yang berada di awal kata berikutnya (terpisah kata). Aturan membacanya diperbolehkan memanjangkan ketukan sepanjang 2, 4, atau maksimal 5 harakat.",
-                    contoh: ["اِنَّآ اَنْزَلْنٰهُ", "يٰۤاَيُّهَا النَّاسُ", "فِيْٓ اَحْسَنِ", "لَاۤ اَعْبُدُ", "بِمَاۤ اُنْزِلَ", "قُوْٓا اَنْفُسَكُمْ", "قَالُوْٓا اٰمَنَّا", "يٰبَنِيْٓ اِسْرَاۤءِيْلَ"]
-                },
-                'arid-sukun': {
-                    penjelasan: "Mad 'Arid Lissukun terjadi apabila terdapat Mad Thabi'i yang berada di akhir ayat atau tepat sebelum huruf hidup yang dimatikan (sukun) karena waqaf (berhenti). Aturan membacanya boleh dipanjangkan selama 2, 4, atau maksimal 6 harakat.",
-                    contoh: ["الْعٰلَمِيْنَۙ", "الْمُسْتَقِيْمَ", "يَعْلَمُوْنَ", "عَظِيْمٌ", "النَّاسِ", "حَكِيْمٍ", "الرَّحِيْمِ", "دِيْنِ"]
-                }
+'muttasil': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Mad Wajib Muttasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) dalam satu kata atau kalimat yang bersambung. Aturan membacanya adalah dengan wajib memanjangkan bacaan hingga 4 atau 5 harakat (2 setengah alif).",
+    contoh: ["جَاۤءَ النَّصْرُ", "السَّمَاۤءِ", "سُوْۤءَ", "شَاۤءَ", "هَنِيْۤئًا", "جِيْۤءَ", "أُولَٰئِكَ", "يَشَاۤءُ"],
+    audioFiles: [
+        "audio/tahsin/muttasil_1.mp3", "audio/tahsin/muttasil_2.mp3", "audio/tahsin/muttasil_3.mp3", "audio/tahsin/muttasil_4.mp3",
+        "audio/tahsin/muttasil_5.mp3", "audio/tahsin/muttasil_6.mp3", "audio/tahsin/muttasil_7.mp3", "audio/tahsin/muttasil_8.mp3"
+    ]
+},
+'munfasil': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Mad Jaiz Munfasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) yang berada di awal kata berikutnya (terpisah kata). Aturan membacanya diperbolehkan memanjangkan ketukan sepanjang 2, 4, atau maksimal 5 harakat.",
+    contoh: ["اِنَّآ اَنْزَلْنٰهُ", "يٰۤاَيُّهَا النَّاسُ", "فِيْٓ اَحْسَنِ", "لَاۤ اَعْبُدُ", "بِمَاۤ اُنْزِلَ", "قُوْٓا اَنْفُسَكُمْ", "قَالُوْٓا اٰمَنَّا", "يٰبَنِيْٓ اِسْرَاۤءِيْلَ"],
+    audioFiles: [
+        "audio/tahsin/munfasil_1.mp3", "audio/tahsin/munfasil_2.mp3", "audio/tahsin/munfasil_3.mp3", "audio/tahsin/munfasil_4.mp3",
+        "audio/tahsin/munfasil_5.mp3", "audio/tahsin/munfasil_6.mp3", "audio/tahsin/munfasil_7.mp3", "audio/tahsin/munfasil_8.mp3"
+    ]
+},
+'arid-sukun': {
+    videoId: "INOXq9tBG5I",
+    penjelasan: "Mad 'Arid Lissukun terjadi apabila terdapat Mad Thabi'i yang berada di akhir ayat atau tepat sebelum huruf hidup yang dimatikan (sukun) karena waqaf (berhenti). Aturan membacanya boleh dipanjangkan selama 2, 4, atau maksimal 6 harakat.",
+    contoh: ["الْعٰلَمِيْنَۙ", "الْمُسْتَقِيْمَ", "يَعْلَمُوْنَ", "عَظِيْمٌ", "النَّاسِ", "حَكِيْمٍ", "الرَّحِيْمِ", "دِيْنِ"],
+    audioFiles: [
+        "audio/tahsin/arid-sukun_1.mp3", "audio/tahsin/arid-sukun_2.mp3", "audio/tahsin/arid-sukun_3.mp3", "audio/tahsin/arid-sukun_4.mp3",
+        "audio/tahsin/arid-sukun_5.mp3", "audio/tahsin/arid-sukun_6.mp3", "audio/tahsin/arid-sukun_7.mp3", "audio/tahsin/arid-sukun_8.mp3"
+    ]
+}
+            },
+
+                'makharijul-huruf': {
+                // TENGGOROKAN
+    'hamzah': { videoId: "TOvmRoJUV3E", penjelasan: "Hamzah (أ) keluar dari pangkal tenggorokan.", contoh: ["أَ", "إِ", "أُ", "أَنْ"] },
+    'ha': { videoId: "TOvmRoJUV3E", penjelasan: "Ha (هـ) keluar dari pangkal tenggorokan.", contoh: ["هَ", "هُ", "هِي", "هُمْ"] },
+    'ain': { videoId: "TOvmRoJUV3E", penjelasan: "Ain (ع) keluar dari tengah tenggorokan.", contoh: ["عَ", "عِ", "عُ", "عَنْ"] },
+    'ha_pedas': { videoId: "TOvmRoJUV3E", penjelasan: "Ha (ح) keluar dari tengah tenggorokan.", contoh: ["حَ", "حِ", "حُ", "حَقّ"] },
+    'ghain': { videoId: "TOvmRoJUV3E", penjelasan: "Ghain (غ) keluar dari tenggorokan atas.", contoh: ["غَ", "غِ", "غُ", "غَيْب"] },
+    'kho': { videoId: "TOvmRoJUV3E", penjelasan: "Kha (خ) keluar dari tenggorokan atas.", contoh: ["خَ", "خِ", "خُ", "خَلَق"] },
+    
+    // LIDAH
+    'qaf': { videoId: "TOvmRoJUV3E", penjelasan: "Qaf (ق) dari pangkal lidah dan langit-langit lunak.", contoh: ["قَ", "قِ", "قُ", "قُل"] },
+    'kaf': { videoId: "TOvmRoJUV3E", penjelasan: "Kaf (ك) dari pangkal lidah sedikit di bawah Qaf.", contoh: ["كَ", "كِ", "كُ", "كَتَب"] },
+    'jim': { videoId: "TOvmRoJUV3E", penjelasan: "Jim (ج) dari tengah lidah.", contoh: ["جَ", "جِ", "جُ", "جَعَل"] },
+    'syin': { videoId: "TOvmRoJUV3E", penjelasan: "Syin (ش) dari tengah lidah.", contoh: ["شَ", "شِ", "شُ", "شَمْس"] },
+    'ya_mati': { videoId: "TOvmRoJUV3E", penjelasan: "Ya (ي) dari tengah lidah.", contoh: ["يَ", "يِ", "يُ", "يَوْم"] },
+    'dhod': { videoId: "TOvmRoJUV3E", penjelasan: "Dhod (ض) dari sisi lidah menyentuh geraham.", contoh: ["ضَ", "ضِ", "ضُ", "ضَرَب"] },
+    'lam': { videoId: "TOvmRoJUV3E", penjelasan: "Lam (ل) dari tepi lidah menyentuh gusi.", contoh: ["لَ", "لِ", "لُ", "لَكُم"] },
+    'nun': { videoId: "TOvmRoJUV3E", penjelasan: "Nun (ن) dari ujung lidah.", contoh: ["نَ", "نِ", "نُ", "نَحْن"] },
+    'ro': { videoId: "TOvmRoJUV3E", penjelasan: "Ro (ر) dari ujung lidah.", contoh: ["رَ", "رِ", "رُ", "رَبّ"] },
+    'tho': { videoId: "TOvmRoJUV3E", penjelasan: "Tho (ط) dari ujung lidah menyentuh pangkal gigi.", contoh: ["طَ", "طِ", "طُ", "طَاق"] },
+    'dal': { videoId: "TOvmRoJUV3E", penjelasan: "Dal (د) dari ujung lidah menyentuh pangkal gigi.", contoh: ["دَ", "دِ", "دُ", "دِين"] },
+    'ta': { videoId: "TOvmRoJUV3E", penjelasan: "Ta (ت) dari ujung lidah menyentuh pangkal gigi.", contoh: ["تَ", "تِ", "تُ", "تَبّ"] },
+    'zha': { videoId: "TOvmRoJUV3E", penjelasan: "Zha (ظ) dari ujung lidah menyentuh ujung gigi atas.", contoh: ["ظَ", "ظِ", "ظُ", "ظَلَم"] },
+    'dzal': { videoId: "TOvmRoJUV3E", penjelasan: "Dzal (ذ) dari ujung lidah menyentuh ujung gigi atas.", contoh: ["ذَ", "ذِ", "ذُ", "ذِي"] },
+    'tsa': { videoId: "TOvmRoJUV3E", penjelasan: "Tsa (ث) dari ujung lidah menyentuh ujung gigi atas.", contoh: ["ثَ", "ثِ", "ثُ", "ثَمَر"] },
+    'zai': { videoId: "TOvmRoJUV3E", penjelasan: "Zai (ز) dari ujung lidah antara gigi atas dan bawah.", contoh: ["زَ", "زِ", "زُ", "زَيْن"] },
+    'sin': { videoId: "TOvmRoJUV3E", penjelasan: "Sin (س) dari ujung lidah antara gigi atas dan bawah.", contoh: ["سَ", "سِ", "سُ", "سَمِع"] },
+    'shod': { videoId: "TOvmRoJUV3E", penjelasan: "Shod (ص) dari ujung lidah antara gigi atas dan bawah.", contoh: ["صَ", "صِ", "صُ", "صَبْر"] },
+    
+    // BIBIR
+    'fa': { videoId: "TOvmRoJUV3E", penjelasan: "Fa (ف) dari bibir bawah menyentuh ujung gigi atas.", contoh: ["فَ", "فِ", "فُ", "فِي"] },
+    'ba': { videoId: "TOvmRoJUV3E", penjelasan: "Ba (ب) dari pertemuan dua bibir.", contoh: ["بَ", "بِ", "بُ", "بَاب"] },
+    'mim': { videoId: "TOvmRoJUV3E", penjelasan: "Mim (م) dari pertemuan dua bibir.", contoh: ["مَ", "مِ", "مُ", "مِنْ"] },
+    'wawu': { videoId: "TOvmRoJUV3E", penjelasan: "Wawu (و) dari dua bibir yang dibulatkan.", contoh: ["وَ", "وِ", "وُ", "وَلَد"] }
             }
+
         };
 
         // Judul sub-materi untuk tampilan tombol interaktif
@@ -469,7 +642,12 @@
             'jalalah': { 'tafkhim': 'Tafkhim (Tebal)', 'tarqiq': 'Tarqiq (Tipis)' },
             'qalqalah': { 'sugra': 'Qalqalah Sugra', 'kubra': 'Qalqalah Kubra' },
             'mad-thabii': { 'alif-fathah': 'Alif + Fathah', 'ya-kasrah': 'Ya + Kasrah', 'wawu-dhammah': 'Wawu + Dhammah' },
-            'mad-fari': { 'muttasil': 'Wajib Muttasil', 'munfasil': 'Jaiz Munfasil', 'arid-sukun': 'Arid Lissukun' }
+            'mad-fari': { 'muttasil': 'Wajib Muttasil', 'munfasil': 'Jaiz Munfasil', 'arid-sukun': 'Arid Lissukun' },
+            'makharijul-huruf': {'hamzah': 'أ (Hamzah)', 'ha': 'هـ (Ha)', 'ain': 'ع (Ain)', 'ha_pedas': 'ح (Ha)', 'ghain': 'غ (Ghain)', 'kho': 'خ (Kho)',
+    'qaf': 'ق (Qaf)', 'kaf': 'ك (Kaf)', 'jim': 'ج (Jim)', 'syin': 'ش (Syin)', 'ya_mati': 'ي (Ya)', 'dhod': 'ض (Dhod)',
+    'lam': 'ل (Lam)', 'nun': 'ن (Nun)', 'ro': 'ر (Ro)', 'tho': 'ط (Tho)', 'dal': 'د (Dal)', 'ta': 'ت (Ta)',
+    'zha': 'ظ (Zha)', 'dzal': 'ذ (Dzal)', 'tsa': 'ث (Tsa)', 'zai': 'ز (Zai)', 'sin': 'س (Sin)', 'shod': 'ص (Shod)',
+    'fa': 'ف (Fa)', 'ba': 'ب (Ba)', 'mim': 'م (Mim)', 'wawu': 'و (Wawu)'}
         };
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -984,28 +1162,35 @@
             // Ambil data dari sub-materi tajwid terpilih
             const subMateriData = TAHSIN_COMPACT_DATA[activeMainCategory][subCategoryKey];
             const contentContainer = document.getElementById('tahsin-tab-content');
+            const videoId = subMateriData.videoId;
             
             let html = `
                 <!-- Penjelasan Umum diletakkan dalam 1 paragraf di atas bagian 8 contoh bacaan -->
                 <div class="bg-sky-50 border border-sky-100 p-5 rounded-2xl text-sm text-sky-900 leading-relaxed shadow-sm">
                     <strong>Penjelasan Materi:</strong> ${subMateriData.penjelasan}
                 </div>
-
-                <div class="flex items-center justify-between pb-1 pt-2 border-b border-slate-200/60">
+            
+                <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" 
+            title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+            </div>
+            
+            <div class="flex items-center justify-between pb-1 pt-2 border-b border-slate-200/60">
                     <h3 class="text-xs font-extrabold uppercase text-slate-400 tracking-wider">Daftar 8 Contoh Latihan Murni Arab:</h3>
                     <span class="bg-sky-100 text-sky-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">${SUB_MATERI_NAMES[activeMainCategory][subCategoryKey]}</span>
                 </div>
                 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    
             `;
 
             subMateriData.contoh.forEach((arabText, index) => {
+                const audioPath = subMateriData.audioFiles[index];
                 html += `
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center justify-center hover:border-sky-300 transition duration-300 group min-h-[110px]">
-                        <span class="text-[9px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-md mb-3">Latihan ${index + 1}</span>
-                        <div class="font-arabic font-bold text-sky-800 text-2xl leading-normal text-center select-all">${arabText}</div>
-                    </div>
-                `;
+            <div onclick="playLocalAudio('${audioPath}')" class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center justify-center hover:border-sky-300 transition duration-300 group min-h-[110px] cursor-pointer">
+                <div class="font-arabic font-bold text-sky-800 text-2xl leading-normal text-center select-none">${arabText}</div>
+            </div>
+        `;
             });
 
             html += "</div>";
@@ -1024,6 +1209,22 @@
         }
         function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
         function unescapeHtml(str) { return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#039;/g, "'"); }
+    
+    function playLocalAudio(path) {
+    const audioBar = document.getElementById('audio-bar');
+    const mainAudio = document.getElementById('main-audio');
+    
+    // Tampilkan audio bar
+    
+    audioBar.classList.add('hidden');
+    document.getElementById('bar-surah-title').innerText = "Latihan Tahsin";
+    document.getElementById('bar-qori-subtitle').innerText = "Memutar contoh bacaan...";
+    
+    // Set sumber audio dan putar
+    mainAudio.src = path;
+    mainAudio.play();
+}
+
     </script>
 </body>
 </html>
