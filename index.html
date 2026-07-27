@@ -1018,7 +1018,8 @@ body.dark-mode .arabic-text {
             }
         }
 
-function renderAyatList() {
+
+        function renderAyatList() {
     const container = document.getElementById('detail-ayat-list');
     
     // Fungsi pembantu untuk mengubah angka biasa (1, 2, 120) ke angka Arab (١, ٢, ١٢٠)
@@ -1036,7 +1037,7 @@ function renderAyatList() {
         const encodedShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
 
         html += `
-            <div id="ayat-${index}" class="ayat-item bg-white p-6 rounded-2xl border border-slate-100 hover:border-sky-200 shadow-sm transition duration-300 space-y-4">
+            <div id="ayat-${index}" onclick="playAyat(${index})" class="ayat-item bg-white p-6 rounded-2xl border border-slate-100 hover:border-sky-200 shadow-sm transition duration-300 space-y-4">
                 <!-- Teks Arab & Nomor Ayat Angka Arab di Akhir Kalimat -->
                 <div class="arabic-text font-arabic text-3xl text-right leading-loose text-slate-800 pb-2">
                     <span class="inline-block text-sky-800 text-2xl relative align-middle mx-1 font-arabic" style="direction: ltr;">۝<span class="absolute inset-0 flex items-center justify-center text-[11px] font-bold">${arabicNumberStr}</span></span>
