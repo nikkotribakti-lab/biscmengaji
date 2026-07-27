@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Al-Qur'an & Murojaah Digital</title>
+    <link rel="icon" type="image/png" href="img/bisc.png">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -68,6 +70,37 @@
         }
     }
 
+    /* Styling Tambahan untuk Dark Mode */
+body.dark-mode .bg-white {
+    background-color: #1e293b !important; /* Slate-800 */
+    color: #f1f5f9 !important;          /* Slate-100 */
+    border-color: #334155 !important;    /* Slate-700 */
+}
+
+body.dark-mode .text-slate-800, 
+body.dark-mode .text-slate-700, 
+body.dark-mode .text-slate-600 {
+    color: #cbd5e1 !important;          /* Slate-300 */
+}
+
+body.dark-mode input, 
+body.dark-mode select {
+    background-color: #0f172a !important; /* Slate-900 */
+    color: #ffffff !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .bg-slate-50, 
+body.dark-mode .bg-slate-100 {
+    background-color: #0f172a !important;
+    color: #cbd5e1 !important;
+}
+/* Khusus untuk teks Arab pada contoh bacaan agar tampil kontras dan jelas */
+body.dark-mode .font-arabic,
+body.dark-mode [dir="rtl"],
+body.dark-mode .arabic-text {
+    color: #ffffff !important;          /* Putih Bersih */
+}
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-24">
@@ -85,9 +118,18 @@
                     <p class="text-xs text-sky-200">Al-Qur'an, Murojaah & Tahsin</p>
                 </div>
             </div>
-            <button onclick="switchView('home')" class="bg-sky-850 hover:bg-sky-800 text-white text-sm font-semibold py-1.5 px-4 rounded-full transition duration-200 flex items-center gap-2 border border-sky-700/50">
-                <i class="fa-solid fa-house"></i> Beranda
-            </button>
+            
+<div class="flex items-center gap-2">
+    <!-- Tombol Dark Mode Toggle -->
+    <button onclick="toggleDarkMode()" class="bg-sky-850 hover:bg-sky-800 text-white text-sm font-semibold py-1.5 px-3 rounded-full transition duration-200 flex items-center justify-center border border-sky-700/50" title="Ubah Tema">
+        <i id="dark-mode-icon" class="fa-solid fa-moon"></i>
+    </button>
+
+    <button onclick="switchView('home')" class="bg-sky-850 hover:bg-sky-800 text-white text-sm font-semibold py-1.5 px-4 rounded-full transition duration-200 flex items-center gap-2 border border-sky-700/50">
+        <i class="fa-solid fa-house"></i> Beranda
+    </button>
+</div>
+            
         </div>
     </header>
 
@@ -394,9 +436,9 @@
         const TAHSIN_COMPACT_DATA = {
             'nun-sukun': {
                 'izhar': {
-                    videoId: "INOXq9tBG5I",
+                    videoId: "video bisc",
                     penjelasan: "Izhar Halqi terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin (ــًــٍــٌ) bertemu dengan salah satu dari 6 huruf tenggorokan (Halqi), yaitu Alif (أ), Ha (هـ), Ha (ح), Kha (خ), 'Ain (ع), dan Ghain (غ). Aturan membacanya adalah suara Nun atau Tanwin tersebut harus diucapkan dengan jelas, tegas, tanpa disertai dengung.",
-                    contoh: ["مَنْ اٰمَنَ", "مِنْ حَكِيْمٍ", "فَرِيْقًا هَدٰى", "عَذَابٌ عَظِيْمٌ", "مِنْ غِلٍّ", "لَطِيْفٌ خَبِيْرٌ", "وَالْمُنْخَنِقَةُ", "مِنْ عِنْدِ"],
+                    contoh: ["مَنْ اٰمَنَ", "مِنْ حَكِيْمٍ", "فَرِيْقًا هَذَاى", "عَذَابٌ عَظِيْمٌ", "مِنْ غِلٍّ", "لَطِيْفٌ خَبِيْرٌ", "وَالْمُنْخَنِقَةُ", "مِنْ عِنْدِ"],
                 audioFiles: [
                                 "audio/tahsin/izhar_1.mp3",
                                 "audio/tahsin/izhar_2.mp3",
@@ -410,7 +452,7 @@
                  },
                 
                 'bighunnah': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Idgham Bighunnah terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 4 huruf yaitu Ya (ي), Nun (ن), Mim (م), atau Wawu (و). Aturan membacanya adalah suara Nun atau Tanwin harus dileburkan ke dalam huruf setelahnya dan dibaca mendengung ditahan selama 2-3 ketukan.",
     contoh: ["مَنْ يَّقُوْلُ", "عَذَابٌ مُّقِيْمٌ", "مِنْ وَّرَاۤىِٔهِمْ", "نَفْسًا زَّكِيَّةً", "مِنْ مَّاءٍ", "وُجُوْهٌ يَّوْمَىِٔذٍ", "خَيْرٌ وَّاَبْقٰى", "اَمَنَةً نُّعَاسًا"],
     audioFiles: [
@@ -420,7 +462,7 @@
 },
 
 'bilaghunnah': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Idgham Bilaghunnah terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Lam (ل) atau Ra (ر). Aturan membacanya adalah suara Nun atau Tanwin wajib dileburkan sepenuhnya ke dalam huruf Lam atau Ra tersebut secara langsung tanpa disertai dengung sedikit pun.",
     contoh: ["مِنْ رَّبِّهِمْ", "هُدًى لِّلْمُتَّقِيْنَ", "مِنْ لَّدُنْهُ", "غَفُوْرٌ رَّحِيْمٌ", "فِتْنَةٌ لَّهُمْ", "مِنْ رِّزْقِ اللّٰهِ", "بِقَادِرٍ لَّمْ", "تَوَّابٌ رَّحِيْمٌ"],
     audioFiles: [
@@ -430,7 +472,7 @@
 },
 
 'iqlab': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Iqlab terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan cara mengubah/membalikkan bunyi huruf Nun atau Tanwin tersebut menjadi suara huruf Mim (م) yang samar di bibir, sembari mendengung dan ditahan sejenak.",
     contoh: ["مِنْ بَعْدِ", "سَمِيْعٌ بَصِيْرٌ", "اَنْۢبِئْهُمْ", "عَلِيْمًا بِذَاتِ", "مَنْۢ بَخِلَ", "لَنَسْفَعًاۢ بِالنَّاصِيَةِ", "يُنْۢبِتُ", "خَبِيْرٌۢ بِمَا"],
     audioFiles: [
@@ -440,7 +482,7 @@
 },
 
 'ikhfa': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Ikhfa Haqiqi terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 15 huruf ikhfa. Aturan membacanya adalah suara Nun atau Tanwin disamarkan (antara jelas dan berdengung) di bibir sambil mengarah kepada makhraj pengucapan huruf berikutnya.",
     contoh: ["مِنْ دُوْنِ", "يَوْمَئِذٍ تُحَدِّثُ", "مِنْ كُلِّ", "صِرَاطًا صَالِحًا", "مِنْ جُوْعٍ", "نَفْسٌ شَيْـًٔا", "مِنْ قَبْلِ", "خَالِدًا فِيْهَا"],
     audioFiles: [
@@ -453,7 +495,7 @@
 
  'mim-sukun': {
                 'ikhfa-syafawi': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Ikhfa Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan menyamarkan suara huruf Mim di bibir disertai dengan dengung (ghunnah) yang ditahan sekitar 2 ketukan secara lembut.",
     contoh: ["تَرْمِيْهِمْ بِحِجَارَةٍ", "اَمْ تُرِيْدُوْنَ بَلْ", "وَمَا صَاحِبُكُمْ بِمَجْنُوْنٍ", "يَعْتَصِمْ بِاللّٰهِ", "اَنْتُمْ بِهٖ", "فَاحْكُمْ بَيْنَهُمْ", "عَلَيْهِمْ بِمُصَيْطِرٍ", "جَزَاۤؤُهُمْ عِنْدَ رَبِّهِمْ جَنّٰتُ"],
     audioFiles: [
@@ -462,7 +504,7 @@
     ]
 },
 'idgham-mimi': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Idgham Mimi (atau Idgham Mutamatsilain Syafawi) terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Mim (م). Aturan membacanya adalah dengan memasukkan suara Mim pertama ke dalam Mim kedua secara sempurna, dibaca rapat, mendengung, dan ditahan sejenak.",
     contoh: ["لَهُمْ مَّا يَشَاۤءُوْنَ", "فِيْ قُلُوْبِهِمْ مَّرَضٌ", "اِنَّهَا عَلَيْهِمْ مُّؤْصَدَةٌ", "اَمْ مَنْ اَسَّسَ", "وَمِنْهُمْ مَّنْ", "خَلَقَكُمْ مِّنْ", "كُنْتُمْ مُّؤْمِنِيْنَ", "اَطْعَمَهُمْ مِّنْ جُوْعٍ"],
     audioFiles: [
@@ -471,7 +513,7 @@
     ]
 },
 'izhar-syafawi': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Izhar Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan salah satu huruf hijaiyah selain Mim (م) dan Ba (ب). Aturan membacanya adalah suara Mim Sukun tersebut harus diucapkan dengan sangat jelas dan terang di bibir tanpa mendengung.",
     contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ لَا", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"],
     audioFiles: [
@@ -483,7 +525,7 @@
 
             'tasydid': {
 'nun-tasydid': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Ghunnah pada Nun bertasydid terjadi ketika huruf Nun memiliki harakat tasydid (نّ). Aturan membacanya adalah suara dengung harus ditahan di rongga hidung secara mantap sepanjang 2 sampai 3 harakat sebelum berpindah ke harakat berikutnya.",
     contoh: ["اِنَّ الَّذِيْنَ", "مِنَ الْجِنَّةِ وَالنَّاسِ", "جَهَنَّمُ", "مِنِّيْ", "مِنَ الْجِنَّةِ", "اَنَّ لَهُمْ", "لَتُسْـَٔلُنَّ", "كَأَنَّهُ"],
     audioFiles: [
@@ -492,7 +534,7 @@
     ]
 },
 'mim-tasydid': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Ghunnah pada Mim bertasydid terjadi ketika huruf Mim memiliki harakat tasydid (مّ). Aturan membacanya adalah merapatkan bibir sepenuhnya dengan menekan suara dengung di rongga hidung yang ditahan mantap sepanjang 2 sampai 3 harakat.",
     contoh: ["ثُمَّ لَتُسْـَٔلُنَّ", "مِمَّا رَزَقْنٰهُمْ", "عَمَّ يَتَسَاۤءَلُوْنَ", "اُمِّيْ", "فَاَمَّا مَنْ", "اُمَّةً وَاحِدَةً", "مِمَّا", "يَمُّ"],
     audioFiles: [
@@ -504,7 +546,7 @@
 
             'jalalah': {
                 'tafkhim': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Lafadz Jalalah Tafkhim adalah penebalan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal tersebut didahului oleh huruf yang berharakat Fathah (ــَـ) atau Dhammah (ــُـ). Cara membacanya adalah dengan memosisikan lidah lebih naik untuk menghasilkan gema bunyi yang tebal.",
     contoh: ["شَهِدَ اللّٰهُ", "يَنْصُرُكُمُ اللّٰهُ", "اللّٰهُ لَاۤ اِلٰهَ اِلَّا هُوَ", "رَسُوْلُ اللّٰهِ", "يُحِبُّهُمُ اللّٰهُ", "قَالَ اللّٰهُ", "اِنَّ اللّٰهَ", "اَحَدٌ اَللّٰهُ"],
     audioFiles: [
@@ -513,7 +555,7 @@
     ]
 },
 'tarqiq': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Lafadz Jalalah Tarqiq adalah penipisan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal agung tersebut didahului oleh huruf berharakat Kasrah (ــِـ). Cara membacanya adalah dengan menjaga posisi lidah tetap di bawah sehingga menghasilkan bunyi Lam yang tipis/ringan.",
     contoh: ["بِسْمِ اللّٰهِ", "فِيْ سَبِيْلِ اللّٰهِ", "لِلّٰهِ الْمُلْكُ", "اِلَّا اللّٰه", "بِاللّٰهِ", "دِيْنِ اللّٰهِ", "بِسْمِ اللّٰهِ الرَّحْمٰنِ", "قُلْ هُوَ اللّٰهُ اَحَدٌ اَللّٰهُ"],
     audioFiles: [
@@ -525,7 +567,7 @@
 
             'qalqalah': {
 'sugra': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Qalqalah Sugra (pantulan kecil) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) berharakat sukun asli dan terletak di pertengahan kata. Aturan membacanya adalah dipantulkan dengan getaran pantulan yang cenderung ringan.",
     contoh: ["يَقْطَعُوْنَ", "نُطْعِمُ", "يَبْتَغُوْنَ", "تَجْرِيْ", "يَدْخُلُوْنَ", "خَلَقْنَا", "تَجْعَلُ", "يَطْمَعُ"],
     audioFiles: [
@@ -534,7 +576,7 @@
     ]
 },
 'kubra': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Qalqalah Kubra (pantulan besar) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) terletak di akhir kata atau kalimat karena dibaca mati akibat waqaf (berhenti). Aturan membacanya adalah dipantulkan dengan getaran suara pantulan yang kuat dan jelas.",
     contoh: ["قُلْ هُوَ اللّٰهُ اَحَدٌ", "تَبَّتْ يَدَاۤ اَبِيْ لَهَبٍ وَّتَبَّ", "الْفَلَقِ", "بِرُوْجِ", "مُحِيْطٌ", "بِالْحَقِّ", "الْحَمِيْدِ", "كَسَبَ"],
     audioFiles: [
@@ -546,7 +588,7 @@
 
             'mad-thabii': {
 'alif-fathah': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Mad Thabi'i Alif terjadi apabila huruf berharakat Fathah (ــَـ) bertemu dengan huruf Alif mati (ا). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat tersebut sepanjang dua harakat (satu alif) secara konsisten.",
     contoh: ["قَالُوْا", "كِتَابٌ", "مَالِكِ", "هٰذَا", "الرَّحْمٰنِ", "عَلٰى", "سَمٰوٰتٍ", "جَاهِدِ"],
     audioFiles: [
@@ -555,7 +597,7 @@
     ]
 },
 'ya-kasrah': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Mad Thabi'i Ya terjadi apabila huruf berharakat Kasrah (ــِـ) bertemu dengan huruf Ya mati (يْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat kasrah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
     contoh: ["الَّذِيْنَ", "سَمِيْعٌ", "فِيْهَا", "بَنِيْٓ", "دِيْنُكُمْ", "عَلِيْمٌ", "قِيْلَ", "اَخِيْهِ"],
     audioFiles: [
@@ -564,7 +606,7 @@
     ]
 },
 'wawu-dhammah': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Mad Thabi'i Wawu terjadi apabila huruf berharakat Dhammah (ــُـ) bertemu dengan huruf Wawu mati (وْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat dhammah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
     contoh: ["يَقُوْلُوْنَ", "تَكُوْنُ", "يَدْعُوْ", "نُوْرٌ", "يَفْعَلُوْنَ", "اَعُوْذُ", "قُلُوْبِ", "تُوْبُوْا"],
     audioFiles: [
@@ -576,7 +618,7 @@
 
             'mad-fari': {
 'muttasil': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Mad Wajib Muttasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) dalam satu kata atau kalimat yang bersambung. Aturan membacanya adalah dengan wajib memanjangkan bacaan hingga 4 atau 5 harakat (2 setengah alif).",
     contoh: ["جَاۤءَ النَّصْرُ", "السَّمَاۤءِ", "سُوْۤءَ", "شَاۤءَ", "هَنِيْۤئًا", "جِيْۤءَ", "أُولَٰئِكَ", "يَشَاۤءُ"],
     audioFiles: [
@@ -585,7 +627,7 @@
     ]
 },
 'munfasil': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Mad Jaiz Munfasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) yang berada di awal kata berikutnya (terpisah kata). Aturan membacanya diperbolehkan memanjangkan ketukan sepanjang 2, 4, atau maksimal 5 harakat.",
     contoh: ["اِنَّآ اَنْزَلْنٰهُ", "يٰۤاَيُّهَا النَّاسُ", "فِيْٓ اَحْسَنِ", "لَاۤ اَعْبُدُ", "بِمَاۤ اُنْزِلَ", "قُوْٓا اَنْفُسَكُمْ", "قَالُوْٓا اٰمَنَّا", "يٰبَنِيْٓ اِسْرَاۤءِيْلَ"],
     audioFiles: [
@@ -594,7 +636,7 @@
     ]
 },
 'arid-sukun': {
-    videoId: "INOXq9tBG5I",
+    videoId: "video bisc",
     penjelasan: "Mad 'Arid Lissukun terjadi apabila terdapat Mad Thabi'i yang berada di akhir ayat atau tepat sebelum huruf hidup yang dimatikan (sukun) karena waqaf (berhenti). Aturan membacanya boleh dipanjangkan selama 2, 4, atau maksimal 6 harakat.",
     contoh: ["الْعٰلَمِيْنَۙ", "الْمُسْتَقِيْمَ", "يَعْلَمُوْنَ", "عَظِيْمٌ", "النَّاسِ", "حَكِيْمٍ", "الرَّحِيْمِ", "دِيْنِ"],
     audioFiles: [
@@ -606,7 +648,7 @@
 
     'makharijul-huruf': {
 'hamzah': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Hamzah (أ) keluar dari pangkal tenggorokan.", 
     contoh: [
         "بَأْ", "أُو", "إِي", "ءَا", "أَأْنَ", "أَنِ", "أً", "أو", "أَنِ أً", "مَئِيأً", "الْمُؤْنِ", "مِنَ",
@@ -615,7 +657,7 @@
     audioFiles: Array(20).fill("audio/h1.mp3") 
 },
 'ba': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Ba (ب) keluar dari pertemuan dua bibir.", 
     contoh: [
         "بَبْ", "بُو", "بِي", "بَا", "بَبْنَ", "بَنِ", "بً", "بو", "بَنِ بً", "مَبِيْبً", "الْمُبْنِ", "مِنَ",
@@ -624,7 +666,7 @@
     audioFiles: Array(20).fill("audio/b1.mp3") 
 },
 'ta': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Ta (ت) dari ujung lidah menyentuh pangkal gigi.", 
     contoh: [
         "تَتْ", "تُو", "تِي", "تَا", "تَتْنَ", "تَنِ", "تًا", "تُو", "تَنِ تً", "مَتِيْتً", "الْمُتْنِ", "مِنَ",
@@ -633,7 +675,7 @@
     audioFiles: Array(20).fill("audio/t1.mp3") 
 },
 'tsa': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Tsa (ث) dari ujung lidah menyentuh ujung gigi atas.", 
     contoh: [
         "ثَثْ", "ثُو", "ثِي", "ثَا", "ثَثْنَ", "ثَنِ", "ثًا", "ثُو", "ثَنِ ثً", "مَثِيْتً", "الْمُثْنِ", "مِنَ",
@@ -642,7 +684,7 @@
     audioFiles: Array(20).fill("audio/ts1.mp3") 
 },
 'jim': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Jim (ج) dari tengah lidah.", 
     contoh: [
         "جَجْ", "جُو", "جِي", "جَا", "جَبْنَ", "جَنِ", "جً", "جو", "جَنِ جً", "مَجِيْتً", "الْمَجْنِ", "مِنَ",
@@ -651,7 +693,7 @@
     audioFiles: Array(20).fill("audio/j1.mp3") 
 },
 'ha_pedas': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Ha (ح) dari tengah tenggorokan.", 
     contoh: [
         "حَحْ", "حُو", "حِي", "حَا", "حَحْنَ", "حَنِ", "حًا", "حُو", "حَنِ حً", "مَحِيْتً", "الْمَحْنِ", "مِنَ",
@@ -660,7 +702,7 @@
     audioFiles: Array(20).fill("audio/h2.mp3") 
 },
 'kho': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Kha (خ) dari tenggorokan atas.", 
     contoh: [
         "خَخْ", "خُو", "خِي", "خَا", "خَخْنَ", "خَنِ", "خًا", "خُو", "خَنِ خً", "مَخِيْتً", "الْمَخْنِ", "مِنَ",
@@ -669,7 +711,7 @@
     audioFiles: Array(20).fill("audio/kh1.mp3") 
 },
 'dal': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Dal (د) dari ujung lidah menyentuh pangkal gigi.", 
     contoh: [
         "دَدْ", "دُو", "دي", "دِا", "دَدْنَ", "دَنِ", "دًا", "دُو", "دَنِ دً", "مَدِيْتً", "الْمَدْنِ", "مِنَ",
@@ -678,7 +720,7 @@
     audioFiles: Array(20).fill("audio/d1.mp3") 
 },
 'dzal': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Dzal (ذ) dari ujung lidah menyentuh ujung gigi atas.", 
     contoh: [
         "ذَذْ", "ذُو", "ذِي", "ذَا", "ذَذْنَ", "ذَنِ", "ذًا", "ذُو", "ذَنِ ذً", "مَذِيْتً", "الْمَذْنِ", "مِنَ",
@@ -687,7 +729,7 @@
     audioFiles: Array(20).fill("audio/dz1.mp3") 
 },
 'ro': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Ro (ر) dari ujung lidah.", 
     contoh: [
         "رَرْ", "رُو", "ري", "را", "رَرْنَ", "رَنِ", "رًا", "رُو", "رَنِ رً", "مَرِيْتً", "الْمَرْنِ", "مِنَ",
@@ -696,7 +738,7 @@
     audioFiles: Array(20).fill("audio/r1.mp3") 
 },
 'zai': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Zai (ز) dari ujung lidah antara gigi atas dan bawah.", 
     contoh: [
         "زَزْ", "زُو", "زِي", "زَا", "زَزْنَ", "زَنِ", "زً", "زُو", "زَنِ زً", "مَزِيْتً", "الْمَزْنِ", "مِنَ",
@@ -705,7 +747,7 @@
     audioFiles: Array(20).fill("audio/z1.mp3") 
 },
 'sin': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Sin (س) dari ujung lidah antara gigi atas dan bawah.", 
     contoh: [
         "سَسْ", "سُو", "سِي", "سَا", "سَسْنَ", "سَنِ", "سًا", "سُو", "سَنِ سً", "مَسِيْتً", "الْمَسْنِ", "مِنَ",
@@ -714,7 +756,7 @@
     audioFiles: Array(20).fill("audio/s1.mp3") 
 },
 'syin': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Syin (ش) dari tengah lidah.", 
     contoh: [
         "شَشْ", "شُو", "شي", "شا", "شَشْنَ", "شَنِ", "شًا", "شُو", "شَنِ شً", "مَشِيْتً", "الْمَشْنِ", "مِنَ",
@@ -723,7 +765,7 @@
     audioFiles: Array(20).fill("audio/sy1.mp3") 
 },
 'shod': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Shod (ص) dari ujung lidah antara gigi atas dan bawah.", 
     contoh: [
         "صَصْ", "صُو", "صِي", "صَا", "صَصْنَ", "صَنِ", "صًا", "صُو", "صَنِ صً", "مَصِيْتً", "الْمَصْنِ", "مِنَ",
@@ -732,7 +774,7 @@
     audioFiles: Array(20).fill("audio/sh1.mp3") 
 },
 'dhod': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Dhod (ض) dari sisi lidah menyentuh geraham.", 
     contoh: [
         "ضَضْ", "ضُو", "ضِي", "ضَا", "ضَضْنَ", "ضَنِ", "ضًا", "ضُو", "ضَنِ ضً", "مَضِيْتً", "الْمَضْنِ", "مِنَ",
@@ -741,7 +783,7 @@
     audioFiles: Array(20).fill("audio/dh1.mp3") 
 },
 'tho': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Tho (ط) dari ujung lidah menyentuh pangkal gigi.", 
     contoh: [
         "طَطْ", "طُو", "طِي", "طَا", "طَطْنَ", "طَنِ", "طًا", "طُو", "طَنِ طً", "مَطِيْتً", "الْمَطْنِ", "مِنَ",
@@ -750,7 +792,7 @@
     audioFiles: Array(20).fill("audio/th1.mp3") 
 },
 'zha': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Zha (ظ) dari ujung lidah menyentuh ujung gigi atas.", 
     contoh: [
         "ظَظْ", "ظُو", "ظِي", "ظَا", "ظَظْنَ", "ظَنِ", "ظًا", "ظُو", "ظَنِ ظً", "مَظِيْتً", "الْمَظْنِ", "مِنَ",
@@ -759,7 +801,7 @@
     audioFiles: Array(20).fill("audio/zh1.mp3") 
 },
 'ain': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Ain (ع) keluar dari tengah tenggorokan.", 
     contoh: [
         "عَعْ", "عُو", "عِي", "عَا", "عَعْنَ", "عَنِ", "عًا", "عُو", "عَنِ عً", "مَعِيْتً", "الْمَعْنِ", "مِنَ",
@@ -768,7 +810,7 @@
     audioFiles: Array(20).fill("audio/a1.mp3") 
 },
 'ghain': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Ghain (غ) keluar dari tenggorokan atas.", 
     contoh: [
         "غَغْ", "غُو", "غِي", "غَا", "غَغْنَ", "غَنِ", "غًا", "غُو", "غَنِ غً", "مَخِيْتً", "الْمَغْنِ", "مِنَ",
@@ -777,7 +819,7 @@
     audioFiles: Array(20).fill("audio/gh1.mp3") 
 },
 'fa': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Fa (ف) dari bibir bawah menyentuh ujung gigi atas.", 
     contoh: [
         "فَفْ", "فُو", "فِي", "فَا", "فَفْنَ", "فَنِ", "فًا", "فُو", "فَنِ فً", "مَفِيْتً", "الْمَفْنِ", "مِنَ",
@@ -786,7 +828,7 @@
     audioFiles: Array(20).fill("audio/f1.mp3") 
 },
 'qaf': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Qaf (ق) dari pangkal lidah dan langit-langit lunak.", 
     contoh: [
         "قَقْ", "قُو", "قِي", "قَا", "قَقْنَ", "قَنِ", "قًا", "قُو", "قَنِ قً", "مَقِيْتً", "الْمَقْنِ", "مِنَ",
@@ -795,7 +837,7 @@
     audioFiles: Array(20).fill("audio/q1.mp3") 
 },
 'kaf': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Kaf (ك) dari pangkal lidah sedikit di bawah Qaf.", 
     contoh: [
         "كَكْ", "كُو", "كِي", "كَا", "كَكْنَ", "كَنِ", "كًا", "كُو", "كَنِ كً", "مَكِيْتً", "الْمَكْنِ", "مِنَ",
@@ -804,7 +846,7 @@
     audioFiles: Array(20).fill("audio/k1.mp3") 
 },
 'lam': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Lam (ل) dari tepi lidah menyentuh gusi.", 
     contoh: [
         "لَلْ", "لُو", "لِي", "لَا", "لَلْنَ", "لَنِ", "لًا", "لُو", "لَنِ لً", "مَلِيْتً", "الْمَلْنِ", "مِنَ",
@@ -813,7 +855,7 @@
     audioFiles: Array(20).fill("audio/l1.mp3") 
 },
 'mim': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Mim (م) dari pertemuan dua bibir.", 
     contoh: [
         "مَمْ", "مُو", "مِي", "مَا", "مَمْنَ", "مَنِ", "مًا", "مُو", "مَنِ مً", "مَمِيْتً", "الْمَمْنِ", "مِنَ",
@@ -822,7 +864,7 @@
     audioFiles: Array(20).fill("audio/m1.mp3") 
 },
 'nun': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Nun (ن) dari ujung lidah.", 
     contoh: [
         "نَنْ", "نُو", "نِي", "نَا", "نَنْْنَ", "نَنِ", "نًا", "نُو", "نَنِ نً", "مَنِيْتً", "الْمَنْنِ", "مِنَ",
@@ -831,7 +873,7 @@
     audioFiles: Array(20).fill("audio/n1.mp3") 
 },
 'wawu': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Wawu (و) dari dua bibir yang dibulatkan.", 
     contoh: [
         "وَوْ", "وُو", "وِي", "وَا", "وَوْْنَ", "وَنِ", "وًا", "وُو", "وَنِ وً", "مَوِيْتً", "الْمَوْنِ", "مِنَ",
@@ -840,7 +882,7 @@
     audioFiles: Array(20).fill("audio/w1.mp3") 
 },
 'ha': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Ha (هـ) dari pangkal tenggorokan.", 
     contoh: [
         "هَهْ", "هُو", "هِي", "هَا", "هَهْنَ", "هَنِ", "هًا", "هُو", "هَنِ هً", "مَهِيْتً", "الْمَهْنِ", "مِنَ",
@@ -849,7 +891,7 @@
     audioFiles: Array(20).fill("audio/h3.mp3") 
 },
 'ya_mati': { 
-    videoId: "TOvmRoJUV3E", 
+    videoId: "video bisc", 
     penjelasan: "Ya (ي) dari tengah lidah.", 
     contoh: [
         "يَيْ", "يُو", "يِي", "يَا", "يَيْْنَ", "يَنِ", "يً", "يُو", "يَنِ يً", "مَيِيْتً", "الْمَيْنِ", "مِنَ",
@@ -976,23 +1018,45 @@
             }
         }
 
-        function renderAyatList() {
-            const container = document.getElementById('detail-ayat-list');
-            let html = "";
-            currentSurahData.ayat.forEach((ayat, index) => {
-                html += `
-                    <div id="ayat-${index}" onclick="playAyat(${index})" class="ayat-item bg-white p-6 rounded-2xl border border-slate-100 hover:border-sky-200 shadow-sm transition duration-300 cursor-pointer space-y-4">
-                        <div class="flex justify-between items-center">
-                            <div class="w-8 h-8 bg-sky-700 text-white font-bold text-xs rounded-full flex items-center justify-center">${ayat.nomorAyat}</div>
-                            <span class="text-[11px] text-sky-600 font-semibold flex items-center gap-1"><i class="fa-solid fa-play text-[9px]"></i> Putar</span>
-                        </div>
-                        <div class="arabic-text font-arabic text-3xl text-right leading-relaxed text-slate-800 pb-2">${ayat.teksArab}</div>
-                        <p class="text-slate-600 text-sm leading-relaxed">${ayat.teksIndonesia}</p>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
+function renderAyatList() {
+    const container = document.getElementById('detail-ayat-list');
+    
+    // Fungsi pembantu untuk mengubah angka biasa (1, 2, 120) ke angka Arab (١, ٢, ١٢٠)
+    function toArabicNumeral(num) {
+        const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+        return num.toString().split('').map(digit => arabicNumbers[digit] || digit).join('');
+    }
+
+    let html = "";
+    currentSurahData.ayat.forEach((ayat, index) => {
+        const arabicNumberStr = toArabicNumeral(ayat.nomorAyat);
+        
+        // Format teks untuk dibagikan ke WhatsApp (menggunakan nomor Arab juga)
+        const shareText = `Surat ${currentSurahData.namaLatin} Ayat ${arabicNumberStr}\n\n${ayat.teksArab} ۝${arabicNumberStr}\n\n"${ayat.teksIndonesia}"\n\n(Dibagikan melalui BISC Mengaji)`;
+        const encodedShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+
+        html += `
+            <div id="ayat-${index}" class="ayat-item bg-white p-6 rounded-2xl border border-slate-100 hover:border-sky-200 shadow-sm transition duration-300 space-y-4">
+                <!-- Teks Arab & Nomor Ayat Angka Arab di Akhir Kalimat -->
+                <div class="arabic-text font-arabic text-3xl text-right leading-loose text-slate-800 pb-2">
+                    <span class="inline-block text-sky-800 text-2xl relative align-middle mx-1 font-arabic" style="direction: ltr;">۝<span class="absolute inset-0 flex items-center justify-center text-[11px] font-bold">${arabicNumberStr}</span></span>
+                    ${ayat.teksArab} 
+                </div>
+
+                <!-- Terjemahan Ayat -->
+                <p class="text-slate-600 text-sm leading-relaxed">${ayat.teksIndonesia}</p>
+                
+                <!-- Tombol Share WhatsApp di Bawah Terjemahan (Kecil) -->
+                <div class="flex justify-end pt-2 border-t border-slate-100">
+                    <a href="${encodedShareUrl}" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500 hover:text-green-600 bg-slate-50 hover:bg-green-50 px-2.5 py-1 rounded-md transition duration-200 border border-slate-200 hover:border-green-200">
+                        <i class="fa-brands fa-whatsapp text-green-500 text-xs"></i> Bagikan Ayat
+                    </a>
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
 
         /* ================= AUDIO PLAYER ENGINE & STOP FUNCTION ================= */
         const audioBar = document.getElementById('audio-bar');
@@ -1472,6 +1536,41 @@ function playMurojaahAudio(url) {
     const audio = new Audio(url);
     audio.play();
 }
+
+// Fungsi untuk mengubah tema gelap/terang
+function toggleDarkMode() {
+    const body = document.body;
+    const icon = document.getElementById('dark-mode-icon');
+    
+    // Cek apakah saat ini sedang dark mode
+    if (body.classList.contains('dark-mode')) {
+        body.classList.remove('dark-mode', 'bg-slate-900', 'text-slate-100');
+        body.classList.add('bg-slate-50', 'text-slate-800');
+        icon.className = "fa-solid fa-moon";
+        localStorage.setItem('theme', 'light');
+    } else {
+        body.classList.add('dark-mode', 'bg-slate-900', 'text-slate-100');
+        body.classList.remove('bg-slate-50', 'text-slate-800');
+        icon.className = "fa-solid fa-sun text-yellow-300";
+        localStorage.setItem('theme', 'dark');
+    }
+    
+    // Terapkan perubahan warna pada elemen kartu/kontainer dinamis
+    applyThemeToElements();
+}
+
+// Jalankan saat halaman pertama kali dimuat untuk membaca preferensi tersimpan
+window.addEventListener('DOMContentLoaded', () => {
+    // (Kode fetchSurahList dan switchView Anda yang sudah ada tetap di sini)
+    
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode', 'bg-slate-900', 'text-slate-100');
+        document.body.classList.remove('bg-slate-50', 'text-slate-800');
+        const icon = document.getElementById('dark-mode-icon');
+        if (icon) icon.className = "fa-solid fa-sun text-yellow-300";
+    }
+});
 
     </script>
 </body>
