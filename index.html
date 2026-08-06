@@ -109,10 +109,9 @@ body.dark-mode .arabic-text {
     <header class="bg-sky-900 text-white sticky top-0 z-50 shadow-md">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
-                <div class="bg-gradient-to-tr from-amber-400 to-yellow-200 p-2 rounded-lg text-sky-900">
-
-                    <img src="img/bisc.png" alt="Logo" class="w-10 h-10">
-                </div>
+<div class="text-sky-900">
+    <img src="img/bisc.png" alt="Logo" class="w-12 h-12 rounded-full object-cover">
+</div>
                 <div>
                     <h1 class="font-bold text-lg leading-tight tracking-wide">BISC MENGAJI</h1>
                     <p class="text-xs text-sky-200">Al-Qur'an, Murojaah & Tahsin</p>
@@ -515,7 +514,7 @@ body.dark-mode .arabic-text {
 'izhar-syafawi': {
     videoId: "video bisc",
     penjelasan: "Izhar Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan salah satu huruf hijaiyah selain Mim (م) dan Ba (ب). Aturan membacanya adalah suara Mim Sukun tersebut harus diucapkan dengan sangat jelas dan terang di bibir tanpa mendengung.",
-    contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ لَا", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"],
+    contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"],
     audioFiles: [
         "audio/tahsin/izhar-syafawi_1.mp3", "audio/tahsin/izhar-syafawi_2.mp3", "audio/tahsin/izhar-syafawi_3.mp3", "audio/tahsin/izhar-syafawi_4.mp3",
         "audio/tahsin/izhar-syafawi_5.mp3", "audio/tahsin/izhar-syafawi_6.mp3", "audio/tahsin/izhar-syafawi_7.mp3", "audio/tahsin/izhar-syafawi_8.mp3"
@@ -590,7 +589,7 @@ body.dark-mode .arabic-text {
 'alif-fathah': {
     videoId: "video bisc",
     penjelasan: "Mad Thabi'i Alif terjadi apabila huruf berharakat Fathah (ــَـ) bertemu dengan huruf Alif mati (ا). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat tersebut sepanjang dua harakat (satu alif) secara konsisten.",
-    contoh: ["قَالُوْا", "كِتَابٌ", "مَالِكِ", "هٰذَا", "الرَّحْمٰنE", "عَلٰى", "سَمٰوٰتِ", "جَاهِدِ"],
+    contoh: ["قَالُوْا", "كِتَابٌ", "مَالِكِ", "هٰذَا", "الرَّحْمٰن", "عَلٰى", "سَمٰوٰتِ", "جَاهِدِ"],
     audioFiles: [
         "audio/tahsin/alif-fathah_1.mp3", "audio/tahsin/alif-fathah_2.mp3", "audio/tahsin/alif-fathah_3.mp3", "audio/tahsin/alif-fathah_4.mp3",
         "audio/tahsin/alif-fathah_5.mp3", "audio/tahsin/alif-fathah_6.mp3", "audio/tahsin/alif-fathah_7.mp3", "audio/tahsin/alif-fathah_8.mp3"
@@ -1202,7 +1201,7 @@ body.dark-mode .arabic-text {
             const activeElement = document.getElementById(`ayat-${index}`);
             if (activeElement) {
                 activeElement.classList.add('bg-sky-50', 'border-sky-300');
-                activeElement.classList.remove('bg-black', 'border-slate-100');
+                activeElement.classList.remove('bg-white', 'border-slate-100');
                 activeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
