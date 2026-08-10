@@ -109,9 +109,10 @@ body.dark-mode .arabic-text {
     <header class="bg-sky-900 text-white sticky top-0 z-50 shadow-md">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
-<div class="text-sky-900">
-    <img src="img/bisc.png" alt="Logo" class="w-12 h-12 rounded-full object-cover">
-</div>
+                <div class="bg-gradient-to-tr from-amber-400 to-yellow-200 p-2 rounded-lg text-sky-900">
+
+                    <img src="img/bisc.png" alt="Logo" class="w-10 h-10">
+                </div>
                 <div>
                     <h1 class="font-bold text-lg leading-tight tracking-wide">BISC MENGAJI</h1>
                     <p class="text-xs text-sky-200">Al-Qur'an, Murojaah & Tahsin</p>
@@ -178,8 +179,8 @@ body.dark-mode .arabic-text {
                     <div class="w-14 h-14 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-500 text-2xl mb-4 group-hover:scale-110 transition duration-300">
                         <i class="fa-solid fa-circle-info"></i>
                     </div>
-                    <span class="font-bold text-slate-800 text-base">Informasi</span>
-                    <span class="text-xs text-slate-400 mt-1">Panduan Aplikasi</span>
+                    <span class="font-bold text-slate-800 text-base">Menghafal</span>
+                    <span class="text-xs text-slate-400 mt-1">Panduan Menghafal dari Audio</span>
                 </button>
             </div>
 
@@ -354,25 +355,242 @@ body.dark-mode .arabic-text {
         </section>
 
         <!-- ==================== VIEW 8: INFORMASI ==================== -->
-        <section id="view-informasi" class="view-panel hidden max-w-2xl mx-auto space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-6">
-                <div class="text-center space-y-2">
-                    <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center text-3xl mx-auto">
-                        <i class="fa-solid fa-circle-info"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-800">Tentang Aplikasi</h2>
-                    <p class="text-xs text-slate-400">IQRA DIGITAL • Versi 1.3</p>
-                </div>
+<section id="view-informasi" class="view-panel max-w-2xl mx-auto space-y-6">
+    <div class="bg-gradient-to-r from-sky-700 to-indigo-700 text-white p-6 rounded-2xl shadow-md">
+        <h2 class="text-2xl font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-bullseye"></i>Menghafal melalui Audio Syaikh Husori</h2>
+        <p class="text-sm text-sky-100">Menghafal Mudah dengan Mendengarkan</p>
+    </div>
 
-                <div class="space-y-4 text-sm text-slate-600 leading-relaxed">
-                    <p><strong>IQRA Digital</strong> merupakan media pembelajaran Al-Qur'an digital satu pintu yang memadukan kenyamanan tilawah harian dengan pengujian murojaah hafalan mandiri serta rujukan ilmu tajwid praktis.</p>
-                </div>
+    <div>
+        <h3 class="font-bold text-slate-700 mb-3">Pilih Mode Menghafal :</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <!-- Tombol Per Ayat (Opsional jika ingin dibuat view sendiri) -->
+            <button onclick="switchView('per-ayat')" class="juz-btn py-4 px-3 bg-white border border-slate-200 hover:border-sky-500 rounded-xl font-bold text-center text-lg text-slate-700 hover:text-sky-600 shadow-sm transition">Per Ayat</button>
+            
+            <!-- Tombol Per Surat yang menghubungkan ke bagian audio per surah -->
+            <button onclick="switchView('per-surat')" class="juz-btn py-4 px-3 bg-white border border-slate-200 hover:border-sky-500 rounded-xl font-bold text-center text-lg text-slate-700 hover:text-sky-600 shadow-sm transition">Per Surat</button>
+        </div>
+    </div>
+</section>
 
-                <div class="bg-slate-50 p-4 rounded-xl text-center text-xs text-slate-400 border border-slate-100">
-                    &copy; 2026 IQRA DIGITAL. All Rights Reserved.
-                </div>
+<!-- Bagian Per Ayat (Juz 29 & 30 dengan Pilihan Surah & Pengulangan) -->
+<section id="view-per-ayat" class="view-panel hidden max-w-2xl mx-auto space-y-6">
+    <div class="bg-white p-6 rounded-2xl shadow-md space-y-4">
+        <!-- Tombol Kembali ke Menu -->
+        <button onclick="switchView('informasi')" class="text-sm text-sky-600 font-semibold flex items-center gap-1 hover:underline mb-2">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Menu
+        </button>
+
+        <h2 class="text-xl font-bold text-slate-700">Menghafal Per Ayat (Juz 29 & 30) - Al-Husary</h2>
+        
+        <!-- Pilihan Juz -->
+        <div class="flex gap-2">
+            <button onclick="switchJuz(30)" id="btnJuz30" class="flex-1 py-2 bg-sky-600 text-white rounded-lg font-bold transition">Juz 30</button>
+            <button onclick="switchJuz(29)" id="btnJuz29" class="flex-1 py-2 bg-slate-200 text-slate-700 rounded-lg font-bold transition">Juz 29</button>
+        </div>
+
+        <!-- Pilihan Surah & Pengulangan -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="form-group space-y-1">
+                <label for="surahJuzSelect" class="block text-xs font-semibold text-slate-600">Pilih Surah:</label>
+                <select id="surahJuzSelect" onchange="loadAyatBySurah()" class="w-full border border-slate-300 p-2 rounded-lg bg-white text-sm">
+                    <!-- Diisi otomatis oleh JS -->
+                </select>
             </div>
-        </section>
+            <div class="form-group space-y-1">
+                <label for="repeatAyatSelect" class="block text-xs font-semibold text-slate-600">Pengulangan Per Ayat:</label>
+                <select id="repeatAyatSelect" class="w-full border border-slate-300 p-2 rounded-lg bg-white text-sm">
+                    <option value="1">1 Kali</option>
+                    <option value="2">2 Kali</option>
+                    <option value="3">3 Kali</option>
+                    <option value="4">4 Kali</option>
+                    <option value="5">5 Kali</option>
+                    <option value="6">6 Kali</option>
+                    <option value="7">7 Kali</option>
+                    <option value="8">8 Kali</option>
+                    <option value="9">9 Kali</option>
+                    <option value="10">10 Kali</option>
+                    <option value="infinity">Looping Terus</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Daftar Ayat -->
+        <div id="ayatContainer" class="space-y-3 max-h-96 overflow-y-auto pr-2">
+            <p class="text-center text-slate-500 py-4">Silakan pilih surah di atas.</p>
+        </div>
+
+        <!-- Bar Audio Melayang (Tetap aktif saat pindah menu, hilang jika kembali ke menu utama/informasi) -->
+<div id="audio-bar" class="hidden fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-4 shadow-xl z-50 flex flex-col sm:flex-row items-center justify-between gap-3 max-w-2xl mx-auto rounded-t-2xl border-t border-slate-700">
+    <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
+        <div id="currentAyatInfo" class="text-xs sm:text-sm font-medium truncate">Memutar Audio...</div>
+        <span id="ayatRepeatStatus" class="text-xs bg-sky-600 px-2 py-0.5 rounded text-sky-100 font-bold whitespace-nowrap"></span>
+    </div>
+    <div class="flex items-center gap-3 w-full sm:w-auto justify-between">
+        <audio id="ayatAudioElement" controls class="w-full sm:w-64 h-10"></audio>
+        <button onclick="closeAyatAudioBar()" class="text-slate-400 hover:text-white p-2" title="Tutup Pemutar"><i class="fa-solid fa-xmark text-lg"></i></button>
+    </div>
+</div>
+    </div>
+</section>
+
+<!-- Bagian Audio Per Surah (Target Link) -->
+<section id="view-per-surat" class="view-panel hidden max-w-2xl mx-auto space-y-6">
+
+    <div class="container bg-white p-6 rounded-2xl shadow-md space-y-4">
+          <!-- Tombol Kembali ke Menu -->
+        <button onclick="switchView('informasi')" class="text-sm text-sky-600 font-semibold flex items-center gap-1 hover:underline mb-2">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Menu
+        </button>
+
+        <h2 class="text-xl font-bold text-slate-700">Audio Per Surah Al-Husary</h2>
+        
+<div class="form-group">
+            <label for="surahSelect">Pilih Surah:</label>
+            <select id="surahSelect">
+                <option value="1">1. Al-Fatihah</option>
+                <option value="2">2. Al-Baqarah</option>
+                <option value="3">3. Ali 'Imran</option>
+                <option value="4">4. An-Nisa'</option>
+                <option value="5">5. Al-Ma'idah</option>
+                <option value="6">6. Al-An'am</option>
+                <option value="7">7. Al-A'raf</option>
+                <option value="8">8. Al-Anfal</option>
+                <option value="9">9. At-Taubah</option>
+                <option value="10">10. Yunus</option>
+                <option value="11">11. Hud</option>
+                <option value="12">12. Yusuf</option>
+                <option value="13">13. Ar-Ra'd</option>
+                <option value="14">14. Ibrahim</option>
+                <option value="15">15. Al-Hijr</option>
+                <option value="16">16. An-Nahl</option>
+                <option value="17">17. Al-Isra'</option>
+                <option value="18">18. Al-Kahf</option>
+                <option value="19">19. Maryam</option>
+                <option value="20">20. Taha</option>
+                <option value="21">21. Al-Anbiya'</option>
+                <option value="22">22. Al-Hajj</option>
+                <option value="23">23. Al-Mu'minun</option>
+                <option value="24">24. An-Nur</option>
+                <option value="25">25. Al-Furqan</option>
+                <option value="26">26. Ash-Shu'ara'</option>
+                <option value="27">27. An-Naml</option>
+                <option value="28">28. Al-Qasas</option>
+                <option value="29">29. Al-'Ankabut</option>
+                <option value="30">30. Ar-Rum</option>
+                <option value="31">31. Luqman</option>
+                <option value="32">32. As-Sajdah</option>
+                <option value="33">33. Al-Ahzab</option>
+                <option value="34">34. Saba'</option>
+                <option value="35">35. Fatir</option>
+                <option value="36">36. Ya-Sin</option>
+                <option value="37">37. As-Saffat</option>
+                <option value="38">38. Sad</option>
+                <option value="39">39. Az-Zumar</option>
+                <option value="40">40. Ghafir</option>
+                <option value="41">41. Fussilat</option>
+                <option value="42">42. Ash-Shura</option>
+                <option value="43">43. Az-Zukhruf</option>
+                <option value="44">44. Ad-Dukhan</option>
+                <option value="45">45. Al-Jathiyah</option>
+                <option value="46">46. Al-Ahqaf</option>
+                <option value="47">47. Muhammad</option>
+                <option value="48">48. Al-Fath</option>
+                <option value="49">49. Al-Hujurat</option>
+                <option value="50">50. Qaf</option>
+                <option value="51">51. Ad-Dhariyat</option>
+                <option value="52">52. At-Tur</option>
+                <option value="53">53. An-Najm</option>
+                <option value="54">54. Al-Qamar</option>
+                <option value="55">55. Ar-Rahman</option>
+                <option value="56">56. Al-Waqi'ah</option>
+                <option value="57">57. Al-Hadid</option>
+                <option value="58">58. Al-Mujadilah</option>
+                <option value="59">59. Al-Hashr</option>
+                <option value="60">60. Al-Mumtahanah</option>
+                <option value="61">61. As-Saff</option>
+                <option value="62">62. Al-Jumu'ah</option>
+                <option value="63">63. Al-Munafiqun</option>
+                <option value="64">64. At-Taghabun</option>
+                <option value="65">65. At-Talaq</option>
+                <option value="66">66. At-Tahrim</option>
+                <option value="67">67. Al-Mulk</option>
+                <option value="68">68. Al-Qalam</option>
+                <option value="69">69. Al-Haqqah</option>
+                <option value="70">70. Al-Ma'arij</option>
+                <option value="71">71. Nuh</option>
+                <option value="72">72. Al-Jinn</option>
+                <option value="73">73. Al-Muzzammil</option>
+                <option value="74">74. Al-Muddaththir</option>
+                <option value="75">75. Al-Qiyamah</option>
+                <option value="76">76. Al-Insan</option>
+                <option value="77">77. Al-Mursalat</option>
+                <option value="78">78. An-Naba'</option>
+                <option value="79">79. An-Nazi'at</option>
+                <option value="80">80. 'Abasa</option>
+                <option value="81">81. At-Takwir</option>
+                <option value="82">82. Al-Infitar</option>
+                <option value="83">83. Al-Mutaffifin</option>
+                <option value="84">84. Al-Inshiqaq</option>
+                <option value="85">85. Al-Buruj</option>
+                <option value="86">86. At-Tariq</option>
+                <option value="87">87. Al-A'la</option>
+                <option value="88">88. Al-Ghashiyah</option>
+                <option value="89">89. Al-Fajr</option>
+                <option value="90">90. Al-Balad</option>
+                <option value="91">91. Ash-Shams</option>
+                <option value="92">92. Al-Lail</option>
+                <option value="93">93. Ad-Duha</option>
+                <option value="94">94. Ash-Sharh</option>
+                <option value="95">95. At-Tin</option>
+                <option value="96">96. Al-'Alaq</option>
+                <option value="97">97. Al-Qadr</option>
+                <option value="98">98. Al-Bayyinah</option>
+                <option value="99">99. Az-Zalzalah</option>
+                <option value="100">100. Al-'Adiyat</option>
+                <option value="101">101. Al-Qari'ah</option>
+                <option value="102">102. At-Takathur</option>
+                <option value="103">103. Al-'Asr</option>
+                <option value="104">104. Al-Humazah</option>
+                <option value="105">105. Al-Fil</option>
+                <option value="106">106. Quraisy</option>
+                <option value="107">107. Al-Ma'un</option>
+                <option value="108">108. Al-Kauthar</option>
+                <option value="109">109. Al-Kafirun</option>
+                <option value="110">110. An-Nasr</option>
+                <option value="111">111. Al-Masad</option>
+                <option value="112">112. Al-Ikhlas</option>
+                <option value="113">113. Al-Falaq</option>
+                <option value="114" selected>114. An-Nas</option>
+            </select>
+        </div>
+
+        <div class="form-group space-y-2">
+            <label for="repeatSelect" class="block text-sm font-medium text-slate-600">Pengulangan Audio:</label>
+            <select id="repeatSelect" class="w-full border border-slate-300 p-2 rounded-lg">
+                <option value="1">1 Kali</option>
+                <option value="2">2 Kali</option>
+                <option value="3">3 Kali</option>
+                <option value="4">4 Kali</option>
+                <option value="5">5 Kali</option>
+                <option value="6">6 Kali</option>
+                <option value="7">7 Kali</option>
+                <option value="8">8 Kali</option>
+                <option value="9">9 Kali</option>
+                <option value="10">10 Kali</option>
+                <option value="infinity">Looping</option>
+            </select>
+        </div>
+
+        <button onclick="fetchSurahAudio()" class="w-full bg-sky-600 text-white py-2 rounded-lg font-bold hover:bg-sky-700 transition">Muat Audio Surah</button>
+
+        <div id="resultBox" class="result-box space-y-2 pt-2">
+            <p id="surahInfo" style="font-weight: bold; color: #7f8c8d; font-size: 14px;"></p>
+            <audio id="audioPlayer" controls class="w-full"></audio>
+            <div id="repeatStatus" class="repeat-status text-sm text-slate-500"></div>
+        </div>
+    </div>
+</section>
 
     </main>
 
@@ -514,7 +732,7 @@ body.dark-mode .arabic-text {
 'izhar-syafawi': {
     videoId: "video bisc",
     penjelasan: "Izhar Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan salah satu huruf hijaiyah selain Mim (م) dan Ba (ب). Aturan membacanya adalah suara Mim Sukun tersebut harus diucapkan dengan sangat jelas dan terang di bibir tanpa mendengung.",
-    contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"],
+    contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ لَا", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"],
     audioFiles: [
         "audio/tahsin/izhar-syafawi_1.mp3", "audio/tahsin/izhar-syafawi_2.mp3", "audio/tahsin/izhar-syafawi_3.mp3", "audio/tahsin/izhar-syafawi_4.mp3",
         "audio/tahsin/izhar-syafawi_5.mp3", "audio/tahsin/izhar-syafawi_6.mp3", "audio/tahsin/izhar-syafawi_7.mp3", "audio/tahsin/izhar-syafawi_8.mp3"
@@ -589,7 +807,7 @@ body.dark-mode .arabic-text {
 'alif-fathah': {
     videoId: "video bisc",
     penjelasan: "Mad Thabi'i Alif terjadi apabila huruf berharakat Fathah (ــَـ) bertemu dengan huruf Alif mati (ا). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat tersebut sepanjang dua harakat (satu alif) secara konsisten.",
-    contoh: ["قَالُوْا", "كِتَابٌ", "مَالِكِ", "هٰذَا", "الرَّحْمٰن", "عَلٰى", "سَمٰوٰتِ", "جَاهِدِ"],
+    contoh: ["قَالُوْا", "كِتَابٌ", "مَالِكِ", "هٰذَا", "الرَّحْمٰنE", "عَلٰى", "سَمٰوٰتِ", "جَاهِدِ"],
     audioFiles: [
         "audio/tahsin/alif-fathah_1.mp3", "audio/tahsin/alif-fathah_2.mp3", "audio/tahsin/alif-fathah_3.mp3", "audio/tahsin/alif-fathah_4.mp3",
         "audio/tahsin/alif-fathah_5.mp3", "audio/tahsin/alif-fathah_6.mp3", "audio/tahsin/alif-fathah_7.mp3", "audio/tahsin/alif-fathah_8.mp3"
@@ -1044,8 +1262,21 @@ body.dark-mode .arabic-text {
             }
         }
 
+        function stopAndCloseAudio() {
+    const audioPlayer = document.getElementById('audioPlayer');
+    const resultBox = document.getElementById('resultBox');
+    
+    // Hentikan pemutaran audio
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0; // Kembalikan ke detik ke-0
+    
+    // Sembunyikan box hasil (opsional, jika ada tombol close/exit)
+    resultBox.style.display = 'none';
+}
+
         /* ================= PENGENDALI PANEL BACA & AUDIO VISIBILITY ================= */
         function switchView(viewId) {
+            stopAndCloseAudio();
             currentActiveView = viewId;
             document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
@@ -1201,7 +1432,7 @@ body.dark-mode .arabic-text {
             const activeElement = document.getElementById(`ayat-${index}`);
             if (activeElement) {
                 activeElement.classList.add('bg-sky-50', 'border-sky-300');
-                activeElement.classList.remove('bg-white', 'border-slate-100');
+                activeElement.classList.remove('bg-black', 'border-slate-100');
                 activeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
@@ -1682,6 +1913,375 @@ window.addEventListener('DOMContentLoaded', () => {
         if (icon) icon.className = "fa-solid fa-sun text-yellow-300";
     }
 });
+
+let currentPlayCount = 0;
+        let maxRepeat = 1;
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        // Event listener saat audio selesai diputar
+        audioPlayer.addEventListener('ended', function() {
+            currentPlayCount++;
+            
+            if (maxRepeat === 'infinity') {
+                document.getElementById('repeatStatus').innerText = `Status: Pengulangan ke-${currentPlayCount} (Tidak Terhingga)`;
+                audioPlayer.currentTime = 0;
+                audioPlayer.play();
+            } else if (currentPlayCount < maxRepeat) {
+                document.getElementById('repeatStatus').innerText = `Status: Memutar pengulangan ke-${currentPlayCount + 1} dari ${maxRepeat}`;
+                audioPlayer.currentTime = 0;
+                audioPlayer.play();
+            } else {
+                document.getElementById('repeatStatus').innerText = `Status: Pemutaran selesai (${maxRepeat} kali).`;
+            }
+        });
+
+        async function fetchSurahAudio() {
+            // Mengambil nilai nomor surah dari value dropdown surahSelect
+            const surah = document.getElementById('surahSelect').value;
+            maxRepeat = document.getElementById('repeatSelect').value;
+            const resultBox = document.getElementById('resultBox');
+            const surahInfo = document.getElementById('surahInfo');
+            const repeatStatus = document.getElementById('repeatStatus');
+
+            if (!surah || surah < 1 || surah > 114) {
+                alert('Silakan pilih surah terlebih dahulu.');
+                return;
+            }
+
+            // Reset hitungan pengulangan saat tombol diklik ulang
+            currentPlayCount = 0;
+
+            const audioApiUrl = `https://api.quran.com/api/v4/chapter_recitations/6/${surah}`;
+            const chapterApiUrl = `https://api.quran.com/api/v4/chapters/${surah}`;
+
+            try {
+                surahInfo.innerText = "Memuat audio surah...";
+                repeatStatus.innerText = "";
+                resultBox.style.display = 'block';
+
+                const [resAudio, resChapter] = await Promise.all([
+                    fetch(audioApiUrl),
+                    fetch(chapterApiUrl)
+                ]);
+
+                const dataAudio = await resAudio.json();
+                const dataChapter = await resChapter.json();
+
+                if (dataAudio.audio_file && dataChapter.chapter) {
+                    let audioUrl = dataAudio.audio_file.audio_url;
+                    
+                    if (audioUrl.startsWith('//')) {
+                        audioUrl = 'https:' + audioUrl;
+                    } else if (!audioUrl.startsWith('http')) {
+                        audioUrl = 'https://verses.quran.com/' + audioUrl;
+                    }
+
+                    const chapterName = dataChapter.chapter.name_complex;
+                    const translatedName = dataChapter.chapter.translated_name.name;
+
+                    surahInfo.innerText = `Surah ${surah}: ${chapterName} (${translatedName}) - Al-Husary`;
+                    
+                    if (maxRepeat === 'infinity') {
+                        repeatStatus.innerText = `Status: Mode Tidak Terhingga Aktif`;
+                    } else if (maxRepeat > 1) {
+                        repeatStatus.innerText = `Status: Memutar pengulangan ke-1 dari ${maxRepeat}`;
+                    } else {
+                        repeatStatus.innerText = `Status: Diputar 1 kali`;
+                    }
+
+                    audioPlayer.src = audioUrl;
+                    audioPlayer.load();
+                    audioPlayer.play().catch(e => {
+                        console.log("Pemutaran otomatis dicegah browser:", e);
+                    });
+                } else {
+                    alert('Audio surah tidak ditemukan.');
+                    resultBox.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Terjadi kesalahan:', error);
+                alert('Gagal mengambil data dari server. Periksa koneksi internet Anda.');
+            }
+        }
+
+
+
+// Data daftar surah lengkap untuk Juz 29 dan Juz 30
+const juzData = {
+    30: [
+        { id: 78, name: "78. An-Naba'" },
+        { id: 79, name: "79. An-Nazi'at" },
+        { id: 80, name: "80. 'Abasa" },
+        { id: 81, name: "81. At-Takwir" },
+        { id: 82, name: "82. Al-Infitar" },
+        { id: 83, name: "83. Al-Mutaffifin" },
+        { id: 84, name: "84. Al-Inshiqaq" },
+        { id: 85, name: "85. Al-Buruj" },
+        { id: 86, name: "86. At-Tariq" },
+        { id: 87, name: "87. Al-A'la" },
+        { id: 88, name: "88. Al-Ghashiyah" },
+        { id: 89, name: "89. Al-Fajr" },
+        { id: 90, name: "90. Al-Balad" },
+        { id: 91, name: "91. Ash-Shams" },
+        { id: 92, name: "92. Al-Lail" },
+        { id: 93, name: "93. Ad-Duha" },
+        { id: 94, name: "94. Ash-Sharh" },
+        { id: 95, name: "95. At-Tin" },
+        { id: 96, name: "96. Al-'Alaq" },
+        { id: 97, name: "97. Al-Qadr" },
+        { id: 98, name: "98. Al-Bayyinah" },
+        { id: 99, name: "99. Az-Zalzalah" },
+        { id: 100, name: "100. Al-'Adiyat" },
+        { id: 101, name: "101. Al-Qari'ah" },
+        { id: 102, name: "102. At-Takathur" },
+        { id: 103, name: "103. Al-'Asr" },
+        { id: 104, name: "104. Al-Humazah" },
+        { id: 105, name: "105. Al-Fil" },
+        { id: 106, name: "106. Quraisy" },
+        { id: 107, name: "107. Al-Ma'un" },
+        { id: 108, name: "108. Al-Kauthar" },
+        { id: 109, name: "109. Al-Kafirun" },
+        { id: 110, name: "110. An-Nasr" },
+        { id: 111, name: "111. Al-Masad" },
+        { id: 112, name: "112. Al-Ikhlas" },
+        { id: 113, name: "113. Al-Falaq" },
+        { id: 114, name: "114. An-Nas" }
+    ],
+    29: [
+        { id: 67, name: "67. Al-Mulk" },
+        { id: 68, name: "68. Al-Qalam" },
+        { id: 69, name: "69. Al-Haqqah" },
+        { id: 70, name: "70. Al-Ma'arij" },
+        { id: 71, name: "71. Nuh" },
+        { id: 72, name: "72. Al-Jinn" },
+        { id: 73, name: "73. Al-Muzzammil" },
+        { id: 74, name: "74. Al-Muddaththir" },
+        { id: 75, name: "75. Al-Qiyamah" },
+        { id: 76, name: "76. Al-Insan" },
+        { id: 77, name: "77. Al-Mursalat" }
+    ]
+};
+
+// Fungsi saat tombol Juz 30 atau 29 diklik
+function switchJuz(juzNumber) {
+    currentJuz = juzNumber;
+    const btn30 = document.getElementById('btnJuz30');
+    const btn29 = document.getElementById('btnJuz29');
+    const selectSurah = document.getElementById('surahJuzSelect');
+
+    if (juzNumber === 30) {
+        btn30.className = "flex-1 py-2 bg-sky-600 text-white rounded-lg font-bold transition";
+        btn29.className = "flex-1 py-2 bg-slate-200 text-slate-700 rounded-lg font-bold transition";
+    } else {
+        btn29.className = "flex-1 py-2 bg-sky-600 text-white rounded-lg font-bold transition";
+        btn30.className = "flex-1 py-2 bg-slate-200 text-slate-700 rounded-lg font-bold transition";
+    }
+
+    // Isi dropdown pilihan surah sesuai juz yang dipilih
+    selectSurah.innerHTML = '';
+    juzData[juzNumber].forEach(surah => {
+        const option = document.createElement('option');
+        option.value = surah.id;
+        option.innerText = surah.name;
+        selectSurah.appendChild(option);
+    });
+
+    // Otomatis muat ayat dari surah pertama di dropdown
+    loadAyatBySurah();
+}
+
+// Fungsi untuk mengambil dan menampilkan seluruh ayat dari surah yang dipilih (dari ayat 1 sampai akhir)
+async function loadAyatBySurah() {
+    const surahId = document.getElementById('surahJuzSelect').value;
+    const container = document.getElementById('ayatContainer');
+
+    if (!surahId) return;
+
+    // Tampilkan status loading
+    container.innerHTML = `<p class="text-center text-slate-500 py-4">Memuat seluruh ayat...</p>`;
+
+    try {
+        // Mengambil seluruh ayat berdasarkan ID surah secara lengkap (tanpa batasan)
+        const response = await fetch(`https://api.quran.com/api/v4/verses/by_chapter/${surahId}?words=false&fields=text_uthmani&per_page=300`);
+        const data = await response.json();
+
+        if (data.verses && data.verses.length > 0) {
+            container.innerHTML = ''; // Kosongkan container
+            
+            // Loop semua ayat dari ayat 1 sampai akhir surat
+            data.verses.forEach((verse, index) => {
+                const verseKey = verse.verse_key; // Contoh: "78:1", "78:2", dst.
+                const nomorAyat = index + 1;
+                
+                const ayatItem = document.createElement('div');
+                ayatItem.className = "ayat-item p-3 border border-slate-200 rounded-xl flex items-center justify-between hover:bg-sky-50 transition cursor-pointer";
+                ayatItem.innerHTML = `
+                    <span class="text-xs font-bold text-sky-700 bg-sky-100 px-2.5 py-1 rounded-md">${nomorAyat}</span>
+                    <p class="text-right text-xl font-arabic text-slate-800 mx-3 flex-1" dir="rtl">${verse.text_uthmani}</p>
+                    <button onclick="playAyatAudio('${verseKey}')" class="bg-sky-600 text-white p-2.5 rounded-lg hover:bg-sky-700 transition flex items-center justify-center" title="Putar Audio Ayat">
+                        <i class="fa-solid fa-play text-sm"></i>
+                    </button>
+                `;
+                container.appendChild(ayatItem);
+            });
+        } else {
+            container.innerHTML = `<p class="text-center text-slate-500 py-4">Ayat tidak ditemukan.</p>`;
+        }
+    } catch (error) {
+        console.error("Gagal memuat ayat:", error);
+        container.innerHTML = `<p class="text-center text-red-500 py-4">Gagal memuat data ayat. Periksa koneksi internet Anda.</p>`;
+    }
+}
+
+
+// Deklarasi variabel khusus untuk Per Ayat (Terisolasi dari Surah)
+let currentPlayCountAyat = 0;
+let maxRepeatAyat = 1;
+
+// Ambil elemen audio khusus ayat
+const ayatAudioElement = document.getElementById('ayatAudioElement');
+
+// 1. Inisialisasi Event Listener 'ended' khusus untuk Ayat
+if (ayatAudioElement) {
+    ayatAudioElement.onended = null;
+
+    ayatAudioElement.addEventListener('ended', async function() {
+        currentPlayCountAyat++;
+        const statusBadge = document.getElementById('ayatRepeatStatus');
+        const audioBar = document.getElementById('audio-bar');
+
+        // Jika mode Looping (infinity), biarkan terus berputar tanpa menutup bar
+        if (maxRepeatAyat === 'infinity') {
+            if (statusBadge) statusBadge.innerText = `Looping (Putaran ke-${currentPlayCountAyat + 1})`;
+            ayatAudioElement.currentTime = 0;
+            ayatAudioElement.load();
+            try {
+                await ayatAudioElement.play();
+            } catch (err) {
+                console.log("Autoplay dicegah:", err);
+            }
+            return;
+        }
+
+        const limitRepeat = parseInt(maxRepeatAyat, 10) || 1;
+
+        // Jika belum mencapai batas maksimal pengulangan, lanjut putar lagi
+        if (currentPlayCountAyat < limitRepeat) {
+            if (statusBadge) statusBadge.innerText = `Ulang ke-${currentPlayCountAyat + 1} dari ${limitRepeat}`;
+            ayatAudioElement.currentTime = 0;
+            ayatAudioElement.load();
+            try {
+                await ayatAudioElement.play();
+            } catch (err) {
+                console.log("Autoplay dicegah:", err);
+            }
+        } else {
+            // Jika sudah SELESAI sesuai batas maksimal:
+            if (statusBadge) statusBadge.innerText = `Selesai diputar (${limitRepeat}x)`;
+            
+            // Beri sedikit jeda (misalnya 800 milidetik) agar teks "Selesai" sempat terbaca sebentar, 
+            // lalu audio-bar otomatis tertutup
+            setTimeout(() => {
+                if (audioBar) audioBar.classList.add('hidden');
+                ayatAudioElement.currentTime = 0;
+                currentPlayCountAyat = 0;
+            }, 800);
+        }
+    });
+}
+// 2. Fungsi Play Audio Ayat
+async function playAyatAudio(verseKey) {
+    const repeatSelect = document.getElementById('repeatAyatSelect');
+    maxRepeatAyat = repeatSelect ? repeatSelect.value : '1';
+    currentPlayCountAyat = 0; // Reset hitungan
+
+    const audioBar = document.getElementById('audio-bar');
+    const currentAyatInfo = document.getElementById('currentAyatInfo');
+    const statusBadge = document.getElementById('ayatRepeatStatus');
+
+    if (currentAyatInfo) currentAyatInfo.innerText = `Memuat Ayat ${verseKey} (Al-Husary)...`;
+    if (statusBadge) statusBadge.innerText = '';
+    
+    // Munculkan bar audio dan pastikan tidak exit sebelum waktunya
+    if (audioBar) audioBar.classList.remove('hidden');
+
+    try {
+        const res = await fetch(`https://api.quran.com/api/v4/recitations/6/by_ayah/${verseKey}`);
+        const data = await res.json();
+
+        let audioUrl = '';
+        if (data.audio_file && data.audio_file.url) {
+            audioUrl = data.audio_file.url;
+        } else if (data.audio_files && data.audio_files.length > 0) {
+            audioUrl = data.audio_files[0].url;
+        }
+
+        if (audioUrl) {
+            if (audioUrl.startsWith('//')) {
+                audioUrl = 'https:' + audioUrl;
+            } else if (audioUrl.startsWith('/')) {
+                audioUrl = 'https://verses.quran.com' + audioUrl;
+            } else if (!audioUrl.startsWith('http')) {
+                audioUrl = 'https://verses.quran.com/' + audioUrl;
+            }
+
+            if (currentAyatInfo) currentAyatInfo.innerText = `Memutar Ayat ${verseKey} - Syeikh Al-Husary`;
+            
+            if (statusBadge) {
+                if (maxRepeatAyat === 'infinity') {
+                    statusBadge.innerText = `Looping Aktif`;
+                } else if (parseInt(maxRepeatAyat, 10) > 1) {
+                    statusBadge.innerText = `Ulang 1 dari ${maxRepeatAyat}`;
+                } else {
+                    statusBadge.innerText = `1 Kali Putaran`;
+                }
+            }
+
+            if (ayatAudioElement) {
+                ayatAudioElement.src = audioUrl;
+                ayatAudioElement.load();
+                await ayatAudioElement.play();
+            }
+        } else {
+            alert("Audio untuk ayat ini tidak tersedia dari server.");
+            if (currentAyatInfo) currentAyatInfo.innerText = "Audio tidak tersedia.";
+        }
+    } catch (err) {
+        console.error("Gagal memuat audio:", err);
+        alert("Gagal memuat audio, periksa koneksi internet Anda.");
+    }
+}
+
+// 3. Fungsi Tutup Manual
+function closeAyatAudioBar() {
+    const audioBar = document.getElementById('audio-bar');
+    if (ayatAudioElement) {
+        ayatAudioElement.pause();
+        ayatAudioElement.currentTime = 0;
+    }
+    currentPlayCountAyat = 0;
+    if (audioBar) audioBar.classList.add('hidden');
+}
+// Penyesuaian Fungsi switchView agar Audio Bar tetap hidup saat pindah menu lain, 
+// tapi otomatis mati/hilang jika kembali ke menu utama ('informasi')
+function switchView(viewId) {
+    // Jika kembali ke menu utama/informasi, matikan audio bar per ayat
+    if (viewId === 'informasi') {
+        closeAyatAudioBar();
+    }
+
+    currentActiveView = viewId;
+    document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
+    
+    const targetElement = document.getElementById(`view-${viewId}`);
+    if (targetElement) {
+        targetElement.classList.remove('hidden');
+        if (viewId === 'per-ayat') {
+            switchJuz(30); // Otomatis load Juz 30 saat dibuka
+        }
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
     </script>
 </body>
