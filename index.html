@@ -108,7 +108,7 @@ body.dark-mode .arabic-text {
     <!-- 🏛️ BAR ATAS -->
     <header class="bg-sky-900 text-white sticky top-0 z-50 shadow-md">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('home')">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()">
 <div class="text-sky-900">
     <img src="img/bisc.png" alt="Logo" class="w-12 h-12 rounded-full object-cover">
 </div>
@@ -124,7 +124,7 @@ body.dark-mode .arabic-text {
         <i id="dark-mode-icon" class="fa-solid fa-moon"></i>
     </button>
 
-    <button onclick="switchView('home')" class="bg-sky-850 hover:bg-sky-800 text-white text-sm font-semibold py-1.5 px-4 rounded-full transition duration-200 flex items-center gap-2 border border-sky-700/50">
+    <button onclick="goHome()" class="bg-sky-850 hover:bg-sky-800 text-white text-sm font-semibold py-1.5 px-4 rounded-full transition duration-200 flex items-center gap-2 border border-sky-700/50">
         <i class="fa-solid fa-house"></i> Beranda
     </button>
 </div>
@@ -420,7 +420,7 @@ body.dark-mode .arabic-text {
         </div>
 
         <!-- Bar Audio Melayang (Tetap aktif saat pindah menu, hilang jika kembali ke menu utama/informasi) -->
-<div id="audio-bar" class="hidden fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-4 shadow-xl z-50 flex flex-col sm:flex-row items-center justify-between gap-3 max-w-2xl mx-auto rounded-t-2xl border-t border-slate-700">
+<div id="audio-bari" class="hidden fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-4 shadow-xl z-50 flex flex-col sm:flex-row items-center justify-between gap-3 max-w-2xl mx-auto rounded-t-2xl border-t border-slate-700">
     <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
         <div id="currentAyatInfo" class="text-xs sm:text-sm font-medium truncate">Memutar Audio...</div>
         <span id="ayatRepeatStatus" class="text-xs bg-sky-600 px-2 py-0.5 rounded text-sky-100 font-bold whitespace-nowrap"></span>
@@ -652,7 +652,7 @@ body.dark-mode .arabic-text {
         const TAHSIN_COMPACT_DATA = {
             'nun-sukun': {
                 'izhar': {
-                    videoId: "video bisc",
+                    videoId: "te9scAs8VGM",
                     penjelasan: "Izhar Halqi terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin (ــًــٍــٌ) bertemu dengan salah satu dari 6 huruf tenggorokan (Halqi), yaitu Alif (أ), Ha (هـ), Ha (ح), Kha (خ), 'Ain (ع), dan Ghain (غ). Aturan membacanya adalah suara Nun atau Tanwin tersebut harus diucapkan dengan jelas, tegas, tanpa disertai dengung.",
                     contoh: ["مَنْ اٰمَنَ", "مِنْ حَكِيْمٍ", "فَرِيْقًا هَذَاى", "عَذَابٌ عَظِيْمٌ", "مِنْ غِلٍّ", "لَطِيْفٌ خَبِيْرٌ", "وَالْمُنْخَنِقَةُ", "مِنْ عِنْدِ"],
                 audioFiles: [
@@ -668,7 +668,7 @@ body.dark-mode .arabic-text {
                  },
                 
                 'bighunnah': {
-    videoId: "video bisc",
+    videoId: "uLbEKDMB-v0",
     penjelasan: "Idgham Bighunnah terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 4 huruf yaitu Ya (ي), Nun (ن), Mim (م), atau Wawu (و). Aturan membacanya adalah suara Nun atau Tanwin harus dileburkan ke dalam huruf setelahnya dan dibaca mendengung ditahan selama 2-3 ketukan.",
     contoh: ["مَنْ يَّقُوْلُ", "عَذَابٌ مُّقِيْمٌ", "مِنْ وَّرَاۤىِٔهِمْ", "مِنْ وَلِيٍّ", "مِنْ مَّاءٍ", "وُجُوْهٌ يَّوْمَىِٔذٍ", "خَيْرٌ وَّاَبْقٰى", "اَمَنَةً نُّعَاسًا"],
     audioFiles: [
@@ -678,7 +678,7 @@ body.dark-mode .arabic-text {
 },
 
 'bilaghunnah': {
-    videoId: "video bisc",
+    videoId: "uLbEKDMB-v0",
     penjelasan: "Idgham Bilaghunnah terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Lam (ل) atau Ra (ر). Aturan membacanya adalah suara Nun atau Tanwin wajib dileburkan sepenuhnya ke dalam huruf Lam atau Ra tersebut secara langsung tanpa disertai dengung sedikit pun.",
     contoh: ["مِنْ رَّبِّهِمْ", "هُدًى لِّلْمُتَّقِيْنَ", "مِنْ لَّدُنْهُ", "غَفُوْرٌ رَّحِيْمٌ", "فِتْنَةٌ لَّهُمْ", "مِنْ رِّزْقِ اللّٰهِ", "بِقَادِرٍ لَّمْ", "تَوَّابٌ رَّحِيْمٌ"],
     audioFiles: [
@@ -688,7 +688,7 @@ body.dark-mode .arabic-text {
 },
 
 'iqlab': {
-    videoId: "video bisc",
+    videoId: "5hjpzR3uHio",
     penjelasan: "Iqlab terjadi apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan cara mengubah/membalikkan bunyi huruf Nun atau Tanwin tersebut menjadi suara huruf Mim (م) yang samar di bibir, sembari mendengung dan ditahan sejenak.",
     contoh: ["مِنْ بَعْدِ", "سَمِيْعٌ بَصِيْرٌ", "اَنْۢبِئْهُمْ", "عَلِيْمًا بِذَاتِ", "مَنْۢ بَخِلَ", "لَنَسْفَعًاۢ بِالنَّاصِيَةِ", "يُنْۢبِتُ", "خَبِيْرٌۢ بِمَا"],
     audioFiles: [
@@ -698,7 +698,7 @@ body.dark-mode .arabic-text {
 },
 
 'ikhfa': {
-    videoId: "video bisc",
+    videoId: "XN9V6Jh4DRA",
     penjelasan: "Ikhfa Haqiqi terjadi apabila terdapat Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 15 huruf ikhfa. Aturan membacanya adalah suara Nun atau Tanwin disamarkan (antara jelas dan berdengung) di bibir sambil mengarah kepada makhraj pengucapan huruf berikutnya.",
     contoh: ["مِنْ دُوْنِ", "يَوْمَئِذٍ تُحَدِّثُ", "مِنْ كُلِّ", "صِرَاطًا صَالِحًا", "مِنْ جُوْعٍ", "نَفْسٌ شَيْـًٔا", "مِنْ قَبْلِ", "خَالِدًا فِيْهَا"],
     audioFiles: [
@@ -711,7 +711,7 @@ body.dark-mode .arabic-text {
 
  'mim-sukun': {
                 'ikhfa-syafawi': {
-    videoId: "video bisc",
+    videoId: "IJmSm_u3kqM",
     penjelasan: "Ikhfa Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Ba (ب). Aturan membacanya adalah dengan menyamarkan suara huruf Mim di bibir disertai dengan dengung (ghunnah) yang ditahan sekitar 2 ketukan secara lembut.",
     contoh: ["تَرْمِيْهِمْ بِحِجَارَةٍ", "عَلَيْهِمْ بِمُؤْمِنِينَ", "وَمَا صَاحِبُكُمْ بِمَجْنُوْنٍ", "يَعْتَصِمْ بِاللّٰهِ", "اَنْتُمْ بِهٖ", "فَاحْكُمْ بَيْنَهُمْ", "عَلَيْهِمْ بِمُصَيْطِرٍ", "جَزَاۤؤُهُمْ عِنْدَ رَبِّهِمْ جَنّٰتُ"],
     audioFiles: [
@@ -720,7 +720,7 @@ body.dark-mode .arabic-text {
     ]
 },
 'idgham-mimi': {
-    videoId: "video bisc",
+    videoId: "hYDm7BQv6pI",
     penjelasan: "Idgham Mimi (atau Idgham Mutamatsilain Syafawi) terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan huruf Mim (م). Aturan membacanya adalah dengan memasukkan suara Mim pertama ke dalam Mim kedua secara sempurna, dibaca rapat, mendengung, dan ditahan sejenak.",
     contoh: ["لَهُمْ مَّا يَشَاۤءُوْنَ", "فِيْ قُلُوْبِهِمْ مَّرَضٌ", "اِنَّهَا عَلَيْهِمْ مُّؤْصَدَةٌ", "اَمْ مَنْ اَسَّسَ", "وَمِنْهُمْ مَّنْ", "خَلَقَكُمْ مِّنْ", "كُنْتُمْ مُّؤْمِنِيْنَ", "اَطْعَمَهُمْ مِّنْ جُوْعٍ"],
     audioFiles: [
@@ -729,9 +729,9 @@ body.dark-mode .arabic-text {
     ]
 },
 'izhar-syafawi': {
-    videoId: "video bisc",
+    videoId: "hYDm7BQv6pI",
     penjelasan: "Izhar Syafawi terjadi apabila terdapat Mim Sukun (مْ) bertemu dengan salah satu huruf hijaiyah selain Mim (م) dan Ba (ب). Aturan membacanya adalah suara Mim Sukun tersebut harus diucapkan dengan sangat jelas dan terang di bibir tanpa mendengung.",
-    contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ لَا", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"],
+    contoh: ["لَعَلَّكُمْ تَتَّقُوْنَ", "اَمْ لَمْ تُنْذِرْهُمْ", "عَلَيْهِمْ وَلَا الضَّالِّيْن", "لَمْ يَخْلُقْ", "الْحَمْدُ لِلّٰهِ", "اَنْعَمْتَ عَلَيْهِمْ", "لَهُمْ جَنّٰتٌ", "اَمْ حَسِبْتُمْ"],
     audioFiles: [
         "audio/tahsin/izhar-syafawi_1.mp3", "audio/tahsin/izhar-syafawi_2.mp3", "audio/tahsin/izhar-syafawi_3.mp3", "audio/tahsin/izhar-syafawi_4.mp3",
         "audio/tahsin/izhar-syafawi_5.mp3", "audio/tahsin/izhar-syafawi_6.mp3", "audio/tahsin/izhar-syafawi_7.mp3", "audio/tahsin/izhar-syafawi_8.mp3"
@@ -741,7 +741,7 @@ body.dark-mode .arabic-text {
 
             'tasydid': {
 'nun-tasydid': {
-    videoId: "video bisc",
+    videoId: "d0xsjWNNmsg",
     penjelasan: "Ghunnah pada Nun bertasydid terjadi ketika huruf Nun memiliki harakat tasydid (نّ). Aturan membacanya adalah suara dengung harus ditahan di rongga hidung secara mantap sepanjang 2 sampai 3 harakat sebelum berpindah ke harakat berikutnya.",
     contoh: ["اِنَّ الَّذِيْنَ", "مِنَ الْجِنَّةِ وَالنَّاسِ", "جَهَنَّمُ", "مِنِّيْ", "مِنَ الْجِنَّةِ", "اَنَّ لَهُمْ", "لَتُسْـَٔلُنَّ", "كَأَنَّهُ"],
     audioFiles: [
@@ -750,7 +750,7 @@ body.dark-mode .arabic-text {
     ]
 },
 'mim-tasydid': {
-    videoId: "video bisc",
+    videoId: "d0xsjWNNmsg",
     penjelasan: "Ghunnah pada Mim bertasydid terjadi ketika huruf Mim memiliki harakat tasydid (مّ). Aturan membacanya adalah merapatkan bibir sepenuhnya dengan menekan suara dengung di rongga hidung yang ditahan mantap sepanjang 2 sampai 3 harakat.",
     contoh: ["ثُمَّ لَتُسْـَٔلُنَّ", "مِمَّا رَزَقْنٰهُمْ", "عَمَّ يَتَسَاۤءَلُوْنَ", "اُمِّيْ", "فَاَمَّا مَنْ", "اُمَّةً وَاحِدَةً", "مِمَّا", "يَمُّ"],
     audioFiles: [
@@ -762,7 +762,7 @@ body.dark-mode .arabic-text {
 
             'jalalah': {
                 'tafkhim': {
-    videoId: "video bisc",
+    videoId: "_Ww8yBPHZgQ",
     penjelasan: "Lafadz Jalalah Tafkhim adalah penebalan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal tersebut didahului oleh huruf yang berharakat Fathah (ــَـ) atau Dhammah (ــُـ). Cara membacanya adalah dengan memosisikan lidah lebih naik untuk menghasilkan gema bunyi yang tebal.",
     contoh: ["شَهِدَ اللّٰهُ", "يَنْصُرُكُمُ اللّٰهُ", "اللّٰهُ لَاۤ اِلٰهَ اِلَّا هُوَ", "رَسُوْلُ اللّٰهِ", "يُحِبُّهُمُ اللّٰهُ", "قَالَ اللّٰهُ", "اِنَّ اللّٰهَ", "نِعْمَةَ اللَّهِ"],
     audioFiles: [
@@ -771,7 +771,7 @@ body.dark-mode .arabic-text {
     ]
 },
 'tarqiq': {
-    videoId: "video bisc",
+    videoId: "_Ww8yBPHZgQ",
     penjelasan: "Lafadz Jalalah Tarqiq adalah penipisan pengucapan nama Allah (اللّٰه) yang terjadi apabila lafal agung tersebut didahului oleh huruf berharakat Kasrah (ــِـ). Cara membacanya adalah dengan menjaga posisi lidah tetap di bawah sehingga menghasilkan bunyi Lam yang tipis/ringan.",
     contoh: ["بِسْمِ اللّٰهِ", "فِيْ سَبِيْلِ اللّٰهِ", "لِلّٰهِ الْمُلْكُ", "ِاِلَّالِلّٰه", "بِاللّٰهِ", "دِيْنِ اللّٰهِ", "بِسْمِ اللّٰهِ الرَّحْمٰنِ", "بِإِذْنِ اللَّهِ"],
     audioFiles: [
@@ -783,7 +783,7 @@ body.dark-mode .arabic-text {
 
             'qalqalah': {
 'sugra': {
-    videoId: "video bisc",
+    videoId: "UrM6bzPNIwc",
     penjelasan: "Qalqalah Sugra (pantulan kecil) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) berharakat sukun asli dan terletak di pertengahan kata. Aturan membacanya adalah dipantulkan dengan getaran pantulan yang cenderung ringan.",
     contoh: ["يَقْطَعُوْنَ", "نُطْعِمُ", "يَبْتَغُوْنَ", "تَجْرِيْ", "يَدْخُلُوْنَ", "خَلَقْنَا", "تَجْعَلُ", "يَطْمَعُ"],
     audioFiles: [
@@ -792,7 +792,7 @@ body.dark-mode .arabic-text {
     ]
 },
 'kubra': {
-    videoId: "video bisc",
+    videoId: "UrM6bzPNIwc",
     penjelasan: "Qalqalah Kubra (pantulan besar) terjadi apabila salah satu dari lima huruf qalqalah (ق, ط, ب, ج, د) terletak di akhir kata atau kalimat karena dibaca mati akibat waqaf (berhenti). Aturan membacanya adalah dipantulkan dengan getaran suara pantulan yang kuat dan jelas.",
     contoh: ["()قُلْ هُوَ اللّٰهُ اَحَدٌ", "تَبَّتْ يَدَاۤ اَبِيْ لَهَبٍ وَّتَبَّ", "()الْفَلَقِ", "()بُرُوْجِ", "()مُحِيْطٌ", "()بِالْحَقِّ", "()الْحَمِيْدِ", "()كَسَبَ"],
     audioFiles: [
@@ -804,7 +804,7 @@ body.dark-mode .arabic-text {
 
             'mad-thabii': {
 'alif-fathah': {
-    videoId: "video bisc",
+    videoId: "p-gQa_iTP7g",
     penjelasan: "Mad Thabi'i Alif terjadi apabila huruf berharakat Fathah (ــَـ) bertemu dengan huruf Alif mati (ا). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat tersebut sepanjang dua harakat (satu alif) secara konsisten.",
     contoh: ["قَالُوْا", "كِتَابٌ", "مَالِكِ", "هٰذَا", "الرَّحْمٰن", "عَلٰى", "سَمٰوٰتِ", "جَاهِدِ"],
     audioFiles: [
@@ -813,7 +813,7 @@ body.dark-mode .arabic-text {
     ]
 },
 'ya-kasrah': {
-    videoId: "video bisc",
+    videoId: "p-gQa_iTP7g",
     penjelasan: "Mad Thabi'i Ya terjadi apabila huruf berharakat Kasrah (ــِـ) bertemu dengan huruf Ya mati (يْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat kasrah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
     contoh: ["الَّذِيْنَ", "سَمِيْعٌ", "فِيْهَا", "بَنِيْٓ", "دِيْنُكُمْ", "عَلِيْمٌ", "قِيْلَ", "اَخِيْهِ"],
     audioFiles: [
@@ -822,7 +822,7 @@ body.dark-mode .arabic-text {
     ]
 },
 'wawu-dhammah': {
-    videoId: "video bisc",
+    videoId: "p-gQa_iTP7g",
     penjelasan: "Mad Thabi'i Wawu terjadi apabila huruf berharakat Dhammah (ــُـ) bertemu dengan huruf Wawu mati (وْ). Aturan membacanya adalah dengan memanjangkan ketukan suara harakat dhammah tersebut sepanjang dua harakat (satu alif) secara konsisten.",
     contoh: ["يَقُوْلُوْنَ", "تَكُوْنُ", "يَدْعُوْ", "نُوْرٌ", "يَفْعَلُوْنَ", "اَعُوْذُ", "قُلُوْبِ", "تُوْبُوْا"],
     audioFiles: [
@@ -834,7 +834,7 @@ body.dark-mode .arabic-text {
 
             'mad-fari': {
 'muttasil': {
-    videoId: "video bisc",
+    videoId: "kdvpjBeV6OQ",
     penjelasan: "Mad Wajib Muttasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) dalam satu kata atau kalimat yang bersambung. Aturan membacanya adalah dengan wajib memanjangkan bacaan hingga 4 atau 5 harakat (2 setengah alif).",
     contoh: ["جَاۤءَ النَّصْرُ", "السَّمَاۤءِ", "سُوْۤءَ", "شَاۤءَ", "هَنِيْۤئًا", "جِيْۤءَ", "أُولَٰئِكَ", "يَشَاۤءُ"],
     audioFiles: [
@@ -843,7 +843,7 @@ body.dark-mode .arabic-text {
     ]
 },
 'munfasil': {
-    videoId: "video bisc",
+    videoId: "kdvpjBeV6OQ",
     penjelasan: "Mad Jaiz Munfasil terjadi apabila Mad Thabi'i bertemu dengan huruf Hamzah (ء) yang berada di awal kata berikutnya (terpisah kata). Aturan membacanya diperbolehkan memanjangkan ketukan sepanjang 2, 4, atau maksimal 5 harakat.",
     contoh: ["اِنَّآ اَنْزَلْنٰهُ", "يٰۤاَيُّهَا النَّاسُ", "فِيْٓ اَحْسَنِ", "لَاۤ اَعْبُدُ", "بِمَاۤ اُنْزِلَ", "قُوْٓا اَنْفُسَكُمْ", "قَالُوْٓا اٰمَنَّا", "يٰبَنِيْٓ اِسْرَاۤءِيْلَ"],
     audioFiles: [
@@ -852,7 +852,7 @@ body.dark-mode .arabic-text {
     ]
 },
 'arid-sukun': {
-    videoId: "video bisc",
+    videoId: "kdvpjBeV6OQ",
     penjelasan: "Mad 'Arid Lissukun terjadi apabila terdapat Mad Thabi'i yang berada di akhir ayat atau tepat sebelum huruf hidup yang dimatikan (sukun) karena waqaf (berhenti). Aturan membacanya boleh dipanjangkan selama 2, 4, atau maksimal 6 harakat.",
     contoh: ["الْعٰلَمِيْنَۙ", "الْمُسْتَقِيْمَ", "يَعْلَمُوْنَ", "عَظِيْمٌ", "النَّاسِ", "حَكِيْمٍ", "الرَّحِيْمِ", "دِيْنِ"],
     audioFiles: [
@@ -1815,7 +1815,7 @@ body.dark-mode .arabic-text {
                 </div>
             
                 <div class="video-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" 
+            <iframe id="video-player" width="560" height="315" src="https://www.youtube.com/embed/${videoId}" 
             title="YouTube video player" frameborder="0" allowfullscreen></iframe>
             </div>
             
@@ -1869,13 +1869,27 @@ body.dark-mode .arabic-text {
     mainAudio.play();
 }
 
+let activeAudio = null;
+
 function playMurojaahAudio(url) {
     if (!url) {
         alert("Audio tidak tersedia untuk ayat ini.");
         return;
     }
-    const audio = new Audio(url);
-    audio.play();
+
+    // 2. Jika sudah ada audio yang pernah diputar sebelumnya, matikan dan reset
+    if (activeAudio !== null) {
+        activeAudio.pause();
+        activeAudio.currentTime = 0;
+    }
+
+    // 3. Buat objek audio baru dan simpan ke variabel global
+    activeAudio = new Audio(url);
+    
+    // 4. Putar audio dari awal
+    activeAudio.play().catch(error => {
+        console.log("Gagal memutar audio:", error);
+    });
 }
 
 // Fungsi untuk mengubah tema gelap/terang
@@ -2194,7 +2208,7 @@ async function playAyatAudio(verseKey) {
     maxRepeatAyat = repeatSelect ? repeatSelect.value : '1';
     currentPlayCountAyat = 0; // Reset hitungan
 
-    const audioBar = document.getElementById('audio-bar');
+    const audioBar = document.getElementById('audio-bari');
     const currentAyatInfo = document.getElementById('currentAyatInfo');
     const statusBadge = document.getElementById('ayatRepeatStatus');
 
@@ -2253,7 +2267,7 @@ async function playAyatAudio(verseKey) {
 
 // 3. Fungsi Tutup Manual
 function closeAyatAudioBar() {
-    const audioBar = document.getElementById('audio-bar');
+    const audioBar = document.getElementById('audio-bari');
     if (ayatAudioElement) {
         ayatAudioElement.pause();
         ayatAudioElement.currentTime = 0;
@@ -2264,9 +2278,16 @@ function closeAyatAudioBar() {
 // Penyesuaian Fungsi switchView agar Audio Bar tetap hidup saat pindah menu lain, 
 // tapi otomatis mati/hilang jika kembali ke menu utama ('informasi')
 function switchView(viewId) {
+    stopAudio();
     // Jika kembali ke menu utama/informasi, matikan audio bar per ayat
     if (viewId === 'informasi') {
         closeAyatAudioBar();
+        stopAudio();
+    }
+
+    if (viewId === 'home') {
+        closeAyatAudioBar();
+        stopAudio();
     }
 
     currentActiveView = viewId;
@@ -2280,6 +2301,31 @@ function switchView(viewId) {
         }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function stopVideo() {
+    const videoIframe = document.getElementById('video-player');
+    
+    if (videoIframe) {
+        // Menyimpan source asli (jika ingin digunakan lagi nanti)
+        // Atau cukup kosongkan src-nya agar video berhenti total
+        videoIframe.src = ""; 
+    }
+}
+
+function goHome() {
+    // Panggil fungsi stop untuk iframe
+    stopVideo();
+    closeAyatAudioBar();
+    stopAndCloseAudio()
+    stopAudio();
+    // Sembunyikan semua section
+    document.querySelectorAll('main > section').forEach(section => {
+        section.classList.add('hidden');
+    });
+
+    // Tampilkan kembali halaman home
+    document.getElementById('view-home').classList.remove('hidden');
 }
 
     </script>
