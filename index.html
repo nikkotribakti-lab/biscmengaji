@@ -1724,6 +1724,7 @@ body.dark-mode .arabic-text {
             if (gameQuestionIndex < 9) {
                 gameQuestionIndex++;
                 renderGameQuestion();
+                activeAudio.pause();
             } else {
                 showGameResult();
             }
@@ -2323,6 +2324,7 @@ function goHome() {
     closeAyatAudioBar();
     stopAndCloseAudio()
     stopAudio();
+    activeAudio.pause();
     // Sembunyikan semua section
     document.querySelectorAll('main > section').forEach(section => {
         section.classList.add('hidden');
