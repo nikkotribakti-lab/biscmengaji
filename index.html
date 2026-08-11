@@ -1437,6 +1437,7 @@ body.dark-mode .arabic-text {
         }
 
         function stopAudio() {
+
             mainAudio.pause();
             mainAudio.src = ""; 
             audioBar.classList.add('hidden'); 
@@ -1873,6 +1874,7 @@ body.dark-mode .arabic-text {
 let activeAudio = null;
 
 function playMurojaahAudio(url) {
+    
     if (!url) {
         alert("Audio tidak tersedia untuk ayat ini.");
         return;
@@ -1893,6 +1895,12 @@ function playMurojaahAudio(url) {
     });
 }
 
+function stopmurojaah() {
+    if (activeAudio !== null) {
+        activeAudio.pause();
+        activeAudio.currentTime = 0;
+    }
+}
 // Fungsi untuk mengubah tema gelap/terang
 function toggleDarkMode() {
     const body = document.body;
@@ -2282,17 +2290,16 @@ function switchView(viewId) {
     stopAudio();
     // Jika kembali ke menu utama/informasi, matikan audio bar per ayat
     if (viewId === 'informasi') {
-    stopVideo();
     closeAyatAudioBar();
     stopAndCloseAudio()
     stopAudio();
     }
 
     if (viewId === 'home') {
-    stopVideo();
     closeAyatAudioBar();
     stopAndCloseAudio()
     stopAudio();
+       
     }
 
     currentActiveView = viewId;
@@ -2324,7 +2331,7 @@ function goHome() {
     closeAyatAudioBar();
     stopAndCloseAudio()
     stopAudio();
-    activeAudio.pause();
+    stopmurojaah();
     // Sembunyikan semua section
     document.querySelectorAll('main > section').forEach(section => {
         section.classList.add('hidden');
