@@ -2281,13 +2281,17 @@ function switchView(viewId) {
     stopAudio();
     // Jika kembali ke menu utama/informasi, matikan audio bar per ayat
     if (viewId === 'informasi') {
-        closeAyatAudioBar();
-        stopAudio();
+    stopVideo();
+    closeAyatAudioBar();
+    stopAndCloseAudio()
+    stopAudio();
     }
 
     if (viewId === 'home') {
-        closeAyatAudioBar();
-        stopAudio();
+    stopVideo();
+    closeAyatAudioBar();
+    stopAndCloseAudio()
+    stopAudio();
     }
 
     currentActiveView = viewId;
