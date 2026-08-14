@@ -171,7 +171,7 @@
 
     <!-- 🏛️ BAR ATAS -->
     <header class="bg-sky-900/95 backdrop-blur-md text-white sticky top-0 z-50 shadow-lg border-b border-sky-800/50 transition-all duration-300">
-        <div class="max-w-4xl mx-auto px-4 py-3.5 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-4 py-3.5 flex justify-between items-center">
             <div class="flex items-center gap-3.5 cursor-pointer group" onclick="goHome()">
                 <div class="relative overflow-hidden rounded-full ring-2 ring-sky-400/40 transition-transform duration-300 group-hover:scale-105">
                     <img src="img/bisc.png" alt="Logo" class="w-11 h-11 object-cover">
@@ -196,7 +196,7 @@
     </header>
 
     <!-- KONTEN UTAMA -->
-    <main class="max-w-4xl mx-auto px-4 py-6">
+    <main class="max-w-7xl mx-auto px-4 py-6">
 
         <!-- ==================== VIEW 1: HOME ==================== -->
         <section id="view-home" class="view-panel space-y-6">
@@ -422,7 +422,7 @@
         </section>
 
         <!-- ==================== VIEW 8: INFORMASI ==================== -->
-        <section id="view-informasi" class="view-panel max-w-2xl mx-auto space-y-6">
+        <section id="view-informasi" class="view-panel max-w-7xl mx-auto space-y-6">
             <div class="bg-gradient-to-br from-sky-800 via-sky-900 to-indigo-950 text-white p-6 md:p-8 rounded-3xl shadow-lg border border-sky-700/30">
                 <h2 class="text-2xl font-bold mb-2 flex items-center gap-2.5"><i class="fa-solid fa-bullseye text-amber-400"></i> Menghafal melalui Audio Syaikh Husori</h2>
                 <p class="text-sm text-sky-100/90 leading-relaxed">Menghafal Mudah dengan Mendengarkan</p>
@@ -2412,4 +2412,140 @@ function goHome() {
 
     </script>
 </body>
+       
+<!-- Footer Profesional yang Otomatis Mengikuti Tema Keseluruhan (Terang / Gelap) -->
+<footer class="bg-white text-slate-600 dark:bg-slate-900 dark:text-slate-300 relative overflow-hidden mt-20 border-t border-slate-200 dark:border-slate-800/80 transition-colors duration-300">
+    <!-- Hiasan Glow Background (menyesuaikan mode gelap) -->
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-teal-500/5 dark:bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-12 pb-8">
+        
+        <!-- Grid Utama Footer -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 pb-12 border-b border-slate-200 dark:border-slate-800">
+            
+            <!-- Kolom 1: Brand & Profil Singkat -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                <div class="relative overflow-hidden rounded-full ring-2 ring-sky-400/40 transition-transform duration-300 group-hover:scale-105">
+                    <img src="img/bisc.png" alt="Logo" class="w-11 h-11 object-cover">
+                </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">BISC Mengaji</h3>
+                        <p class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">Bandung Islamic School</p>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Platform pembelajaran Al-Qur'an digital yang interaktif, membantu santri dan jamaah dalam hafalan, tajwid, serta murojaah harian.
+                </p>
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 text-xs text-slate-600 dark:text-slate-300">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Versi Aplikasi 5.0</span>
+                </div>
+            </div>
+
+            <!-- Kolom 2: Navigasi Cepat -->
+            <div class="space-y-3">
+                <h4 class="text-sm font-semibold text-slate-900 dark:text-white tracking-wider uppercase border-l-2 border-emerald-500 pl-2.5">
+                    Navigasi Utama
+                </h4>
+                <ul class="space-y-2 text-xs text-slate-500 dark:text-slate-400">
+                    <li>
+                        <a href="#" onclick="switchView('home')" class="hover:text-emerald-600 dark:hover:text-emerald-400 hover:translate-x-1 transition-all inline-block">
+                            <i class="fa-solid fa-chevron-right text-[9px] mr-1 text-emerald-500"></i> Beranda Utama
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchView('quran')" class="hover:text-emerald-600 dark:hover:text-emerald-400 hover:translate-x-1 transition-all inline-block">
+                            <i class="fa-solid fa-chevron-right text-[9px] mr-1 text-emerald-500"></i> Al-Qur'an Digital
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchView('murojaah')" class="hover:text-emerald-600 dark:hover:text-emerald-400 hover:translate-x-1 transition-all inline-block">
+                            <i class="fa-solid fa-chevron-right text-[9px] mr-1 text-emerald-500"></i> Game Murojaah
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchView('tahsin')" class="hover:text-emerald-600 dark:hover:text-emerald-400 hover:translate-x-1 transition-all inline-block">
+                            <i class="fa-solid fa-chevron-right text-[9px] mr-1 text-emerald-500"></i> Modul Tahsin & Tajwid
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Kolom 3: Kontak & Informasi -->
+            <div class="space-y-3">
+                <h4 class="text-sm font-semibold text-slate-900 dark:text-white tracking-wider uppercase border-l-2 border-emerald-500 pl-2.5">
+                    Hubungi Kami
+                </h4>
+                <ul class="space-y-2.5 text-xs text-slate-500 dark:text-slate-400">
+                    <li class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-location-dot text-emerald-600 dark:text-emerald-400 mt-0.5"></i>
+                        <span>Bandung, Jawa Barat, Indonesia</span>
+                    </li>
+                    <li class="flex items-center gap-2.5">
+                        <i class="fa-solid fa-envelope text-emerald-600 dark:text-emerald-400"></i>
+                        <a href="mailto:info@bandungislamicschool.sch.id" class="hover:text-slate-900 dark:hover:text-white transition">info@bandungislamicschool.sch.id</a>
+                    </li>
+                    <li class="flex items-center gap-2.5">
+                        <i class="fa-solid fa-globe text-emerald-600 dark:text-emerald-400"></i>
+                        <a href="https://bandungislamicschool.sch.id" target="_blank" class="hover:text-slate-900 dark:hover:text-white transition">bandungislamicschool.sch.id</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Kolom 4: Media Sosial (Interaktif Cards) -->
+            <div class="space-y-3">
+                <h4 class="text-sm font-semibold text-slate-900 dark:text-white tracking-wider uppercase border-l-2 border-emerald-500 pl-2.5">
+                    Media Sosial Resmi
+                </h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                    Mari terhubung dengan kami untuk berita dan konten edukasi Islam terbaru:
+                </p>
+                
+                <!-- Grid Tombol Medsos -->
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                    <!-- Instagram -->
+                    <a href="https://instagram.com/bandungislamicschool" target="_blank" class="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800/60 hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 border border-slate-200 dark:border-slate-700/50 hover:border-transparent text-slate-700 dark:text-slate-300 hover:text-white transition-all group">
+                        <i class="fa-brands fa-instagram text-base group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-medium">Instagram</span>
+                    </a>
+
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/" target="_blank" class="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800/60 hover:bg-emerald-600 border border-slate-200 dark:border-slate-700/50 hover:border-transparent text-slate-700 dark:text-slate-300 hover:text-white transition-all group">
+                        <i class="fa-brands fa-whatsapp text-base group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-medium">WhatsApp</span>
+                    </a>
+
+                    <!-- Facebook -->
+                    <a href="https://facebook.com" target="_blank" class="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800/60 hover:bg-blue-600 border border-slate-200 dark:border-slate-700/50 hover:border-transparent text-slate-700 dark:text-slate-300 hover:text-white transition-all group">
+                        <i class="fa-brands fa-facebook-f text-base group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-medium">Facebook</span>
+                    </a>
+
+                    <!-- YouTube -->
+                    <a href="https://youtube.com" target="_blank" class="flex items-center gap-2 p-2 rounded-xl bg-slate-100 dark:bg-slate-800/60 hover:bg-red-600 border border-slate-200 dark:border-slate-700/50 hover:border-transparent text-slate-700 dark:text-slate-300 hover:text-white transition-all group">
+                        <i class="fa-brands fa-youtube text-base group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-medium">YouTube</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Bar: Hak Cipta & Tautan Hukum -->
+        <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <p class="text-center sm:text-left">
+                &copy; 2026 <span class="text-slate-700 dark:text-slate-300 font-medium">Bandung Islamic School</span>. Hak Cipta Dilindungi.
+            </p>
+            <div class="flex items-center gap-6 text-slate-500 dark:text-slate-400">
+                <a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition">Kebijakan Privasi</a>
+                <span class="text-slate-300 dark:text-slate-700">•</span>
+                <a href="#" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition">Syarat & Ketentuan</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
 </html>
