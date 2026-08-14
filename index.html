@@ -52,7 +52,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <style>
+   
+   <!-- Video Intro Overlay -->
+<div id="intro-container">
+    <video id="intro-video" autoplay muted playsinline>
+        <source src="intro.mp4" type="video/mp4">
+    </video>
+</div>
+   
+   <style>
+   #intro-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); /* Latar belakang gelap transparan */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+/* Batasi ukuran video agar tidak 1 layar penuh */
+#intro-video {
+    width: 80%;          /* Lebar maksimal 80% dari layar */
+    max-width: 600px;    /* Batas maksimal lebar dalam piksel */
+    height: auto;        /* Menjaga rasio video tetap normal */
+    border-radius: 12px; /* Opsional: membuat sudut video melengkung */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Efek bayangan */
+}
+
         .neon-btn {
             position: relative;
             display: inline-block;
@@ -2408,6 +2439,32 @@ function goHome() {
 
     // Tampilkan kembali halaman home
     document.getElementById('view-home').classList.remove('hidden');
+}
+
+const introContainer = document.getElementById('intro-container');
+const introVideo = document.getElementById('intro-video');
+const mainContent = document.getElementById('main-content');
+
+// Ketika video selesai diputar
+introVideo.onended = function() {
+    tutupIntro();
+};
+
+// Opsional: Tombol Lewati (Skip) jika pengunjung tidak ingin menunggu
+/* 
+setTimeout(() => {
+    // Tambahkan tombol skip jika diperlukan
+}, 2000); 
+*/
+
+function tutupIntro() {
+    // Berikan efek transisi pudar (fade out)
+    introContainer.style.opacity = '0';
+    
+    setTimeout(() => {
+        introContainer.style.display = 'none'; // Sembunyikan elemen intro
+        mainContent.style.display = 'block';   // Tampilkan konten utama
+    }, 500); // Waktu harus sama dengan durasi transition di CSS (0.5s)
 }
 
     </script>
