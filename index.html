@@ -197,45 +197,30 @@
             color: #ffffff !important;
         }
 
-        /* Mengunci scroll body dan mengukur tinggi pas layar HP */
+        /* Styling Saat Mode Fullscreen Aktif */
+:fullscreen #view-quran,
+:-webkit-full-screen #view-quran {
+    background-color: #0f172a; /* Slate 900 */
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+}
+
+/* Di HP/Mobile Saat Fullscreen: Maksimalkan Tinggi Mushaf */
 @media (max-width: 1023px) {
-    /* Kelas tambahan untuk menyembunyikan footer di mode Mushaf */
-    body.mushaf-active-mode footer,
-    body.mushaf-active-mode .app-footer {
-        display: none !important;
-    }
-
-    /* Kunci layar HP agar tidak ada scroll saat mode Mushaf */
-    #view-quran.mushaf-mode-active {
-        height: 100dvh; /* Menggunakan Dynamic Viewport Height */
-        overflow: hidden !important;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding-bottom: 0.5rem;
-    }
-
-    /* Sesuaikan tinggi container Mushaf agar pas sisa ruang layar */
-    #view-quran.mushaf-mode-active #mushaf-page-container {
+    :fullscreen #view-quran #mushaf-page-container,
+    :-webkit-full-screen #view-quran #mushaf-page-container {
         flex: 1;
         height: 100%;
-        min-height: 0; /* Mencegah overflow */
-        margin-top: 0;
-        margin-bottom: 0;
+        margin: 0;
     }
 
-    /* Kurangi padding background hitam agar ruang gambar lebih lega */
-    #view-quran.mushaf-mode-active #mushaf-page-container > div {
-        height: 100%;
-        min-height: 0 !important;
-        padding: 0.5rem !important;
-    }
-
-    /* Batasi tinggi gambar maksimal mengikuti sisa layar */
-    #view-quran.mushaf-mode-active img {
-        max-h: 100% !important;
-        height: auto;
-        object-fit: contain;
+    :fullscreen #view-quran img,
+    :-webkit-full-screen #view-quran img {
+        max-height: 82vh !important;
     }
 }
     </style>
@@ -337,10 +322,10 @@
         </section>
 
         <!-- ==================== VIEW 2: QURAN ==================== -->
-<section id="view-quran" class="view-panel space-y-4 md:space-y-6 w-full max-w-[1400px] mx-auto px-2 sm:px-4">
+<section id="view-quran" class="view-panel space-y-3 md:space-y-4 w-full max-w-[1400px] mx-auto px-2 sm:px-4 transition-all">
 
-    <!-- 1. BAR NAVIGASI & TOGGLE MODE (Di Bagian Atas) -->
-    <div class="flex flex-col sm:flex-row gap-3 justify-between items-center bg-white p-3 md:p-4 rounded-2xl shadow-sm border border-slate-200/80 w-full">
+    <!-- 1. BAR NAVIGASI & TOGGLE MODE -->
+    <div class="flex flex-col sm:flex-row gap-3 justify-between items-center bg-white p-3 md:p-4 rounded-2xl shadow-sm border border-slate-200/80 w-full shrink-0">
         
         <!-- Switch Button Mode -->
         <div class="flex p-1 bg-slate-100 rounded-xl w-full sm:w-auto shrink-0">
@@ -373,8 +358,8 @@
 
             <!-- Tombol Navigasi Manual -->
             <div class="flex items-center gap-1.5">
-                <!-- Panah Kanan (Maju/Selanjutnya di RTL) -->
-                <button onclick="changeMushafPage(1)" title="Halaman Selanjutnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all">
+                <!-- Panah Kanan (Maju ke halaman selanjutnya pada RTL) -->
+                <button onclick="changeMushafPage(1)" title="Halaman Selanjutnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all active:scale-95">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
 
@@ -383,11 +368,17 @@
                     <span>/ 604</span>
                 </div>
 
-                <!-- Panah Kiri (Mundur/Sebelumnya di RTL) -->
-                <button onclick="changeMushafPage(-1)" title="Halaman Sebelumnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all">
+                <!-- Panah Kiri (Mundur ke halaman sebelumnya pada RTL) -->
+                <button onclick="changeMushafPage(-1)" title="Halaman Sebelumnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all active:scale-95">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
             </div>
+
+            <!-- Tombol Fullscreen -->
+            <button id="btn-fullscreen" onclick="toggleFullscreen()" title="Layar Penuh" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 active:scale-95">
+                <i id="icon-fullscreen" class="fa-solid fa-expand"></i>
+                <span class="hidden md:inline">Full</span>
+            </button>
         </div>
 
     </div>
@@ -395,14 +386,14 @@
     <!-- 2. CONTAINER TAMPILAN LIST SURAH -->
     <div id="quran-surah-list" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 w-full"></div>
 
-    <!-- 3. CONTAINER TAMPILAN BUKU / MUSHAF ASLI (Di Bawah Navigasi) -->
-    <div id="mushaf-page-container" class="w-full my-3">
+    <!-- 3. CONTAINER TAMPILAN BUKU / MUSHAF ASLI -->
+    <div id="mushaf-page-container" class="w-full flex-1">
         
-        <!-- Wrapper Utama: Flexbox RTL dengan Tinggi Responsif -->
-        <div class="flex flex-row-reverse justify-center items-stretch gap-3 md:gap-5 bg-slate-800 p-3 sm:p-5 rounded-2xl md:rounded-3xl shadow-2xl min-h-[85vh] w-full" dir="rtl">
+        <!-- Wrapper Utama: Flexbox RTL -->
+        <div class="flex flex-row-reverse justify-center items-stretch gap-3 md:gap-5 bg-slate-800 p-2 sm:p-5 rounded-2xl md:rounded-3xl shadow-2xl h-full min-h-[80vh] w-full" dir="rtl">
             
             <!-- HALAMAN KANAN (Ganjil di Desktop / Utama di Mobile) -->
-            <div id="mushaf-card-right" class="relative flex-1 flex flex-col justify-between items-center bg-[#fffdf5] rounded-xl md:rounded-2xl p-3 sm:p-4 shadow-md w-full min-w-0 transition-all duration-300">
+            <div id="mushaf-card-right" class="relative flex-1 flex flex-col justify-between items-center bg-[#fffdf5] rounded-xl md:rounded-2xl p-2 sm:p-4 shadow-md w-full min-w-0 transition-all duration-300">
                 
                 <!-- Label Halaman -->
                 <span id="label-right-page" class="text-xs font-bold text-amber-900 bg-amber-100/80 px-3 py-1 rounded-full z-10 shrink-0 select-none">Halaman -</span>
@@ -414,7 +405,7 @@
                 </div>
                 
                 <!-- Container Pembungkus Gambar -->
-                <div class="w-full flex-1 flex items-center justify-center my-2 overflow-hidden">
+                <div class="w-full flex-1 flex items-center justify-center my-1 overflow-hidden">
                     <img id="img-mushaf-right" 
                          class="max-w-full max-h-[72vh] lg:max-h-[78vh] w-auto h-auto object-contain rounded drop-shadow-sm select-none" 
                          src="" 
@@ -425,7 +416,7 @@
             </div>
 
             <!-- HALAMAN KIRI (Genap di Desktop - Kontrol Tampilan via JS) -->
-            <div id="mushaf-card-left" class="hidden relative flex-1 flex flex-col justify-between items-center bg-[#fffdf5] rounded-xl md:rounded-2xl p-3 sm:p-4 shadow-md w-full min-w-0 transition-all duration-300">
+            <div id="mushaf-card-left" class="hidden relative flex-1 flex flex-col justify-between items-center bg-[#fffdf5] rounded-xl md:rounded-2xl p-2 sm:p-4 shadow-md w-full min-w-0 transition-all duration-300">
                 
                 <!-- Label Halaman -->
                 <span id="label-left-page" class="text-xs font-bold text-amber-900 bg-amber-100/80 px-3 py-1 rounded-full z-10 shrink-0 select-none">Halaman -</span>
@@ -437,7 +428,7 @@
                 </div>
 
                 <!-- Container Pembungkus Gambar -->
-                <div class="w-full flex-1 flex items-center justify-center my-2 overflow-hidden">
+                <div class="w-full flex-1 flex items-center justify-center my-1 overflow-hidden">
                     <img id="img-mushaf-left" 
                          class="max-w-full max-h-[72vh] lg:max-h-[78vh] w-auto h-auto object-contain rounded drop-shadow-sm select-none" 
                          src="" 
@@ -451,7 +442,6 @@
     </div>
 
 </section>
-
         <!-- ==================== VIEW 3: QURAN DETAIL ==================== -->
         <section id="view-quran-detail" class="view-panel hidden space-y-6">
             <div id="detail-surah-header" class="bg-gradient-to-r from-sky-800 to-sky-950 text-white rounded-3xl p-6 md:p-8 shadow-md text-center space-y-3 relative overflow-hidden border border-sky-700/40"></div>
@@ -2647,10 +2637,6 @@ function switchQuranView(mode) {
     const mushafNav = document.getElementById('mushaf-nav-controls');
     const btnSurah = document.getElementById('btn-mode-surah');
     const btnMushaf = document.getElementById('btn-mode-mushaf');
-    
-    // Ambil elemen wrapper utama & body
-    const viewQuran = document.getElementById('view-quran');
-    const body = document.body;
 
     if (mode === 'mushaf') {
         if (surahList) surahList.classList.add('hidden');
@@ -2658,13 +2644,9 @@ function switchQuranView(mode) {
         if (mushafContainer) mushafContainer.classList.remove('hidden');
         if (mushafNav) mushafNav.classList.remove('hidden');
         
-        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
-        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
+        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
         
-        // --- PROPERTI PENGUNCI MOBILE & SEMBUNYIKAN FOOTER ---
-        if (body) body.classList.add('mushaf-active-mode');
-        if (viewQuran) viewQuran.classList.add('mushaf-mode-active');
-
         renderMushafView();
     } else {
         if (surahList) surahList.classList.remove('hidden');
@@ -2672,12 +2654,8 @@ function switchQuranView(mode) {
         if (mushafContainer) mushafContainer.classList.add('hidden');
         if (mushafNav) mushafNav.classList.add('hidden');
         
-        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
-        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
-        
-        // --- KEMBALIKAN FOOTER & SCROLL NORMAL DI MODE SURAH ---
-        if (body) body.classList.remove('mushaf-active-mode');
-        if (viewQuran) viewQuran.classList.remove('mushaf-mode-active');
+        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
+        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
     }
 }
 
@@ -2899,6 +2877,50 @@ document.addEventListener("DOMContentLoaded", () => {
     initMushafDropdowns();
     renderMushafView();
 });
+
+function toggleFullscreen() {
+    // Kita gunakan elemen <section id="view-quran"> sebagai area Fullscreen
+    const elem = document.getElementById('view-quran') || document.documentElement;
+    const icon = document.getElementById('icon-fullscreen');
+
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+        // Masuk ke Mode Fullscreen
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari / iOS */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+    } else {
+        // Keluar dari Mode Fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+// Event Listener untuk Mengubah Ikon saat Pengguna Keluar via Tombol ESC / Gesture
+document.addEventListener('fullscreenchange', updateFullscreenIcon);
+document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
+
+function updateFullscreenIcon() {
+    const icon = document.getElementById('icon-fullscreen');
+    if (!icon) return;
+
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+        // Sedang Fullscreen -> Tampilkan Ikon Compress (Kecilkan)
+        icon.className = "fa-solid fa-compress";
+    } else {
+        // Normal -> Tampilkan Ikon Expand (Layar Penuh)
+        icon.className = "fa-solid fa-expand";
+    }
+}
+
     </script>
 </body>
        
