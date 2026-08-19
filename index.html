@@ -295,15 +295,120 @@
         </section>
 
         <!-- ==================== VIEW 2: QURAN ==================== -->
-        <section id="view-quran" class="view-panel hidden space-y-6">
-            <div class="flex flex-col md:flex-row gap-4 items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80">
-                <div class="relative w-full">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" id="search-quran-input" oninput="filterQuranList()" class="w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm transition-all shadow-inner" placeholder="Cari nama surat atau terjemahannya...">
+<section id="view-quran" class="view-panel space-y-4 md:space-y-6 w-full max-w-[1400px] mx-auto px-2 sm:px-4">
+
+    <!-- 1. BAR NAVIGASI & TOGGLE MODE (Di Bagian Atas) -->
+    <div class="flex flex-col sm:flex-row gap-3 justify-between items-center bg-white p-3 md:p-4 rounded-2xl shadow-sm border border-slate-200/80 w-full">
+        
+        <!-- Switch Button Mode -->
+        <div class="flex p-1 bg-slate-100 rounded-xl w-full sm:w-auto shrink-0">
+            <button id="btn-mode-surah" onclick="switchQuranView('surah')" class="flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900">
+                <i class="fa-solid fa-list-ol mr-1.5"></i> Per Surah
+            </button>
+            <button id="btn-mode-mushaf" onclick="switchQuranView('mushaf')" class="flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm">
+                <i class="fa-solid fa-book-open mr-1.5"></i> Mushaf Asli
+            </button>
+        </div>
+
+        <!-- Filter Pencarian (Mode Surah) -->
+        <div id="quran-search-bar" class="hidden relative w-full sm:w-72">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="text" id="search-quran-input" oninput="filterQuranList()" class="w-full pl-11 pr-4 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 text-xs transition-all shadow-inner" placeholder="Cari surat...">
+        </div>
+
+        <!-- Controls Navigasi Halaman (Mode Mushaf) -->
+        <div id="mushaf-nav-controls" class="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
+            
+            <!-- Pilih Surah -->
+            <select id="select-mushaf-surah" onchange="jumpToSurah(this.value)" class="py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 focus:ring-2 focus:ring-sky-500 max-w-[130px] sm:max-w-none">
+                <option value="">-- Pilih Surah --</option>
+            </select>
+
+            <!-- Pilih Juz -->
+            <select id="select-mushaf-juz" onchange="jumpToJuz(this.value)" class="py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 focus:ring-2 focus:ring-sky-500">
+                <option value="">-- Juz --</option>
+            </select>
+
+            <!-- Tombol Navigasi Manual -->
+            <div class="flex items-center gap-1.5">
+                <!-- Panah Kanan (Maju/Selanjutnya di RTL) -->
+                <button onclick="changeMushafPage(1)" title="Halaman Selanjutnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+                <div class="flex items-center gap-1 text-xs font-semibold text-slate-600">
+                    <input type="number" id="mushaf-page-input" min="1" max="604" value="1" onchange="jumpToMushafPage(this.value)" class="w-12 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-bold text-xs focus:ring-2 focus:ring-sky-500">
+                    <span>/ 604</span>
+                </div>
+
+                <!-- Panah Kiri (Mundur/Sebelumnya di RTL) -->
+                <button onclick="changeMushafPage(-1)" title="Halaman Sebelumnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 2. CONTAINER TAMPILAN LIST SURAH -->
+    <div id="quran-surah-list" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 w-full"></div>
+
+    <!-- 3. CONTAINER TAMPILAN BUKU / MUSHAF ASLI (Di Bawah Navigasi) -->
+    <div id="mushaf-page-container" class="w-full my-3">
+        
+        <!-- Wrapper Utama: Flexbox RTL dengan Tinggi Responsif -->
+        <div class="flex flex-row-reverse justify-center items-stretch gap-3 md:gap-5 bg-slate-800 p-3 sm:p-5 rounded-2xl md:rounded-3xl shadow-2xl min-h-[85vh] w-full" dir="rtl">
+            
+            <!-- HALAMAN KANAN (Ganjil di Desktop / Utama di Mobile) -->
+            <div id="mushaf-card-right" class="relative flex-1 flex flex-col justify-between items-center bg-[#fffdf5] rounded-xl md:rounded-2xl p-3 sm:p-4 shadow-md w-full min-w-0 transition-all duration-300">
+                
+                <!-- Label Halaman -->
+                <span id="label-right-page" class="text-xs font-bold text-amber-900 bg-amber-100/80 px-3 py-1 rounded-full z-10 shrink-0 select-none">Halaman -</span>
+                
+                <!-- Indicator Loading -->
+                <div id="loading-right" class="absolute inset-0 flex flex-col items-center justify-center bg-[#fffdf5] rounded-xl md:rounded-2xl z-20">
+                    <i class="fa-solid fa-spinner animate-spin text-2xl text-amber-600 mb-2"></i>
+                    <span class="text-xs text-slate-500 font-sans">Memuat Mushaf...</span>
+                </div>
+                
+                <!-- Container Pembungkus Gambar -->
+                <div class="w-full flex-1 flex items-center justify-center my-2 overflow-hidden">
+                    <img id="img-mushaf-right" 
+                         class="max-w-full max-h-[72vh] lg:max-h-[78vh] w-auto h-auto object-contain rounded drop-shadow-sm select-none" 
+                         src="" 
+                         alt="Halaman Mushaf Kanan" 
+                         onload="document.getElementById('loading-right').classList.add('hidden')" 
+                         onerror="handleImgError(this, 'loading-right')">
                 </div>
             </div>
-            <div id="quran-surah-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-        </section>
+
+            <!-- HALAMAN KIRI (Genap di Desktop - Kontrol Tampilan via JS) -->
+            <div id="mushaf-card-left" class="hidden relative flex-1 flex flex-col justify-between items-center bg-[#fffdf5] rounded-xl md:rounded-2xl p-3 sm:p-4 shadow-md w-full min-w-0 transition-all duration-300">
+                
+                <!-- Label Halaman -->
+                <span id="label-left-page" class="text-xs font-bold text-amber-900 bg-amber-100/80 px-3 py-1 rounded-full z-10 shrink-0 select-none">Halaman -</span>
+                
+                <!-- Indicator Loading -->
+                <div id="loading-left" class="absolute inset-0 flex flex-col items-center justify-center bg-[#fffdf5] rounded-xl md:rounded-2xl z-20">
+                    <i class="fa-solid fa-spinner animate-spin text-2xl text-amber-600 mb-2"></i>
+                    <span class="text-xs text-slate-500 font-sans">Memuat Mushaf...</span>
+                </div>
+
+                <!-- Container Pembungkus Gambar -->
+                <div class="w-full flex-1 flex items-center justify-center my-2 overflow-hidden">
+                    <img id="img-mushaf-left" 
+                         class="max-w-full max-h-[72vh] lg:max-h-[78vh] w-auto h-auto object-contain rounded drop-shadow-sm select-none" 
+                         src="" 
+                         alt="Halaman Mushaf Kiri" 
+                         onload="document.getElementById('loading-left').classList.add('hidden')" 
+                         onerror="handleImgError(this, 'loading-left')">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
 
         <!-- ==================== VIEW 3: QURAN DETAIL ==================== -->
         <section id="view-quran-detail" class="view-panel hidden space-y-6">
@@ -2467,6 +2572,279 @@ function tutupIntro() {
     }, 500); // Waktu harus sama dengan durasi transition di CSS (0.5s)
 }
 
+let currentMushafPage = 1;
+
+function isDesktop() {
+    return window.innerWidth >= 1024;
+}
+
+// URL CDN Gambar Mushaf Madinah HD
+function getPageImageUrl(page) {
+    const pad = String(page).padStart(3, '0');
+    return `https://android.quran.com/data/width_1260/page${pad}.png`;
+}
+
+// Handling Jika Gambar Gagal Dimuat
+function handleImgError(imgElement, loadingId) {
+    const pageNum = imgElement.src.match(/\d+/g)?.pop();
+    if (pageNum && !imgElement.dataset.retried) {
+        imgElement.dataset.retried = "true";
+        imgElement.src = `https://everyayah.com/data/quranimages/${parseInt(pageNum)}.png`;
+    } else {
+        const loader = document.getElementById(loadingId);
+        if (loader) {
+            loader.innerHTML = `<span class="text-xs text-rose-500 font-sans font-bold">Gagal memuat gambar.<br>Periksa koneksi.</span>`;
+        }
+    }
+}
+
+function switchQuranView(mode) {
+    const surahList = document.getElementById('quran-surah-list');
+    const mushafContainer = document.getElementById('mushaf-page-container');
+    const searchBar = document.getElementById('quran-search-bar');
+    const mushafNav = document.getElementById('mushaf-nav-controls');
+    const btnSurah = document.getElementById('btn-mode-surah');
+    const btnMushaf = document.getElementById('btn-mode-mushaf');
+
+    if (mode === 'mushaf') {
+        if (surahList) surahList.classList.add('hidden');
+        if (searchBar) searchBar.classList.add('hidden');
+        if (mushafContainer) mushafContainer.classList.remove('hidden');
+        if (mushafNav) mushafNav.classList.remove('hidden');
+        
+        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
+        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+        
+        renderMushafView();
+    } else {
+        if (surahList) surahList.classList.remove('hidden');
+        if (searchBar) searchBar.classList.remove('hidden');
+        if (mushafContainer) mushafContainer.classList.add('hidden');
+        if (mushafNav) mushafNav.classList.add('hidden');
+        
+        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
+        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+    }
+}
+
+function renderMushafView() {
+    const cardLeft = document.getElementById('mushaf-card-left');
+    const cardRight = document.getElementById('mushaf-card-right');
+    const imgRight = document.getElementById('img-mushaf-right');
+    const imgLeft = document.getElementById('img-mushaf-left');
+    const loadRight = document.getElementById('loading-right');
+    const loadLeft = document.getElementById('loading-left');
+    
+    let pageRight, pageLeft;
+
+    if (isDesktop()) {
+        // PERATURAN DESKTOP:
+        // Mushaf dibaca RTL. Kanan = Halaman Ganjil, Kiri = Halaman Genap.
+        // Tentukan pasangan halaman berdasarkan angka ganjil utama (base odd page)
+        let baseOddPage = currentMushafPage % 2 !== 0 ? currentMushafPage : currentMushafPage - 1;
+        if (baseOddPage < 1) baseOddPage = 1;
+
+        pageRight = baseOddPage; // Kanan selalu ganjil
+        pageLeft = baseOddPage + 1 <= 604 ? baseOddPage + 1 : null; // Kiri selalu genap
+    } else {
+        // PERATURAN MOBILE/HP:
+        // Cukup tampilkan 1 halaman aktif di container utama (kanan)
+        pageRight = currentMushafPage;
+        pageLeft = null;
+    }
+
+    // Reset Indikator Loading
+    if (loadRight) loadRight.classList.remove('hidden');
+    if (loadLeft) loadLeft.classList.remove('hidden');
+
+    // 1. Render Gambar Kanan (Ganjil di Desktop / Tunggal di Mobile)
+    if (pageRight && imgRight) {
+        if (cardRight) cardRight.classList.remove('hidden');
+        imgRight.dataset.retried = "";
+        imgRight.src = getPageImageUrl(pageRight);
+        
+        const lblRight = document.getElementById('label-right-page');
+        if (lblRight) lblRight.innerText = `Halaman ${pageRight}`;
+    }
+
+    // 2. Render Gambar Kiri (Genap di Desktop)
+    if (isDesktop() && pageLeft && imgLeft && cardLeft) {
+        cardLeft.classList.remove('hidden');
+        cardLeft.classList.add('flex');
+        
+        imgLeft.dataset.retried = "";
+        imgLeft.src = getPageImageUrl(pageLeft);
+        
+        const lblLeft = document.getElementById('label-left-page');
+        if (lblLeft) lblLeft.innerText = `Halaman ${pageLeft}`;
+    } else if (cardLeft) {
+        // Sembunyikan frame kiri jika di Mobile atau jika halaman terakhir (604) tidak punya pasangan
+        cardLeft.classList.add('hidden');
+        cardLeft.classList.remove('flex');
+    }
+
+    const inputPage = document.getElementById('mushaf-page-input');
+    if (inputPage) inputPage.value = currentMushafPage;
+}
+
+function changeMushafPage(delta) {
+    // Di Desktop lompat 2 halaman, di Mobile berpindah 1 halaman
+    const step = isDesktop() ? delta * 2 : delta;
+    let target = currentMushafPage + step;
+
+    if (target < 1) target = 1;
+    if (target > 604) target = 604;
+
+    currentMushafPage = target;
+    renderMushafView();
+}
+
+function jumpToMushafPage(val) {
+    const page = parseInt(val);
+    if (page >= 1 && page <= 604) {
+        currentMushafPage = page;
+        renderMushafView();
+    }
+}
+
+// Inisialisasi awal saat dokumen selesai dimuat
+document.addEventListener("DOMContentLoaded", () => {
+    renderMushafView();
+});
+
+// Penanganan otomatis saat resize browser
+window.addEventListener('resize', () => {
+    const container = document.getElementById('mushaf-page-container');
+    if (container && !container.classList.contains('hidden')) {
+        renderMushafView();
+    }
+});
+
+// ==========================================
+// FITUR SLIDE / SWIPE GESER DI MODE MOBILE
+// ==========================================
+let touchStartX = 0;
+let touchEndX = 0;
+
+const mushafContainer = document.getElementById('mushaf-page-container');
+
+if (mushafContainer) {
+    // 1. Catat posisi awal sentuhan jari
+    mushafContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    // 2. Catat posisi akhir sentuhan saat jari diangkat
+    mushafContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipeGesture();
+    }, { passive: true });
+}
+
+function handleSwipeGesture() {
+    const minSwipeDistance = 50; // Jarak minimal usapan jari (dalam piksel) untuk memicu slide
+    const swipeDistance = touchEndX - touchStartX;
+
+    // Abaikan jika gerakan tidak cukup jauh (mencegah ketidaksengajaan saat scroll)
+    if (Math.abs(swipeDistance) < minSwipeDistance) return;
+
+    if (swipeDistance > 0) {
+        // Usap ke KANAN -> Mengarah ke Halaman SEBELUMNYA (-1)
+        changeMushafPage(-1);
+    } else {
+        // Usap ke KIRI -> Mengarah ke Halaman SELANJUTNYA (+1)
+        changeMushafPage(1);
+    }
+}
+
+// Data Pemetaan Halaman Awal untuk Setiap Surah (1 - 114)
+const surahStartPages = {
+    1: 1, 2: 2, 3: 50, 4: 77, 5: 106, 6: 128, 7: 151, 8: 177, 9: 187, 10: 208,
+    11: 221, 12: 235, 13: 249, 14: 255, 15: 262, 16: 267, 17: 282, 18: 293, 19: 305, 20: 312,
+    21: 322, 22: 332, 23: 342, 24: 350, 25: 359, 26: 367, 27: 377, 28: 385, 29: 396, 30: 404,
+    31: 411, 32: 415, 33: 418, 34: 428, 35: 434, 36: 440, 37: 446, 38: 453, 39: 458, 40: 467,
+    41: 477, 42: 483, 43: 489, 44: 496, 45: 499, 46: 502, 47: 507, 48: 511, 49: 515, 50: 518,
+    51: 520, 52: 523, 53: 526, 54: 528, 55: 531, 56: 534, 57: 537, 58: 542, 59: 545, 60: 549,
+    61: 551, 62: 553, 63: 554, 64: 556, 65: 558, 66: 560, 67: 562, 68: 564, 69: 566, 70: 568,
+    71: 570, 72: 572, 73: 574, 74: 575, 75: 577, 76: 578, 77: 580, 78: 582, 79: 583, 80: 585,
+    81: 586, 82: 587, 83: 587, 84: 589, 85: 590, 86: 591, 87: 591, 88: 592, 89: 593, 90: 594,
+    91: 595, 92: 595, 93: 596, 94: 596, 95: 597, 96: 597, 97: 598, 98: 598, 99: 599, 100: 599,
+    101: 600, 102: 600, 103: 601, 104: 601, 105: 601, 106: 602, 107: 602, 108: 602, 109: 603,
+    110: 603, 111: 603, 112: 604, 113: 604, 114: 604
+};
+
+// Data Pemetaan Halaman Awal untuk Setiap Juz (1 - 30)
+const juzStartPages = {
+    1: 1, 2: 22, 3: 42, 4: 62, 5: 82, 6: 102, 7: 122, 8: 142, 9: 162, 10: 182,
+    11: 202, 12: 222, 13: 242, 14: 262, 15: 282, 16: 302, 17: 322, 18: 342, 19: 362, 20: 382,
+    21: 402, 22: 422, 23: 442, 24: 462, 25: 482, 26: 502, 27: 522, 28: 542, 29: 562, 30: 582
+};
+
+// Nama-nama Surah untuk mengisi Dropdown secara Otomatis
+const surahNames = [
+    "1. Al-Fatihah", "2. Al-Baqarah", "3. Ali 'Imran", "4. An-Nisa'", "5. Al-Ma'idah", "6. Al-An'am", "7. Al-A'raf", "8. Al-Anfal", "9. At-Taubah", "10. Yunus",
+    "11. Hud", "12. Yusuf", "13. Ar-Ra'd", "14. Ibrahim", "15. Al-Hijr", "16. An-Nahl", "17. Al-Isra'", "18. Al-Kahf", "19. Maryam", "20. Thaha",
+    "21. Al-Anbiya'", "22. Al-Hajj", "23. Al-Mu'minun", "24. An-Nur", "25. Al-Furqan", "26. Asy-Syu'ara'", "27. An-Naml", "28. Al-Qashas", "29. Al-'Ankabut", "30. Ar-Rum",
+    "31. Luqman", "32. As-Sajdah", "33. Al-Ahzab", "34. Saba'", "35. Fathir", "36. Ya-Sin", "37. Ash-Shaffat", "38. Shad", "39. Az-Zumar", "40. Ghafir",
+    "41. Fushshilat", "42. Asy-Syura", "43. Az-Zukhruf", "44. Ad-Dukhan", "45. Al-Jatsiyah", "46. Al-Ahqaf", "47. Muhammad", "48. Al-Fath", "49. Al-Hujurat", "50. Qaf",
+    "51. Adz-Dzariyat", "52. At-Thur", "53. An-Najm", "54. Al-Qamar", "55. Ar-Rahman", "56. Al-Waqi'ah", "57. Al-Hadid", "58. Al-Mujadilah", "59. Al-Hasyr", "60. Al-Mumtahanah",
+    "61. Ash-Shaff", "62. Al-Jumu'ah", "63. Al-Munafiqun", "64. At-Taghabun", "65. At-Thalaq", "66. At-Tahrim", "67. Al-Mulk", "68. Al-Qalam", "69. Al-Haqqah", "70. Al-Ma'arij",
+    "71. Nuh", "72. Al-Jinn", "73. Al-Muzzammil", "74. Al-Muddatstsir", "75. Al-Qiyamah", "76. Al-Insan", "77. Al-Mursalat", "78. An-Naba'", "79. An-Nazi'at", "80. 'Abasa",
+    "81. At-Takwir", "82. Al-Infitar", "83. Al-Muthaffifin", "84. Al-Insyiqaq", "85. Al-Buruj", "86. At-Thariq", "87. Al-A'la", "88. Al-Ghasyiyah", "89. Al-Fajr", "90. Al-Balad",
+    "91. Asy-Syams", "92. Al-Lail", "93. Ad-Dhuha", "94. Asy-Syarh", "95. At-Tin", "96. Al-'Alaq", "97. Al-Qadr", "98. Al-Bayyinah", "99. Az-Zalzalah", "100. Al-'Adiyat",
+    "101. Al-Qari'ah", "102. At-Takatsur", "103. Al-'Ashr", "104. Al-Humazah", "105. Al-Fil", "106. Quraisy", "107. Al-Ma'un", "108. Al-Kautsar", "109. Al-Kafirun", "110. An-Nashr",
+    "111. Al-Lahab", "112. Al-Ikhlash", "113. Al-Falaq", "114. An-Nas"
+];
+
+// Mengisi Pilihan Surah & Juz secara Otomatis saat Website Dimuat
+function initMushafDropdowns() {
+    const selectSurah = document.getElementById('select-mushaf-surah');
+    const selectJuz = document.getElementById('select-mushaf-juz');
+
+    if (selectSurah && selectSurah.options.length <= 1) {
+        surahNames.forEach((name, index) => {
+            const opt = document.createElement('option');
+            opt.value = index + 1;
+            opt.innerText = name;
+            selectSurah.appendChild(opt);
+        });
+    }
+
+    if (selectJuz && selectJuz.options.length <= 1) {
+        for (let i = 1; i <= 30; i++) {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.innerText = `Juz ${i}`;
+            selectJuz.appendChild(opt);
+        }
+    }
+}
+
+// Fungsi Melompat ke Surah Pilihan
+function jumpToSurah(surahNum) {
+    if (!surahNum) return;
+    const targetPage = surahStartPages[surahNum];
+    if (targetPage) {
+        currentMushafPage = targetPage;
+        renderMushafView();
+    }
+}
+
+// Fungsi Melompat ke Juz Pilihan
+function jumpToJuz(juzNum) {
+    if (!juzNum) return;
+    const targetPage = juzStartPages[juzNum];
+    if (targetPage) {
+        currentMushafPage = targetPage;
+        renderMushafView();
+    }
+}
+
+// Panggil inisialisasi pada DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+    initMushafDropdowns();
+    renderMushafView();
+});
     </script>
 </body>
        
