@@ -240,9 +240,9 @@ body.overflow-hidden-fixed {
     overflow: hidden !important;
 }
 
-/* 3. ATURAN GAMBAR & CONTAINER MUSHAF DI HP */
+/* ATURAN GAMBAR & CONTAINER MUSHAF DI HP (PERBAIKAN TAMPILAN UTUH) */
 @media (max-width: 1023px) {
-    /* Paksa container mengambang pas di sisa layar */
+    /* Buat container fleksibel mengisi sisa ruang secara presisi */
     #view-quran:fullscreen #mushaf-page-container,
     #view-quran:-webkit-full-screen #mushaf-page-container,
     #view-quran.mobile-pseudo-fullscreen #mushaf-page-container {
@@ -250,22 +250,46 @@ body.overflow-hidden-fixed {
         height: 100% !important;
         min-height: 0 !important;
         margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
 
+    /* Hilangkan padding berlebih pada latar belakang kertas Mushaf */
     #view-quran:fullscreen #mushaf-page-container > div,
     #view-quran:-webkit-full-screen #mushaf-page-container > div,
     #view-quran.mobile-pseudo-fullscreen #mushaf-page-container > div {
         height: 100% !important;
         min-height: 0 !important;
-        padding: 0.25rem !important;
+        padding: 0.25rem 0.25rem 0.5rem 0.25rem !important; /* Padding minimal */
+        gap: 0.25rem !important;
     }
 
-    /* Batasi tinggi gambar agar tidak memicu scrollbar vertikal */
+    /* Hilangkan margin pembungkus gambar agar gambar punya ruang maksimal */
+    #view-quran:fullscreen #mushaf-page-container .overflow-hidden,
+    #view-quran:-webkit-full-screen #mushaf-page-container .overflow-hidden,
+    #view-quran.mobile-pseudo-fullscreen #mushaf-page-container .overflow-hidden {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        height: 100% !important;
+    }
+
+    /* SETTING UTAMA GAMBAR: Bebaskan max-height & paksa proporsional */
     #view-quran:fullscreen img,
     #view-quran:-webkit-full-screen img,
     #view-quran.mobile-pseudo-fullscreen img {
-        max-height: 70dvh !important; /* Aman untuk rasio HP tinggi */
-        object-fit: contain !important;
+        max-height: 100% !important; /* Gunakan 100% dari sisa ruang kontainer */
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important; /* Menjamin gambar tidak terpotong sama sekali */
+    }
+
+    /* Perkecil ukuran label halaman di bagian atas agar tidak memakan tempat */
+    #view-quran:fullscreen #label-right-page,
+    #view-quran:fullscreen #label-left-page,
+    #view-quran.mobile-pseudo-fullscreen #label-right-page,
+    #view-quran.mobile-pseudo-fullscreen #label-left-page {
+        padding: 0.15rem 0.6rem !important;
+        font-size: 0.65rem !important;
     }
 }
     </style>
