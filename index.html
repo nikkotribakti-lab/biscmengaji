@@ -196,6 +196,48 @@
         body.dark-mode .arabic-text {
             color: #ffffff !important;
         }
+
+        /* Mengunci scroll body dan mengukur tinggi pas layar HP */
+@media (max-width: 1023px) {
+    /* Kelas tambahan untuk menyembunyikan footer di mode Mushaf */
+    body.mushaf-active-mode footer,
+    body.mushaf-active-mode .app-footer {
+        display: none !important;
+    }
+
+    /* Kunci layar HP agar tidak ada scroll saat mode Mushaf */
+    #view-quran.mushaf-mode-active {
+        height: 100dvh; /* Menggunakan Dynamic Viewport Height */
+        overflow: hidden !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 0.5rem;
+    }
+
+    /* Sesuaikan tinggi container Mushaf agar pas sisa ruang layar */
+    #view-quran.mushaf-mode-active #mushaf-page-container {
+        flex: 1;
+        height: 100%;
+        min-height: 0; /* Mencegah overflow */
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    /* Kurangi padding background hitam agar ruang gambar lebih lega */
+    #view-quran.mushaf-mode-active #mushaf-page-container > div {
+        height: 100%;
+        min-height: 0 !important;
+        padding: 0.5rem !important;
+    }
+
+    /* Batasi tinggi gambar maksimal mengikuti sisa layar */
+    #view-quran.mushaf-mode-active img {
+        max-h: 100% !important;
+        height: auto;
+        object-fit: contain;
+    }
+}
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-32 transition-colors duration-300">
@@ -2605,6 +2647,10 @@ function switchQuranView(mode) {
     const mushafNav = document.getElementById('mushaf-nav-controls');
     const btnSurah = document.getElementById('btn-mode-surah');
     const btnMushaf = document.getElementById('btn-mode-mushaf');
+    
+    // Ambil elemen wrapper utama & body
+    const viewQuran = document.getElementById('view-quran');
+    const body = document.body;
 
     if (mode === 'mushaf') {
         if (surahList) surahList.classList.add('hidden');
@@ -2612,9 +2658,13 @@ function switchQuranView(mode) {
         if (mushafContainer) mushafContainer.classList.remove('hidden');
         if (mushafNav) mushafNav.classList.remove('hidden');
         
-        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
-        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
+        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
         
+        // --- PROPERTI PENGUNCI MOBILE & SEMBUNYIKAN FOOTER ---
+        if (body) body.classList.add('mushaf-active-mode');
+        if (viewQuran) viewQuran.classList.add('mushaf-mode-active');
+
         renderMushafView();
     } else {
         if (surahList) surahList.classList.remove('hidden');
@@ -2622,8 +2672,12 @@ function switchQuranView(mode) {
         if (mushafContainer) mushafContainer.classList.add('hidden');
         if (mushafNav) mushafNav.classList.add('hidden');
         
-        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
-        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+        if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
+        if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-3 md:px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+        
+        // --- KEMBALIKAN FOOTER & SCROLL NORMAL DI MODE SURAH ---
+        if (body) body.classList.remove('mushaf-active-mode');
+        if (viewQuran) viewQuran.classList.remove('mushaf-mode-active');
     }
 }
 
