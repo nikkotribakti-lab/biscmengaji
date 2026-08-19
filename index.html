@@ -197,7 +197,17 @@
             color: #ffffff !important;
         }
 
-      /* Style khusus saat elemen #view-quran masuk mode Fullscreen (Desktop & Mobile) */
+     /* Kelas pengunci Body agar tidak ada scrollbar browser */
+body.overflow-hidden-fixed {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+/* 1. NATIVE FULLSCREEN (Android Chrome) */
 #view-quran:fullscreen,
 #view-quran:-webkit-full-screen {
     width: 100vw !important;
@@ -211,18 +221,31 @@
     overflow: hidden !important;
 }
 
-/* Pengaturan Khusus Layar HP (Mobile) saat Fullscreen */
-@media (max-width: 1023px) {
-    body.mobile-fullscreen-active {
-        overflow: hidden !important;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-    }
+/* 2. PSEUDO FULLSCREEN (iOS / Safari iPhone) */
+#view-quran.mobile-pseudo-fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    z-index: 99999 !important; /* Timpa seluruh elemen lain termasuk header/footer */
+    background-color: #0f172a !important;
+    padding: 0.5rem !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+}
 
-    /* Container Mushaf Mengisi Sisa Ruang Layar HP */
+/* 3. ATURAN GAMBAR & CONTAINER MUSHAF DI HP */
+@media (max-width: 1023px) {
+    /* Paksa container mengambang pas di sisa layar */
     #view-quran:fullscreen #mushaf-page-container,
-    #view-quran:-webkit-full-screen #mushaf-page-container {
+    #view-quran:-webkit-full-screen #mushaf-page-container,
+    #view-quran.mobile-pseudo-fullscreen #mushaf-page-container {
         flex: 1 !important;
         height: 100% !important;
         min-height: 0 !important;
@@ -230,16 +253,18 @@
     }
 
     #view-quran:fullscreen #mushaf-page-container > div,
-    #view-quran:-webkit-full-screen #mushaf-page-container > div {
+    #view-quran:-webkit-full-screen #mushaf-page-container > div,
+    #view-quran.mobile-pseudo-fullscreen #mushaf-page-container > div {
         height: 100% !important;
         min-height: 0 !important;
-        padding: 0.5rem !important;
+        padding: 0.25rem !important;
     }
 
-    /* Maksimalkan Gambar Mushaf di HP tanpa Terpotong */
+    /* Batasi tinggi gambar agar tidak memicu scrollbar vertikal */
     #view-quran:fullscreen img,
-    #view-quran:-webkit-full-screen img {
-        max-height: 75dvh !important;
+    #view-quran:-webkit-full-screen img,
+    #view-quran.mobile-pseudo-fullscreen img {
+        max-height: 70dvh !important; /* Aman untuk rasio HP tinggi */
         object-fit: contain !important;
     }
 }
@@ -2899,41 +2924,50 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function toggleFullscreen() {
-    const elem = document.getElementById('view-quran') || document.documentElement;
+    const viewQuran = document.getElementById('view-quran');
     const body = document.body;
+    const icon = document.getElementById('icon-fullscreen');
 
-    // Cek apakah sedang dalam mode Fullscreen
-    const isFS = document.fullscreenElement || 
-                 document.webkitFullscreenElement || 
-                 document.msFullscreenElement;
+    // Cek apakah browser mendukung Native Fullscreen pada elemen HTML
+    const supportsNativeFS = !!(viewQuran.requestFullscreen || viewQuran.webkitRequestFullscreen);
 
-    if (!isFS) {
-        // --- MASUK FULLSCREEN ---
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Chrome Android & Safari iOS */
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen();
+    if (supportsNativeFS) {
+        // --- JALUR ANDROID / DESKTOP (NATIVE FULLSCREEN) ---
+        const isFS = document.fullscreenElement || document.webkitFullscreenElement;
+
+        if (!isFS) {
+            if (viewQuran.requestFullscreen) {
+                viewQuran.requestFullscreen();
+            } else if (viewQuran.webkitRequestFullscreen) {
+                viewQuran.webkitRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
         }
-        
-        // Kunci body di HP agar tidak bisa di-scroll sama sekali
-        body.classList.add('mobile-fullscreen-active');
     } else {
-        // --- KELUAR FULLSCREEN ---
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
+        // --- JALUR SAFARI IOS / IPHONE (PSEUDO FULLSCREEN VIA CSS) ---
+        const isPseudoFS = viewQuran.classList.contains('mobile-pseudo-fullscreen');
+
+        if (!isPseudoFS) {
+            viewQuran.classList.add('mobile-pseudo-fullscreen');
+            body.classList.add('overflow-hidden-fixed');
+            if (icon) icon.className = "fa-solid fa-compress";
+            
+            // Coba sembunyikan address bar iOS dengan scroll otomatis
+            window.scrollTo(0, 1);
+        } else {
+            viewQuran.classList.remove('mobile-pseudo-fullscreen');
+            body.classList.remove('overflow-hidden-fixed');
+            if (icon) icon.className = "fa-solid fa-expand";
         }
-        
-        body.classList.remove('mobile-fullscreen-active');
     }
 }
 
-// Handler saat pengguna keluar fullscreen lewat gesture/usap layar HP
+// Handler untuk merespons tombol ESC / Gesture Swipe Android
 document.addEventListener('fullscreenchange', handleFSChange);
 document.addEventListener('webkitfullscreenchange', handleFSChange);
 
@@ -2946,8 +2980,10 @@ function handleFSChange() {
         icon.className = isFS ? "fa-solid fa-compress" : "fa-solid fa-expand";
     }
 
-    if (!isFS) {
-        body.classList.remove('mobile-fullscreen-active');
+    if (isFS) {
+        body.classList.add('overflow-hidden-fixed');
+    } else {
+        body.classList.remove('overflow-hidden-fixed');
     }
 }
 
