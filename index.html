@@ -197,30 +197,50 @@
             color: #ffffff !important;
         }
 
-        /* Styling Saat Mode Fullscreen Aktif */
-:fullscreen #view-quran,
-:-webkit-full-screen #view-quran {
-    background-color: #0f172a; /* Slate 900 */
-    padding: 1rem;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    height: 100vh;
+      /* Style khusus saat elemen #view-quran masuk mode Fullscreen (Desktop & Mobile) */
+#view-quran:fullscreen,
+#view-quran:-webkit-full-screen {
+    width: 100vw !important;
+    height: 100dvh !important;
+    background-color: #0f172a !important; /* Slate 900 */
+    padding: 0.5rem !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
 }
 
-/* Di HP/Mobile Saat Fullscreen: Maksimalkan Tinggi Mushaf */
+/* Pengaturan Khusus Layar HP (Mobile) saat Fullscreen */
 @media (max-width: 1023px) {
-    :fullscreen #view-quran #mushaf-page-container,
-    :-webkit-full-screen #view-quran #mushaf-page-container {
-        flex: 1;
+    body.mobile-fullscreen-active {
+        overflow: hidden !important;
+        position: fixed;
+        width: 100%;
         height: 100%;
-        margin: 0;
     }
 
-    :fullscreen #view-quran img,
-    :-webkit-full-screen #view-quran img {
-        max-height: 82vh !important;
+    /* Container Mushaf Mengisi Sisa Ruang Layar HP */
+    #view-quran:fullscreen #mushaf-page-container,
+    #view-quran:-webkit-full-screen #mushaf-page-container {
+        flex: 1 !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+    }
+
+    #view-quran:fullscreen #mushaf-page-container > div,
+    #view-quran:-webkit-full-screen #mushaf-page-container > div {
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0.5rem !important;
+    }
+
+    /* Maksimalkan Gambar Mushaf di HP tanpa Terpotong */
+    #view-quran:fullscreen img,
+    #view-quran:-webkit-full-screen img {
+        max-height: 75dvh !important;
+        object-fit: contain !important;
     }
 }
     </style>
@@ -2879,21 +2899,28 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function toggleFullscreen() {
-    // Kita gunakan elemen <section id="view-quran"> sebagai area Fullscreen
     const elem = document.getElementById('view-quran') || document.documentElement;
-    const icon = document.getElementById('icon-fullscreen');
+    const body = document.body;
 
-    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-        // Masuk ke Mode Fullscreen
+    // Cek apakah sedang dalam mode Fullscreen
+    const isFS = document.fullscreenElement || 
+                 document.webkitFullscreenElement || 
+                 document.msFullscreenElement;
+
+    if (!isFS) {
+        // --- MASUK FULLSCREEN ---
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari / iOS */
+        } else if (elem.webkitRequestFullscreen) { /* Chrome Android & Safari iOS */
             elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
+        } else if (elem.msRequestFullscreen) {
             elem.msRequestFullscreen();
         }
+        
+        // Kunci body di HP agar tidak bisa di-scroll sama sekali
+        body.classList.add('mobile-fullscreen-active');
     } else {
-        // Keluar dari Mode Fullscreen
+        // --- KELUAR FULLSCREEN ---
         if (document.exitFullscreen) {
             document.exitFullscreen();
         } else if (document.webkitExitFullscreen) {
@@ -2901,23 +2928,26 @@ function toggleFullscreen() {
         } else if (document.msExitFullscreen) {
             document.msExitFullscreen();
         }
+        
+        body.classList.remove('mobile-fullscreen-active');
     }
 }
 
-// Event Listener untuk Mengubah Ikon saat Pengguna Keluar via Tombol ESC / Gesture
-document.addEventListener('fullscreenchange', updateFullscreenIcon);
-document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
+// Handler saat pengguna keluar fullscreen lewat gesture/usap layar HP
+document.addEventListener('fullscreenchange', handleFSChange);
+document.addEventListener('webkitfullscreenchange', handleFSChange);
 
-function updateFullscreenIcon() {
+function handleFSChange() {
+    const isFS = document.fullscreenElement || document.webkitFullscreenElement;
     const icon = document.getElementById('icon-fullscreen');
-    if (!icon) return;
+    const body = document.body;
 
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-        // Sedang Fullscreen -> Tampilkan Ikon Compress (Kecilkan)
-        icon.className = "fa-solid fa-compress";
-    } else {
-        // Normal -> Tampilkan Ikon Expand (Layar Penuh)
-        icon.className = "fa-solid fa-expand";
+    if (icon) {
+        icon.className = isFS ? "fa-solid fa-compress" : "fa-solid fa-expand";
+    }
+
+    if (!isFS) {
+        body.classList.remove('mobile-fullscreen-active');
     }
 }
 
