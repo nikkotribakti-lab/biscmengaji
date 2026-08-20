@@ -411,48 +411,47 @@ body.overflow-hidden-fixed {
             <input type="text" id="search-quran-input" oninput="filterQuranList()" class="w-full pl-11 pr-4 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 text-xs transition-all shadow-inner" placeholder="Cari surat...">
         </div>
 
-        <!-- Controls Navigasi Halaman (Mode Mushaf) -->
-        <div id="mushaf-nav-controls" class="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
+        <!-- Controls Navigasi Halaman & Fullscreen -->
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
             
-            <!-- Pilih Surah -->
-            <select id="select-mushaf-surah" onchange="jumpToSurah(this.value)" class="py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 focus:ring-2 focus:ring-sky-500 max-w-[130px] sm:max-w-none">
-                <option value="">-- Pilih Surah --</option>
-            </select>
+            <!-- Controls Navigasi Halaman (Khusus Mode Mushaf) -->
+            <div id="mushaf-nav-controls" class="flex flex-wrap items-center gap-2">
+                <select id="select-mushaf-surah" onchange="jumpToSurah(this.value)" class="py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 focus:ring-2 focus:ring-sky-500 max-w-[130px] sm:max-w-none">
+                    <option value="">-- Pilih Surah --</option>
+                </select>
 
-            <!-- Pilih Juz -->
-            <select id="select-mushaf-juz" onchange="jumpToJuz(this.value)" class="py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 focus:ring-2 focus:ring-sky-500">
-                <option value="">-- Juz --</option>
-            </select>
+                <select id="select-mushaf-juz" onchange="jumpToJuz(this.value)" class="py-1.5 px-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 focus:ring-2 focus:ring-sky-500">
+                    <option value="">-- Juz --</option>
+                </select>
 
-            <!-- Tombol Navigasi Manual -->
-            <div class="flex items-center gap-1.5">
-                <button onclick="changeMushafPage(1)" title="Halaman Selanjutnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all active:scale-95">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="changeMushafPage(1)" title="Halaman Selanjutnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all active:scale-95">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
 
-                <div class="flex items-center gap-1 text-xs font-semibold text-slate-600">
-                    <input type="number" id="mushaf-page-input" min="1" max="604" value="1" onchange="jumpToMushafPage(this.value)" class="w-12 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-bold text-xs focus:ring-2 focus:ring-sky-500">
-                    <span>/ 604</span>
+                    <div class="flex items-center gap-1 text-xs font-semibold text-slate-600">
+                        <input type="number" id="mushaf-page-input" min="1" max="604" value="1" onchange="jumpToMushafPage(this.value)" class="w-12 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-bold text-xs focus:ring-2 focus:ring-sky-500">
+                        <span>/ 604</span>
+                    </div>
+
+                    <button onclick="changeMushafPage(-1)" title="Halaman Sebelumnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all active:scale-95">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
                 </div>
-
-                <button onclick="changeMushafPage(-1)" title="Halaman Sebelumnya" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all active:scale-95">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
             </div>
 
-            <!-- Tombol Fullscreen -->
-            <button id="btn-fullscreen" onclick="toggleFullscreen()" title="Layar Penuh" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 active:scale-95">
-                <i id="icon-fullscreen" class="fa-solid fa-expand"></i>
-                <span class="hidden md:inline">Full</span>
-            </button>
+            
+            <!-- Tombol Fullscreen Global (Aktif di Kedua Mode) -->
+<button id="btn-fullscreen" onclick="toggleFullscreen()" title="Layar Penuh" px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 active:scale-95 shrink-0">
+    <i id="icon-fullscreen" class="fa-solid fa-expand"></i>
+    <span class="hidden md:inline">Full</span>
+</button>
         </div>
 
     </div>
 
-    <!-- 2. BAR AUDIO MUSHAF (BARU: Di Atas Container Mushaf) -->
+    <!-- 2. BAR AUDIO MUSHAF -->
     <div id="mushaf-audio-bar" class="flex flex-wrap items-center justify-between gap-3 bg-amber-500/10 border border-amber-200/80 p-2.5 sm:p-3 rounded-2xl w-full">
-        
-        <!-- Pilihan Qori -->
         <div class="flex items-center gap-2 w-full sm:w-auto flex-1 min-w-[240px]">
             <i class="fa-solid fa-circle-user text-amber-700 text-sm pl-1"></i>
             <span class="text-xs font-bold text-amber-900 shrink-0 hidden sm:inline">Qori:</span>
@@ -467,86 +466,71 @@ body.overflow-hidden-fixed {
             </select>
         </div>
 
-        <!-- Status & Player Controls Bar -->
         <div class="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto shrink-0">
-            <!-- Informational Label Audio -->
             <div class="flex items-center gap-2 text-xs font-semibold text-amber-900 bg-white/70 px-3 py-1.5 rounded-xl border border-amber-200/60">
                 <i id="status-audio-icon" class="fa-solid fa-music text-amber-600"></i>
                 <span id="status-audio-text" class="truncate max-w-[150px] sm:max-w-none">Siap memutar</span>
             </div>
 
-            <!-- Tombol Stop Audio Global -->
             <button id="btn-stop-global" onclick="stopPageAudio()" title="Hentikan Audio" class="hidden px-3 py-1.5 bg-red-600 hover:bg-red-700 active:scale-95 text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
                 <i class="fa-solid fa-square"></i>
                 <span>Stop</span>
             </button>
         </div>
-
     </div>
 
     <!-- 3. CONTAINER TAMPILAN LIST SURAH -->
-    <div id="quran-surah-list" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 w-full"></div>
+    <div id="quran-surah-list" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 w-full bg-slate-50 p-3 rounded-2xl border border-slate-200/60"></div>
 
     <!-- 4. CONTAINER TAMPILAN BUKU / MUSHAF ASLI -->
     <div id="mushaf-page-container" class="w-full flex-1">
-        
-        <!-- Wrapper Utama: Flexbox RTL -->
-        <div class="flex flex-row-reverse justify-center items-stretch gap-3 md:gap-5 bg-slate-800 p-2 sm:p-5 rounded-2xl md:rounded-3xl shadow-2xl h-full min-h-[80vh] w-full" dir="rtl">
+        <!-- flex-row standar (tanpa flex-row-reverse) dengan dir="rtl" -->
+        <div class="flex flex-row justify-center items-stretch gap-3 md:gap-5 bg-slate-800 p-2 sm:p-5 rounded-2xl md:rounded-3xl shadow-2xl h-full min-h-[80vh] w-full" dir="rtl">
             
-            <!-- HALAMAN KANAN -->
+            <!-- HALAMAN KANAN (Pertama dalam DOM RTL = Posisi Kanan Visual) -->
             <div id="mushaf-card-right" class="relative flex-1 flex flex-col justify-between items-center bg-[#fffdf5] rounded-xl md:rounded-2xl p-2 sm:p-4 shadow-md w-full min-w-0 transition-all duration-300">
-                
-                <!-- Header Card: Label & Tombol Audio Halaman Kanan -->
-                <div class="w-full flex items-center justify-between z-10 px-1 gap-2">
-                    <span id="label-left-page" class="text-xs font-bold text-amber-900 bg-amber-100/80 px-3 py-1 rounded-full shrink-0 select-none">Halaman -</span>
-                    
-                    <button id="btn-audio-left" onclick="togglePageAudio('left')" title="Putar Audio Halaman Ini" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-sm shrink-0">
-                        <i id="icon-audio-left" class="fa-solid fa-play"></i>
-                        <span id="text-audio-left" class="hidden sm:inline">Play</span>
-                    </button>
-                </div>
-
-                <!-- Indicator Loading -->
-                <div id="loading-right" class="absolute inset-0 flex flex-col items-center justify-center bg-[#fffdf5] rounded-xl md:rounded-2xl z-20">
-                    <i class="fa-solid fa-spinner animate-spin text-2xl text-amber-600 mb-2"></i>
-                    <span class="text-xs text-slate-500 font-sans">Memuat Mushaf...</span>
-                </div>
-                
-                <!-- Container Pembungkus Gambar -->
-                <div class="w-full flex-1 flex items-center justify-center my-1 overflow-hidden">
-                    <img id="img-mushaf-left" class="max-w-full max-h-[72vh] lg:max-h-[78vh] w-auto h-auto object-contain rounded drop-shadow-sm select-none" src="" alt="Halaman Mushaf Kanan" onload="document.getElementById('loading-right').classList.add('hidden')" onerror="handleImgError(this, 'loading-right')">
-                </div>
-            </div>
-
-            <!-- HALAMAN KIRI -->
-            <div id="mushaf-card-left" class="hidden relative flex-1 flex flex-col justify-between items-center bg-[#fffdf5] rounded-xl md:rounded-2xl p-2 sm:p-4 shadow-md w-full min-w-0 transition-all duration-300">
-                
-                <!-- Header Card: Label & Tombol Audio Halaman Kiri -->
                 <div class="w-full flex items-center justify-between z-10 px-1 gap-2">
                     <span id="label-right-page" class="text-xs font-bold text-amber-900 bg-amber-100/80 px-3 py-1 rounded-full shrink-0 select-none">Halaman -</span>
-                    
                     <button id="btn-audio-right" onclick="togglePageAudio('right')" title="Putar Audio Halaman Ini" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-sm shrink-0">
                         <i id="icon-audio-right" class="fa-solid fa-play"></i>
                         <span id="text-audio-right" class="hidden sm:inline">Play</span>
                     </button>
                 </div>
 
-                <!-- Indicator Loading -->
+                <div id="loading-right" class="absolute inset-0 flex flex-col items-center justify-center bg-[#fffdf5] rounded-xl md:rounded-2xl z-20">
+                    <i class="fa-solid fa-spinner animate-spin text-2xl text-amber-600 mb-2"></i>
+                    <span class="text-xs text-slate-500 font-sans">Memuat Mushaf...</span>
+                </div>
+                
+                <div class="w-full flex-1 flex items-center justify-center my-1 overflow-hidden">
+                    <img id="img-mushaf-right" class="max-w-full max-h-[72vh] lg:max-h-[78vh] w-auto h-auto object-contain rounded drop-shadow-sm select-none" src="" alt="Halaman Mushaf Kanan" onload="document.getElementById('loading-right').classList.add('hidden')" onerror="if(typeof handleImgError === 'function') handleImgError(this, 'loading-right')">
+                </div>
+            </div>
+
+            <!-- HALAMAN KIRI (Kedua dalam DOM RTL = Posisi Kiri Visual) -->
+            <div id="mushaf-card-left" class="hidden relative flex-1 flex flex-col justify-between items-center bg-[#fffdf5] rounded-xl md:rounded-2xl p-2 sm:p-4 shadow-md w-full min-w-0 transition-all duration-300">
+                <div class="w-full flex items-center justify-between z-10 px-1 gap-2">
+                    <span id="label-left-page" class="text-xs font-bold text-amber-900 bg-amber-100/80 px-3 py-1 rounded-full shrink-0 select-none">Halaman -</span>
+                    <button id="btn-audio-left" onclick="togglePageAudio('left')" title="Putar Audio Halaman Ini" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-sm shrink-0">
+                        <i id="icon-audio-left" class="fa-solid fa-play"></i>
+                        <span id="text-audio-left" class="hidden sm:inline">Play</span>
+                    </button>
+                </div>
+
                 <div id="loading-left" class="absolute inset-0 flex flex-col items-center justify-center bg-[#fffdf5] rounded-xl md:rounded-2xl z-20">
                     <i class="fa-solid fa-spinner animate-spin text-2xl text-amber-600 mb-2"></i>
                     <span class="text-xs text-slate-500 font-sans">Memuat Mushaf...</span>
                 </div>
 
-                <!-- Container Pembungkus Gambar -->
                 <div class="w-full flex-1 flex items-center justify-center my-1 overflow-hidden">
-                    <img id="img-mushaf-right" class="max-w-full max-h-[72vh] lg:max-h-[78vh] w-auto h-auto object-contain rounded drop-shadow-sm select-none" src="" alt="Halaman Mushaf Kiri" onload="document.getElementById('loading-left').classList.add('hidden')" onerror="handleImgError(this, 'loading-left')">
+                    <img id="img-mushaf-left" class="max-w-full max-h-[72vh] lg:max-h-[78vh] w-auto h-auto object-contain rounded drop-shadow-sm select-none" src="" alt="Halaman Mushaf Kiri" onload="document.getElementById('loading-left').classList.add('hidden')" onerror="if(typeof handleImgError === 'function') handleImgError(this, 'loading-left')">
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- Hidden Audio Player dengan Support Lintas Domain (CORS) -->
+    <!-- Hidden Audio Player -->
     <audio id="mushaf-audio-player" class="hidden" crossorigin="anonymous" onended="stopPageAudio()"></audio>
 
 </section>
@@ -2760,12 +2744,14 @@ function switchQuranView(mode) {
     const btnSurah = document.getElementById('btn-mode-surah');
     const btnMushaf = document.getElementById('btn-mode-mushaf');
 const mushafAudioBar = document.getElementById('mushaf-audio-bar');
+const btnFullscreen = document.getElementById('btn-fullscreen');
     if (mode === 'mushaf') {
         if (surahList) surahList.classList.add('hidden');
         if (searchBar) searchBar.classList.add('hidden');
         if (mushafContainer) mushafContainer.classList.remove('hidden');
         if (mushafNav) mushafNav.classList.remove('hidden');
         if (mushafAudioBar) mushafAudioBar.classList.remove('hidden');
+        if (btnFullscreen) btnFullscreen.classList.remove('hidden');
         if (btnMushaf) btnMushaf.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
         if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
         renderMushafView();
@@ -2773,6 +2759,7 @@ const mushafAudioBar = document.getElementById('mushaf-audio-bar');
      else if (mode === 'surah') {
         if (surahList) surahList.classList.remove('hidden');
         if (searchBar) searchBar.classList.remove('hidden');
+        if (btnFullscreen) btnFullscreen.classList.add('hidden');
         if (mushafContainer) mushafContainer.classList.add('hidden');
         if (mushafNav) mushafNav.classList.add('hidden');
         if (btnSurah) btnSurah.className = "flex-1 sm:flex-none px-4 py-2 text-xs font-bold rounded-lg transition-all bg-sky-600 text-white shadow-sm";
@@ -3267,6 +3254,46 @@ function setAudioButtonState(side, state) {
         icon.className = "fa-solid fa-play";
         text.innerText = "Play";
         btn.className = "px-2.5 py-1 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-sm shrink-0";
+    }
+}
+
+// Helper untuk menyembunyikan indikator loading
+function hideLoading(elementId) {
+    const el = document.getElementById(elementId);
+    if (el) el.classList.add('hidden');
+}
+
+// Handler jika gambar gagal dimuat agar spinner tidak berputar terus
+function handleImgError(imgEl, loadingId) {
+    hideLoading(loadingId);
+    console.warn("Gambar gagal dimuat:", imgEl.src);
+}
+
+// Logika Pemuatan Halaman Mushaf (Mobile & Desktop)
+function renderMushafPage(pageNumber) {
+    const isMobile = window.innerWidth < 768;
+
+    const imgRight = document.getElementById('img-mushaf-right');
+    const loadingRight = document.getElementById('loading-right');
+    const cardLeft = document.getElementById('mushaf-card-left');
+    const imgLeft = document.getElementById('img-mushaf-left');
+    const loadingLeft = document.getElementById('loading-left');
+
+    // Reset Indikator Loading Halaman Kanan
+    if (loadingRight) loadingRight.classList.remove('hidden');
+    if (imgRight) imgRight.src = `URL_IMAGE_PAGE_${pageNumber}.png`;
+
+    // Pengaturan Tampilan Mobile vs Desktop
+    if (isMobile) {
+        // Pada mobile, paksa sembunyikan card kiri & matikan loadingnya
+        if (cardLeft) cardLeft.classList.add('hidden');
+        if (loadingLeft) loadingLeft.classList.add('hidden');
+        if (imgLeft) imgLeft.src = '';
+    } else {
+        // Pada desktop, tampilkan card kiri jika ada halaman genap/ganjil pasangannya
+        if (cardLeft) cardLeft.classList.remove('hidden');
+        if (loadingLeft) loadingLeft.classList.remove('hidden');
+        if (imgLeft) imgLeft.src = `URL_IMAGE_PAGE_${pageNumber + 1}.png`;
     }
 }
 
