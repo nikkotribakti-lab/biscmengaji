@@ -5448,117 +5448,116 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDzikir('pagi');
 });
 
-// Koordinat Ka'bah di Mekkah
-const KAABA_LAT = 21.422487;
-const KAABA_LNG = 39.826206;
+// Variabel Global Lokasi & Kiblat
+let userLat = null;
+let userLng = null;
+let qiblaBearing = 295.2; // Default sudut kiblat Indonesia (derajat dari utara)
 
-let qiblaBearing = 295.2; // Nilai default estimasi Indonesia
-
-/**
- * Memulai dan meminta izin sensor Kompas / Orientasi HP
- */
-function initQiblaCompass() {
+// 1. Fungsi Utama Menginisialisasi Kompas & GPS
+async function initQiblaCompass() {
     const statusEl = document.getElementById('qibla-status');
-    
-    // 1. Dapatkan lokasi GPS terlebih dahulu untuk menghitung sudut pasti ke Ka'bah
-    if (navigator.geolocation) {
-        statusEl.innerText = "Mengambil koordinat GPS...";
+    if (statusEl) statusEl.innerText = "Meminta akses lokasi & sensor...";
+
+    // Step A: Ambil Lokasi GPS Presisi
+    if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                const userLat = position.coords.latitude;
-                const userLng = position.coords.longitude;
+                userLat = position.coords.latitude;
+                userLng = position.coords.longitude;
                 
-                // Hitung arah kiblat berdasarkan koordinat pengguna
-                qiblaBearing = calculateQiblaAngle(userLat, userLng);
-                document.getElementById('qibla-degree').innerText = `${qiblaBearing.toFixed(1)}° NW`;
-                statusEl.innerText = "GPS Aktif. Memutar kompas...";
+                // Hitung Sudut Kiblat berdasarkan lokasi pengguna
+                qiblaBearing = calculateQiblaBearing(userLat, userLng);
                 
-                // Minta izin sensor orientasi
-                requestOrientationPermission();
+                const degreeEl = document.getElementById('qibla-degree');
+                if (degreeEl) {
+                    degreeEl.innerText = `${qiblaBearing.toFixed(1)}° NW`;
+                }
+
+                // Step B: Minta Izin Sensor Gerak / Orientasi Perangkat
+                requestCompassPermission();
             },
             (error) => {
-                statusEl.innerText = "GPS gagal/ditolak. Gunakan nilai standar (295.2°).";
-                requestOrientationPermission();
-            }
+                console.warn("Gagal mendapatkan GPS, menggunakan default lokasi:", error);
+                if (statusEl) statusEl.innerText = "GPS gagal. Menggunakan estimasi posisi.";
+                requestCompassPermission();
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
         );
     } else {
-        requestOrientationPermission();
+        requestCompassPermission();
     }
 }
 
-/**
- * Penanganan Izin Sensor Orientasi (Khususnya untuk iOS 13+ & Android Modern)
- */
-function requestOrientationPermission() {
+// 2. Minta Izin Akses Sensor Orientasi (Khusus Browser iOS 13+ & Android Modern)
+function requestCompassPermission() {
     const statusEl = document.getElementById('qibla-status');
 
+    // Cek apakah browser membutuhkan izin eksplisit (Safari/iOS)
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        // Khusus iOS / Safari
         DeviceOrientationEvent.requestPermission()
-            .then(permissionState => {
-                if (permissionState === 'granted') {
+            .then(response => {
+                if (response === 'granted') {
                     window.addEventListener('deviceorientation', handleOrientation, true);
-                    statusEl.innerText = "Kompas aktif! Putar HP Anda.";
+                    if (statusEl) statusEl.innerText = "Kompas aktif. Putar HP Anda.";
                 } else {
-                    alert('Izin akses sensor orientasi ditolak.');
-                    statusEl.innerText = "Izin sensor ditolak.";
+                    alert("Akses sensor kompas ditolak oleh pengguna.");
+                    if (statusEl) statusEl.innerText = "Izin sensor kompas ditolak.";
                 }
             })
-            .catch(console.error);
+            .catch(err => {
+                console.error(err);
+                if (statusEl) statusEl.innerText = "Gagal mengaktifkan sensor orientasi.";
+            });
     } else if ('ondeviceorientationabsolute' in window) {
-        // Android Chrome dengan absolute orientation
-        window.addEventListener('deviceorientationabsolute', handleOrientation, true);
-        statusEl.innerText = "Kompas aktif! Putar HP Anda.";
+        // Chrome / Android modern dengan Absolute Orientation
+        window.addEventListener('ondeviceorientationabsolute', handleOrientation, true);
+        if (statusEl) statusEl.innerText = "Kompas aktif. Putar HP Anda.";
     } else if ('ondeviceorientation' in window) {
-        // Fallback Android / Browser standar
+        // Fallback standar browser lain
         window.addEventListener('deviceorientation', handleOrientation, true);
-        statusEl.innerText = "Kompas aktif! Putar HP Anda.";
+        if (statusEl) statusEl.innerText = "Kompas aktif. Putar HP Anda.";
     } else {
-        alert("Perangkat Anda tidak mendukung sensor kompas.");
-        statusEl.innerText = "Sensor kompas tidak didukung di perangkat ini.";
+        alert("Perangkat atau browser Anda tidak mendukung sensor kompas (Gyroscope/Magnetometer).");
+        if (statusEl) statusEl.innerText = "Sensor kompas tidak didukung.";
     }
 }
 
-/**
- * Handler Pergerakan Sensor Kompas
- */
+// 3. Listener Pembacaan Sensor & Rotasi Elemen Kompas
 function handleOrientation(event) {
     let compassHeading = null;
 
-    // Untuk iOS (webkitCompassHeading)
     if (event.webkitCompassHeading) {
+        // Khusus iOS Safari (langsung memberikan arah utara magnetis)
         compassHeading = event.webkitCompassHeading;
-    } 
-    // Untuk Android / Sensor Absolute
-    else if (event.alpha !== null) {
-        compassHeading = 360 - event.alpha;
+    } else if (event.alpha !== null) {
+        // Untuk Android / Chrome
+        compassHeading = event.absolute ? event.alpha : (360 - event.alpha);
     }
 
     if (compassHeading !== null) {
-        // Hitung perputaran dial kompas agar menunjuk ke Kiblat
-        const dialRotation = compassHeading - qiblaBearing;
-        const compassDial = document.getElementById('compass-dial');
-
-        if (compassDial) {
-            compassDial.style.transform = `rotate(${-dialRotation}deg)`;
+        const dial = document.getElementById('compass-dial');
+        if (dial) {
+            // Memutar piringan kompas berlawanan dengan arah rotasi HP agar indikator Utara & Kiblat tetap presisi
+            dial.style.transform = `rotate(${-compassHeading}deg)`;
         }
     }
 }
 
-/**
- * Formula Matematika Geodesik (Great Circle) Menghitung Sudut Kiblat
- */
-function calculateQiblaAngle(lat, lng) {
-    const phiK = KAABA_LAT * (Math.PI / 180);
-    const lambdaK = KAABA_LNG * (Math.PI / 180);
-    const phi = lat * (Math.PI / 180);
-    const lambda = lng * (Math.PI / 180);
+// 4. Rumus Matematika Menghitung Arah Kiblat Presisi (Great Circle Distance)
+function calculateQiblaBearing(lat, lng) {
+    // Koordinat Ka'bah di Makkah
+    const meccaLat = 21.422487;
+    const meccaLng = 39.826206;
 
-    const y = Math.sin(lambdaK - lambda);
-    const x = Math.cos(phi) * Math.tan(phiK) - Math.sin(phi) * Math.cos(lambdaK - lambda);
+    const phi1 = lat * Math.PI / 180;
+    const phi2 = meccaLat * Math.PI / 180;
+    const deltaLambda = (meccaLng - lng) * Math.PI / 180;
 
-    let qibla = Math.atan2(y, x) * (180 / Math.PI);
-    return (qibla + 360) % 360;
+    const y = Math.sin(deltaLambda);
+    const x = Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLambda);
+    
+    let qibla = Math.atan2(y, x) * 180 / Math.PI;
+    return (qibla + 360) % 360; // Normalisasi ke 0 - 360 derajat
 }
 
 function updateCurrentTime() {
