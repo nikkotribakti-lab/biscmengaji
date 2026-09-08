@@ -1154,6 +1154,8 @@ body.overflow-hidden-fixed {
 
             <!-- Tempat Contoh Bacaan Muncul -->
             <div id="tahsin-tab-content" class="space-y-4"></div>
+
+        
         </section>
 
         <!-- ==================== VIEW 8: INFORMASI ==================== -->
@@ -1663,6 +1665,15 @@ body.overflow-hidden-fixed {
         "audio/tahsin/arid-sukun_1.mp3", "audio/tahsin/arid-sukun_2.mp3", "audio/tahsin/arid-sukun_3.mp3", "audio/tahsin/arid-sukun_4.mp3",
         "audio/tahsin/arid-sukun_5.mp3", "audio/tahsin/arid-sukun_6.mp3", "audio/tahsin/arid-sukun_7.mp3", "audio/tahsin/arid-sukun_8.mp3"
     ]
+},
+'mad-badal': {
+    videoId: "z12XvThR1bA", // Ganti dengan ID video YouTube penjelasan Mad Badal pilihanmu
+    penjelasan: "Mad Badal terjadi apabila huruf Hamzah (ء) bertemu dengan huruf-huruf Mad (ا, و, ي) dalam satu kata, di mana asal huruf Mad tersebut merupakan ganti dari Hamzah sukun. Aturan membacanya dibaca panjang 2 harakat (1 alif), sama seperti Mad Thabi'i.",
+    contoh: ["ءَامَنُوا", "إِيْمَانًا", "أُوْتُوا", "ءَادَمَ", "ءَالِهَتِنَا", "ءَاخِرَةِ", "إِ۠يْتَاءِ", "أُﻭْﺫِﻳْﻨَﺎ"],
+    audioFiles: [
+        "audio/tahsin/mad-badal_1.mp3", "audio/tahsin/mad-badal_2.mp3", "audio/tahsin/mad-badal_3.mp3", "audio/tahsin/mad-badal_4.mp3",
+        "audio/tahsin/mad-badal_5.mp3", "audio/tahsin/mad-badal_6.mp3", "audio/tahsin/mad-badal_7.mp3", "audio/tahsin/mad-badal_8.mp3"
+    ]
 }
             },
 
@@ -2042,7 +2053,7 @@ body.overflow-hidden-fixed {
             'jalalah': { 'tafkhim': 'Tafkhim (Tebal)', 'tarqiq': 'Tarqiq (Tipis)' },
             'qalqalah': { 'sugra': 'Qalqalah Sugra', 'kubra': 'Qalqalah Kubra' },
             'mad-thabii': { 'alif-fathah': 'Alif + Fathah', 'ya-kasrah': 'Ya + Kasrah', 'wawu-dhammah': 'Wawu + Dhammah' },
-            'mad-fari': { 'muttasil': 'Wajib Muttasil', 'munfasil': 'Jaiz Munfasil', 'arid-sukun': 'Arid Lissukun' },
+            'mad-fari': { 'muttasil': 'Wajib Muttasil', 'munfasil': 'Jaiz Munfasil', 'arid-sukun': 'Arid Lissukun','mad-badal': 'Mad Badal' },
             'makharijul-huruf': {'hamzah': 'أ (Hamzah)', 'ha': 'هـ (Ha)', 'ain': 'ع (Ain)', 'ha_pedas': 'ح (Ha)', 'ghain': 'غ (Ghain)', 'kho': 'خ (Kho)',
     'qaf': 'ق (Qaf)', 'kaf': 'ك (Kaf)', 'jim': 'ج (Jim)', 'syin': 'ش (Syin)', 'ya_mati': 'ي (Ya)', 'dhod': 'ض (Dhod)',
     'lam': 'ل (Lam)', 'nun': 'ن (Nun)', 'ro': 'ر (Ro)', 'tho': 'ط (Tho)', 'dal': 'د (Dal)', 'ta': 'ت (Ta)',
@@ -5583,6 +5594,266 @@ function updateCurrentTime() {
 // Jalankan interval setiap 1 detik
 setInterval(updateCurrentTime, 1000);
 updateCurrentTime();
+
+/* ================= 🎨 THREE.JS 3D MAKHRAJ VISUALIZER ================= */
+
+// Data Anatomi & Koordinat Sorot Makhraj 3D
+const MAKHRAJ_3D_DATA = {
+    'al-jauf': {
+        title: "Rongga Mulut (Al-Jauf)",
+        arabic: "الجَوْف",
+        desc: "Merupakan rongga terbuka di tenggorokan hingga mulut. Tempat keluarnya huruf-huruf Mad (Panjang): Alif (ا), Wau mad (و), dan Ya mad (ي).",
+        letters: ["ا", "و", "ي"],
+        targetPos: { x: 0, y: 0, z: 0 },
+        highlightColor: 0x38bdf8 // Sky Blue
+    },
+    'al-halq-aqsa': {
+        title: "Pangkal Tenggorokan (Aqshal Halq)",
+        arabic: "أَقْصَى الحَلْق",
+        desc: "Terletak pada bagian tenggorokan paling bawah (dekat dada / pita suara). Tempat keluarnya huruf Hamzah (ء) dan Ha (هـ).",
+        letters: ["ء", "هـ"],
+        targetPos: { x: 0, y: -2.2, z: 0 },
+        highlightColor: 0xf59e0b // Amber
+    },
+    'al-halq-wasat': {
+        title: "Tengah Tenggorokan (Wasatul Halq)",
+        arabic: "وَسَطُ الحَلْق",
+        desc: "Terletak di bagian tengah tenggorokan (katup epiglotis). Tempat keluarnya huruf 'Ain (ع) dan Ha (ح).",
+        letters: ["ع", "ح"],
+        targetPos: { x: 0, y: -1.2, z: 0.2 },
+        highlightColor: 0x10b981 // Emerald
+    },
+    'al-halq-adna': {
+        title: "Ujung Tenggorokan (Adnal Halq)",
+        arabic: "أَدْنَى الحَلْق",
+        desc: "Terletak di bagian tenggorokan atas (dekat akar lidah/tekak). Tempat keluarnya huruf Ghain (غ) dan Kha (خ).",
+        letters: ["غ", "خ"],
+        targetPos: { x: 0, y: -0.3, z: 0.4 },
+        highlightColor: 0x8b5cf6 // Purple
+    },
+    'al-lisan-qaf': {
+        title: "Pangkal Lidah - Qaf (Aqshal Lisan)",
+        arabic: "أَقْصَى اللِّسَان - ق",
+        desc: "Pangkal lidah menempel pada langit-langit lunak belakang. Tempat keluarnya huruf Qaf (ق).",
+        letters: ["ق"],
+        targetPos: { x: 0, y: 0.2, z: 0.2 },
+        highlightColor: 0xef4444 // Red
+    },
+    'al-lisan-kaf': {
+        title: "Pangkal Lidah - Kaf",
+        arabic: "أَقْصَى اللِّسَان - ك",
+        desc: "Pangkal lidah sedikit di depan posisi makhraj Qaf, menempel pada perbatasan langit-langit keras dan lunak. Tempat keluarnya huruf Kaf (ك).",
+        letters: ["ك"],
+        targetPos: { x: 0, y: 0.3, z: 0.6 },
+        highlightColor: 0xf97316 // Orange
+    },
+    'al-lisan-wasat': {
+        title: "Tengah Lidah (Wasatul Lisan)",
+        arabic: "وَسَطُ اللِّسَان",
+        desc: "Tengah lidah diangkat menempel pada langit-langit atas. Tempat keluarnya huruf Jim (ج), Syin (ش), dan Ya (ي).",
+        letters: ["ج", "ش", "ي"],
+        targetPos: { x: 0, y: 0.5, z: 1.1 },
+        highlightColor: 0x06b6d4 // Cyan
+    },
+    'al-lisan-dad': {
+        title: "Tepi Lidah (Hafatul Lisan) - Dad",
+        arabic: "حَافَةُ اللِّسَان - ض",
+        desc: "Salah satu atau kedua tepi lidah menempel pada gigi geraham atas. Tempat keluarnya huruf Dad (ض).",
+        letters: ["ض"],
+        targetPos: { x: 0.7, y: 0.4, z: 1.0 },
+        highlightColor: 0xec4899 // Pink
+    },
+    'as-syafatain-ba': {
+        title: "Dua Bibir (Asy-Syafatain)",
+        arabic: "الشَّفَتَيْن",
+        desc: "Kedua bibir atas dan bawah dirapatkan. Tempat keluarnya huruf Ba (ب), Mim (م), dan Wau (و).",
+        letters: ["ب", "م", "و"],
+        targetPos: { x: 0, y: 0.2, z: 2.3 },
+        highlightColor: 0x3b82f6 // Blue
+    },
+    'as-syafatain-fa': {
+        title: "Bibir Bawah & Gigi Atas - Fa",
+        arabic: "الشَّفَةُ السُّفْلَى - ف",
+        desc: "Bibir bawah bagian dalam menempel pada ujung gigi seri atas. Tempat keluarnya huruf Fa (ف).",
+        letters: ["ف"],
+        targetPos: { x: 0, y: 0.1, z: 2.2 },
+        highlightColor: 0x84cc16 // Lime
+    }
+};
+
+let scene, camera, renderer, controls;
+let mouthMesh, tongueMesh, highlightSphere;
+let is3DInitialized = false;
+
+// Inisialisasi Environment Three.js 3D
+function initMakhraj3DScene() {
+    const container = document.getElementById('makhraj-3d-canvas-container');
+    if (!container || is3DInitialized) return;
+
+    // 1. Scene
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x020617); // Slate 950
+
+    // 2. Camera
+    camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(4, 2, 6);
+
+    // 3. Renderer
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true;
+    container.appendChild(renderer.domElement);
+
+    // 4. Orbit Controls (Interaksi Rotasi/Zoom Mouse & Touch)
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.maxDistance = 12;
+    controls.minDistance = 2;
+
+    // 5. Pencahayaan (Lighting)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight(0x38bdf8, 1.2);
+    dirLight.position.set(5, 10, 7);
+    scene.add(dirLight);
+
+    const pointLight = new THREE.PointLight(0xf59e0b, 1, 10);
+    pointLight.position.set(-3, -2, -2);
+    scene.add(pointLight);
+
+    // 6. Membuat Anatomi Mulut & Lidah 3D (Procedural Wireframe Mesh)
+    buildAnatomy3DModel();
+
+    // 7. Event Listener Resize Window
+    window.addEventListener('resize', onWindowResize3D);
+
+    is3DInitialized = true;
+    animate3D();
+    
+    // Default Load Makhraj Pertama
+    renderMakhraj3D('al-jauf');
+}
+
+// Konstruksi Model 3D Anatomi Mulut & Lidah
+function buildAnatomy3DModel() {
+    const modelGroup = new THREE.Group();
+
+    // Material
+    const headMaterial = new THREE.MeshPhongMaterial({
+        color: 0x334155,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.3
+    });
+
+    const tongueMaterial = new THREE.MeshStandardMaterial({
+        color: 0xe11d48,
+        roughness: 0.4,
+        metalness: 0.1
+    });
+
+    const throatMaterial = new THREE.MeshStandardMaterial({
+        color: 0x475569,
+        side: THREE.DoubleSide
+    });
+
+    // A. Bentuk Tenggorokan (Cylinder)
+    const throatGeo = new THREE.CylinderGeometry(0.8, 1, 3, 16);
+    const throatMesh = new THREE.Mesh(throatGeo, throatMaterial);
+    throatMesh.position.set(0, -1.5, 0);
+    modelGroup.add(throatMesh);
+
+    // B. Bentuk Lidah (Parametric Curve Shape Mesh)
+    const tongueGeo = new THREE.SphereGeometry(1.2, 32, 16);
+    tongueGeo.scale(0.8, 0.4, 1.6);
+    tongueMesh = new THREE.Mesh(tongueGeo, tongueMaterial);
+    tongueMesh.position.set(0, 0, 0.8);
+    modelGroup.add(tongueMesh);
+
+    // C. Outer Outline Rongga Kepala/Mulut (Sphere Wireframe)
+    const headGeo = new THREE.SphereGeometry(2.5, 24, 24);
+    headGeo.scale(1, 1.2, 1.2);
+    mouthMesh = new THREE.Mesh(headGeo, headMaterial);
+    mouthMesh.position.set(0, 0.2, 0.5);
+    modelGroup.add(mouthMesh);
+
+    // D. Marker / Indicator Sphere untuk Menyorot Titik Makhraj (Glow)
+    const highlightGeo = new THREE.SphereGeometry(0.35, 32, 32);
+    const highlightMat = new THREE.MeshBasicMaterial({
+        color: 0x38bdf8,
+        wireframe: false,
+        transparent: true,
+        opacity: 0.85
+    });
+    highlightSphere = new THREE.Mesh(highlightGeo, highlightMat);
+    modelGroup.add(highlightSphere);
+
+    scene.add(modelGroup);
+}
+
+// Render Ulang Titik Makhraj Berdasarkan Pilihan User
+function renderMakhraj3D(key) {
+    const data = MAKHRAJ_3D_DATA[key];
+    if (!data) return;
+
+    // Update Text UI
+    document.getElementById('makhraj-title').innerText = data.title;
+    document.getElementById('makhraj-arabic-name').innerText = data.arabic;
+    document.getElementById('makhraj-desc').innerText = data.desc;
+    document.getElementById('makhraj-active-zone-label').innerText = data.title;
+
+    // Update List Huruf
+    const lettersContainer = document.getElementById('makhraj-letters');
+    lettersContainer.innerHTML = data.letters.map(l => 
+        `<span class="px-3 py-1 bg-sky-900/60 rounded-xl border border-sky-400/40 text-amber-300 shadow-md animate-fade-in">${l}</span>`
+    ).join('');
+
+    // Pindahkan Posisi Marker Glow 3D ke Titik Makhraj
+    if (highlightSphere) {
+        highlightSphere.position.set(data.targetPos.x, data.targetPos.y, data.targetPos.z);
+        highlightSphere.material.color.setHex(data.highlightColor);
+    }
+}
+
+// Render Animation Loop
+function animate3D() {
+    requestAnimationFrame(animate3D);
+
+    if (controls) controls.update();
+
+    // Efek Pulsating / Berdenyut pada Marker Titik Makhraj
+    if (highlightSphere) {
+        const time = Date.now() * 0.005;
+        const scale = 1 + Math.sin(time) * 0.15;
+        highlightSphere.scale.set(scale, scale, scale);
+    }
+
+    if (renderer && scene && camera) {
+        renderer.render(scene, camera);
+    }
+}
+
+// Fit Canvas saat Window di-resize
+function onWindowResize3D() {
+    const container = document.getElementById('makhraj-3d-canvas-container');
+    if (!container || !renderer || !camera) return;
+
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+}
+
+// Jalankan Otomatis Inisialisasi 3D saat Tab Tahsin/Makhraj Dibuka
+const originalOpenTahsin = window.openTahsin;
+window.openTahsin = function() {
+    if (originalOpenTahsin) originalOpenTahsin();
+    setTimeout(() => {
+        initMakhraj3DScene();
+    }, 200);
+};
 
     </script>
 
